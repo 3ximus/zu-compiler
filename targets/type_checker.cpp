@@ -14,6 +14,11 @@ void zu::type_checker::do_integer_node(cdk::integer_node * const node, int lvl) 
   node->type(new basic_type(4, basic_type::TYPE_INT));
 }
 
+void zu::type_checker::do_double_node(cdk::integer_node * const node, int lvl) {
+  ASSERT_UNSPEC;
+  node->type(new basic_type(8, basic_type::TYPE_DOUBLE));
+}
+
 void zu::type_checker::do_string_node(cdk::string_node * const node, int lvl) {
   ASSERT_UNSPEC;
   node->type(new basic_type(4, basic_type::TYPE_STRING));

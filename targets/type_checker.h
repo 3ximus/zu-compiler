@@ -38,6 +38,7 @@ namespace zu {
 
   public:
     void do_integer_node(cdk::integer_node * const node, int lvl);
+    void do_double_node(cdk::integer_node * const node, int lvl);
     void do_string_node(cdk::string_node * const node, int lvl);
 
   protected:
