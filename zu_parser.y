@@ -13,7 +13,7 @@
 
 %union {
   int                   i;	/* integer value */
-  double                j;
+  double                d;
   std::string          *s;	/* symbol name or string literal */
   cdk::basic_node      *node;	/* node pointer */
   cdk::sequence_node   *sequence;
