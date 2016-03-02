@@ -21,7 +21,7 @@ void zu::postfix_writer::do_integer_node(cdk::integer_node * const node, int lvl
   _pf.INT(node->value()); // push an integer
 }
 
-void zu::postfix_writer::do_double_node(cdk::double_node * const node, int lv) {
+void zu::postfix_writer::do_double_node(cdk::double_node * const node, int lvl) {
   _pf.DOUBLE(node->value());
 }
 
