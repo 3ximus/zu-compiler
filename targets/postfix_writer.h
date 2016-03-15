@@ -54,10 +54,13 @@ namespace zu {
 	void do_simetry_node(zu::simetry_node * const node, int lvl);
 	void do_reference_node(zu::reference_node * const node, int lvl);
 	void do_identity_node(zu::identity_node * const node, int lvl);
+	void do_priority_node(zu::priority_node * const node, int lvl);
 
   public:
 	void do_and_node(zu::and_node * const node, int lvl);
 	void do_or_node(zu::or_node * const node, int lvl);
+	void do_allocation_node(zu::allocation_node * const node, int lvl);
+	void do_index_node(zu::index_node * const node, int lvl);
 
   public:
     void do_add_node(cdk::add_node * const node, int lvl);
