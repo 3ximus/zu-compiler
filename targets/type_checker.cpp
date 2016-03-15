@@ -42,8 +42,7 @@ void zu::type_checker::do_neg_node(cdk::neg_node * const node, int lvl) {
 void zu::type_checker::do_simetry_node(zu::simetry_node * const node, int lvl) {/* TODO */}
 void zu::type_checker::do_reference_node(zu::reference_node * const node, int lvl) {/* TODO */}
 void zu::type_checker::do_identity_node(zu::identity_node * const node, int lvl) {/* TODO */}
-
-void zu::type_checker::do_index_node(zu::index_node * const node, int lvl) {/* TODO */}
+void zu::type_checker::do_priority_node(zu::priority_node * const node, int lvl) {/* TODO */}
 
 //---------------------------------------------------------------------------
 
