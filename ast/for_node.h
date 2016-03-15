@@ -9,20 +9,20 @@ namespace zu {
    * Class for describing while-cycle nodes.
    */
   class for_node: public cdk::basic_node {
-    cdk::expression_node *_start_condition, *_stop_condition, *_step;
+    cdk::expression_node *_init, *_test, *_step;
     cdk::basic_node *_block;
 
   public:
-    inline for_node(int lineno, cdk::expression_node *start_condition,cdk::expression_node *stop_condition,cdk::expression_node *step, cdk::basic_node *block) :
-        basic_node(lineno), _start_condition(start_condition),_stop_condition(stop_condition),_step(step), _block(block) {
+    inline for_node(int lineno, cdk::expression_node *init,cdk::expression_node *test,cdk::expression_node *step, cdk::basic_node *block) :
+        basic_node(lineno), _init(init),_test(test),_step(step), _block(block) {
     }
 
   public:
-    inline cdk::expression_node *start_condition() {
-      return _start_condition;
+    inline cdk::expression_node *init() {
+      return _init;
     }
-    inline cdk::expression_node *stop_condition() {
-      return _stop_condition;
+    inline cdk::expression_node *test() {
+      return _test;
     }
     inline cdk::expression_node *step() {
       return _step;
