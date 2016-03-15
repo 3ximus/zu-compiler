@@ -43,10 +43,14 @@ void zu::type_checker::do_simetry_node(zu::simetry_node * const node, int lvl) {
 void zu::type_checker::do_reference_node(zu::reference_node * const node, int lvl) {/* TODO */}
 void zu::type_checker::do_identity_node(zu::identity_node * const node, int lvl) {/* TODO */}
 
+void zu::type_checker::do_index_node(zu::index_node * const node, int lvl) {/* TODO */}
+
 //---------------------------------------------------------------------------
 
 void zu::type_checker::do_and_node(zu::and_node * const node, int lvl) {/* TODO */}
 void zu::type_checker::do_or_node(zu::or_node * const node, int lvl) {/* TODO */}
+void zu::type_checker::do_allocation_node(zu::allocation_node * const node, int lvl)  {/* TODO */}
+void zu::type_checker::do_index_node(zu::index_node * const node, int lvl) {/* TODO */}
 
 //---------------------------------------------------------------------------
 
