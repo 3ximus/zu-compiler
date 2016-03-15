@@ -55,7 +55,6 @@ list : stmt	     { $$ = new cdk::sequence_node(LINE, $1); }
 stmt : expr ';'                         { $$ = new zu::evaluation_node(LINE, $1); }
  	   | tPRINT expr ';'                  { $$ = new zu::print_node(LINE, $2); }
      | tREAD lval ';'                   { $$ = new zu::read_node(LINE, $2); }
-     | tFOR '(' expr ')' stmt         { $$ = new zu::for_node(LINE, $3, $5); }
      | tIF '(' expr ')' stmt %prec tIFX { $$ = new zu::if_node(LINE, $3, $5); }
      | tIF '(' expr ')' stmt tELSE stmt { $$ = new zu::if_else_node(LINE, $3, $5, $7); }
      | '{' list '}'                     { $$ = $2; }

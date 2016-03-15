@@ -13,7 +13,7 @@ namespace zu {
     cdk::basic_node *_block;
 
   public:
-    inline for_node(int lineno, cdk::expression_node *start_condition,cdk::expression_node *stop_condition,cdk::expression_node *step cdk::basic_node *block) :
+    inline for_node(int lineno, cdk::expression_node *start_condition,cdk::expression_node *stop_condition,cdk::expression_node *step, cdk::basic_node *block) :
         basic_node(lineno), _start_condition(start_condition),_stop_condition(stop_condition),_step(step), _block(block) {
     }
 

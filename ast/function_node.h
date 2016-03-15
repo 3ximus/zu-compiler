@@ -6,7 +6,7 @@
 namespace zu {
 
   /**
-   * Class function describing while-cycle nodes.
+   * Class function describing function nodes.
    */
   class function_node: public cdk::expression_node {
     cdk::sequence_node *_args;
@@ -14,7 +14,7 @@ namespace zu {
 
   public:
     inline function_node(int lineno, cdk::sequence_node *args, cdk::basic_node *block) :
-        basic_node(lineno), _args(args), _block(block) {
+        expression_node(lineno), _args(args), _block(block) {
     }
 
   public:

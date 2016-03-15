@@ -161,7 +161,7 @@ void zu::type_checker::do_read_node(zu::read_node * const node, int lvl) {
 //---------------------------------------------------------------------------
 
 void zu::type_checker::do_for_node(zu::for_node * const node, int lvl) {
-  node->condition()->accept(this, lvl + 4);
+  //node->condition()->accept(this, lvl + 4);
 }
 
 //---------------------------------------------------------------------------

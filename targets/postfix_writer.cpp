@@ -247,13 +247,13 @@ void zu::postfix_writer::do_read_node(zu::read_node * const node, int lvl) {
 //---------------------------------------------------------------------------
 
 void zu::postfix_writer::do_for_node(zu::for_node * const node, int lvl) {
-  int lbl1, lbl2;
-  _pf.LABEL(mklbl(lbl1 = ++_lbl));
-  node->condition()->accept(this, lvl);
-  _pf.JZ(mklbl(lbl2 = ++_lbl));
-  node->block()->accept(this, lvl + 2);
-  _pf.JMP(mklbl(lbl1));
-  _pf.LABEL(mklbl(lbl2));
+  //int lbl1, lbl2;
+  //_pf.LABEL(mklbl(lbl1 = ++_lbl));
+  //node->condition()->accept(this, lvl);
+  //_pf.JZ(mklbl(lbl2 = ++_lbl));
+  //node->block()->accept(this, lvl + 2);
+  //_pf.JMP(mklbl(lbl1));
+  //_pf.LABEL(mklbl(lbl2));
 }
 
 //---------------------------------------------------------------------------

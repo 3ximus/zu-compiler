@@ -38,6 +38,7 @@ class evaluation_node;
 class rvalue_node; 
 class if_else_node; 
 class and_node; 
+class function_node; 
 class simetry_node; 
 class reference_node; 
 class assignment_node; 
@@ -98,6 +99,7 @@ class print_node;
 #include "ast/rvalue_node.h"
 #include "ast/if_else_node.h"
 #include "ast/and_node.h"
+#include "ast/function_node.h"
 #include "ast/simetry_node.h"
 #include "ast/reference_node.h"
 #include "ast/assignment_node.h"
