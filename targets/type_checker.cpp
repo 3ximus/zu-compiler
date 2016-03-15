@@ -118,6 +118,7 @@ void zu::type_checker::do_lvalue_node(zu::lvalue_node * const node, int lvl) {
   node->type(new basic_type(4, basic_type::TYPE_INT));
 }
 
+void zu::type_checker::do_function_node(zu::function_node * const node, int lvl){/*TODO*/}
 //---------------------------------------------------------------------------
 
 void zu::type_checker::do_assignment_node(zu::assignment_node * const node, int lvl) {

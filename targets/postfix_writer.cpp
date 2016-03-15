@@ -197,6 +197,8 @@ void zu::postfix_writer::do_program_node(zu::program_node * const node, int lvl)
   _pf.EXTERN("println");
 }
 
+void zu::postfix_writer::do_function_node(zu::function_node * const node, int lvl){/*TODO*/}
+
 //---------------------------------------------------------------------------
 
 void zu::postfix_writer::do_evaluation_node(zu::evaluation_node * const node, int lvl) {
