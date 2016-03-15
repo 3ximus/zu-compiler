@@ -52,10 +52,8 @@ public:
 
 public:
   virtual void do_integer_node(cdk::integer_node * const node, int lvl) = 0;
-  virtual void do_double_node(cdk::double_node * const node, int lvl) {
-    // Zu does not use this node
-  }
-  virtual void do_string_node(cdk::string_node * const node, int lvl) = 0;
+  virtual void do_double_node(cdk::double_node * const node, int lvl) 	= 0;
+  virtual void do_string_node(cdk::string_node * const node, int lvl) 	= 0;
   virtual void do_identifier_node(cdk::identifier_node * const node, int lvl) {
     // Zu does not use this node
   }
@@ -66,7 +64,6 @@ public:
   virtual void do_simetry_node(zu::simetry_node * const node, int lvl) = 0;
   virtual void do_reference_node(zu::reference_node * const node, int lvl) = 0;
   virtual void do_identity_node(zu::identity_node * const node, int lvl) = 0;
-
   virtual void do_priority_node(zu::priority_node * const node, int lvl) = 0;
 
 public:
