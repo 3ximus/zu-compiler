@@ -9,9 +9,7 @@ namespace zu {
   class reference_node: public cdk::unary_expression_node {
 
   public:
-    inline reference_node(int lineno, expression_node *arg) {
-        cdk::unary_expression_node(lineno, arg);
-    }
+    inline reference_node(int lineno, expression_node *arg): cdk::unary_expression_node(lineno, arg){}
 
     void accept(basic_ast_visitor *sp, int level) {
       sp->do_reference_node(this, level);
