@@ -27,13 +27,15 @@ namespace cdk {
 
 namespace zu {
 class lvalue_node; 
-class while_node; 
+class or_node; 
 class program_node; 
 class read_node; 
 class evaluation_node; 
 class rvalue_node; 
 class if_else_node; 
+class and_node; 
 class assignment_node; 
+class for_node; 
 class if_node; 
 class print_node; 
 
@@ -79,13 +81,15 @@ class print_node;
 //---------------------------------------------------------------------------
 
 #include "ast/lvalue_node.h"
-#include "ast/while_node.h"
+#include "ast/or_node.h"
 #include "ast/program_node.h"
 #include "ast/read_node.h"
 #include "ast/evaluation_node.h"
 #include "ast/rvalue_node.h"
 #include "ast/if_else_node.h"
+#include "ast/and_node.h"
 #include "ast/assignment_node.h"
+#include "ast/for_node.h"
 #include "ast/if_node.h"
 #include "ast/print_node.h"
 
