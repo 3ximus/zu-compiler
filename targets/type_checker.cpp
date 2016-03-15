@@ -38,6 +38,8 @@ inline void zu::type_checker::processUnaryExpression(cdk::unary_expression_node 
 void zu::type_checker::do_neg_node(cdk::neg_node * const node, int lvl) {
   processUnaryExpression(node, lvl);
 }
+void zu::type_checker::do_and_node(zu::and_node * const node, int lvl) {/* TODO */}
+void zu::type_checker::do_or_node(zu::or_node * const node, int lvl) {/* TODO */}
 
 //---------------------------------------------------------------------------
 
@@ -148,7 +150,7 @@ void zu::type_checker::do_read_node(zu::read_node * const node, int lvl) {
 
 //---------------------------------------------------------------------------
 
-void zu::type_checker::do_while_node(zu::while_node * const node, int lvl) {
+void zu::type_checker::do_for_node(zu::for_node * const node, int lvl) {
   node->condition()->accept(this, lvl + 4);
 }
 

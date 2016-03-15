@@ -39,6 +39,8 @@ inline void zu::xml_writer::processUnaryExpression(cdk::unary_expression_node * 
 void zu::xml_writer::do_neg_node(cdk::neg_node * const node, int lvl) {
   processUnaryExpression(node, lvl);
 }
+void zu::xml_writer::do_and_node(zu::and_node * const node, int lvl) {/* TODO */}
+void zu::xml_writer::do_or_node(zu::or_node * const node, int lvl) {/* TODO */}
 
 //---------------------------------------------------------------------------
 
@@ -146,7 +148,7 @@ void zu::xml_writer::do_read_node(zu::read_node * const node, int lvl) {
 
 //---------------------------------------------------------------------------
 
-void zu::xml_writer::do_while_node(zu::while_node * const node, int lvl) {
+void zu::xml_writer::do_for_node(zu::for_node * const node, int lvl) {
   openTag(node, lvl);
   openTag("condition", lvl + 2);
   node->condition()->accept(this, lvl + 4);

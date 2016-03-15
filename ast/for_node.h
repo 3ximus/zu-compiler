@@ -1,6 +1,5 @@
-// $Id: while_node.h,v 1.1 2016/02/19 19:29:48 david Exp $ -*- c++ -*-
-#ifndef __CDK_WHILENODE_H__
-#define __CDK_WHILENODE_H__
+#ifndef __CDK_FORNODE_H__
+#define __CDK_FORNODE_H__
 
 #include <cdk/ast/expression_node.h>
 
@@ -9,12 +8,13 @@ namespace zu {
   /**
    * Class for describing while-cycle nodes.
    */
-  class while_node: public cdk::basic_node {
+  class for_node: public cdk::basic_node {
+	/* TODO add more conditions */
     cdk::expression_node *_condition;
     cdk::basic_node *_block;
 
   public:
-    inline while_node(int lineno, cdk::expression_node *condition, cdk::basic_node *block) :
+    inline for_node(int lineno, cdk::expression_node *condition, cdk::basic_node *block) :
         basic_node(lineno), _condition(condition), _block(block) {
     }
 
@@ -27,7 +27,7 @@ namespace zu {
     }
 
     void accept(basic_ast_visitor *sp, int level) {
-      sp->do_while_node(this, level);
+      sp->do_for_node(this, level);
     }
 
   };

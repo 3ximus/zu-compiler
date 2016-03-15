@@ -47,6 +47,9 @@ void zu::postfix_writer::do_neg_node(cdk::neg_node * const node, int lvl) {
   _pf.NEG(); // 2-complement
 }
 
+void zu::postfix_writer::do_and_node(zu::and_node * const node, int lvl) {/* TODO */}
+void zu::postfix_writer::do_or_node(zu::or_node * const node, int lvl) {/* TODO */}
+
 //---------------------------------------------------------------------------
 
 void zu::postfix_writer::do_add_node(cdk::add_node * const node, int lvl) {
@@ -233,7 +236,7 @@ void zu::postfix_writer::do_read_node(zu::read_node * const node, int lvl) {
 
 //---------------------------------------------------------------------------
 
-void zu::postfix_writer::do_while_node(zu::while_node * const node, int lvl) {
+void zu::postfix_writer::do_for_node(zu::for_node * const node, int lvl) {
   int lbl1, lbl2;
   _pf.LABEL(mklbl(lbl1 = ++_lbl));
   node->condition()->accept(this, lvl);

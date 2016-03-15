@@ -60,6 +60,8 @@ namespace zu {
 
   public:
     void do_neg_node(cdk::neg_node * const node, int lvl);
+	void do_and_node(zu::and_node * const node, int lvl);
+	void do_or_node(zu::or_node * const node, int lvl);
 
   protected:
     void processBinaryExpression(cdk::binary_expression_node * const node, int lvl);
@@ -89,7 +91,7 @@ namespace zu {
     void do_assignment_node(zu::assignment_node * const node, int lvl);
 
   public:
-    void do_while_node(zu::while_node * const node, int lvl);
+    void do_for_node(zu::for_node * const node, int lvl);
     void do_if_node(zu::if_node * const node, int lvl);
     void do_if_else_node(zu::if_else_node * const node, int lvl);
 
