@@ -7,23 +7,14 @@ namespace zu {
   /**
    * Class for describing and nodes.
    */
-  class and_node: public cdk::expression_node {
-    cdk::expression_node *_lvalue;
-    cdk::expression_node *_rvalue;
+  class and_node: public cdk::binary_expression_node {
 
   public:
-    inline and_node(int lineno, cdk::expression_node *lvalue, cdk::expression_node *rvalue) :
-        cdk::expression_node(lineno), _lvalue(lvalue), _rvalue(rvalue) {
+    inline and_node(int lineno, cdk::expression_node *lvalue, cdk::expression_node *rvalue) : 
+        binary_expression_node(lineno, lvalue, rvalue) {
     }
 
   public:
-    inline cdk::expression_node *lvalue() {
-      return _lvalue;
-    }
-    inline cdk::expression_node *rvalue() {
-      return _rvalue;
-    }
-
     void accept(basic_ast_visitor *sp, int level) {
       sp->do_and_node(this, level);
     }
