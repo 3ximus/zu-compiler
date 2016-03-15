@@ -39,6 +39,13 @@ inline void zu::xml_writer::processUnaryExpression(cdk::unary_expression_node * 
 void zu::xml_writer::do_neg_node(cdk::neg_node * const node, int lvl) {
   processUnaryExpression(node, lvl);
 }
+
+void zu::xml_writer::do_simetry_node(zu::simetry_node * const node, int lvl) {/* TODO */}
+void zu::xml_writer::do_reference_node(zu::reference_node * const node, int lvl) {/* TODO */}
+void zu::xml_writer::do_identity_node(zu::identity_node * const node, int lvl) {/* TODO */}
+
+//---------------------------------------------------------------------------
+
 void zu::xml_writer::do_and_node(zu::and_node * const node, int lvl) {/* TODO */}
 void zu::xml_writer::do_or_node(zu::or_node * const node, int lvl) {/* TODO */}
 

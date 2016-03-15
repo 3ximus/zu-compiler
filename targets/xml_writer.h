@@ -60,6 +60,11 @@ namespace zu {
 
   public:
     void do_neg_node(cdk::neg_node * const node, int lvl);
+	void do_simetry_node(zu::simetry_node * const node, int lvl);
+	void do_reference_node(zu::reference_node * const node, int lvl);
+	void do_identity_node(zu::identity_node * const node, int lvl);
+
+  public:
 	void do_and_node(zu::and_node * const node, int lvl);
 	void do_or_node(zu::or_node * const node, int lvl);
 

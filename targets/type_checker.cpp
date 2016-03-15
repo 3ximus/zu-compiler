@@ -38,6 +38,13 @@ inline void zu::type_checker::processUnaryExpression(cdk::unary_expression_node 
 void zu::type_checker::do_neg_node(cdk::neg_node * const node, int lvl) {
   processUnaryExpression(node, lvl);
 }
+
+void zu::type_checker::do_simetry_node(zu::simetry_node * const node, int lvl) {/* TODO */}
+void zu::type_checker::do_reference_node(zu::reference_node * const node, int lvl) {/* TODO */}
+void zu::type_checker::do_identity_node(zu::identity_node * const node, int lvl) {/* TODO */}
+
+//---------------------------------------------------------------------------
+
 void zu::type_checker::do_and_node(zu::and_node * const node, int lvl) {/* TODO */}
 void zu::type_checker::do_or_node(zu::or_node * const node, int lvl) {/* TODO */}
 

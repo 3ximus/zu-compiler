@@ -60,8 +60,15 @@ public:
     // Zu does not use this node
   }
 
+
 public:
   virtual void do_neg_node(cdk::neg_node * const node, int lvl) = 0;
+  virtual void do_simetry_node(zu::simetry_node * const node, int lvl) = 0;
+  virtual void do_reference_node(zu::reference_node * const node, int lvl) = 0;
+  virtual void do_identity_node(zu::identity_node * const node, int lvl) = 0;
+
+
+public:
   virtual void do_and_node(zu::and_node * const node, int lvl) = 0;
   virtual void do_or_node(zu::or_node * const node, int lvl) = 0;
 
