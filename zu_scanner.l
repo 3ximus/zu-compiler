@@ -1,6 +1,6 @@
 %option c++ yyclass="zu_scanner" outfile="zu_scanner.cpp"
 %option stack noyywrap yylineno 8bit
-%{ 
+%{
 /* $Id: zu_scanner.l,v 1.1 2016/02/19 19:29:48 david Exp $ */
 // make relevant includes before including the parser's tab file
 #include <string>
@@ -17,10 +17,10 @@
 
 "//".*                 ; /* ignore comments */
 
-">="                   return tGE; 
-"<="                   return tLE; 
-"=="                   return tEQ; 
-"!="                   return tNE; 
+">="                   return tGE;
+"<="                   return tLE;
+"=="                   return tEQ;
+"!="                   return tNE;
 
 [A-Za-z][A-Za-z0-9_]*  yylval.s = new std::string(yytext); return tIDENTIFIER;
 

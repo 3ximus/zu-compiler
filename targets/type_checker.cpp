@@ -119,7 +119,7 @@ void zu::type_checker::do_lvalue_node(zu::lvalue_node * const node, int lvl) {
 }
 
 void zu::type_checker::do_function_slim_node(zu::function_slim_node * const node, int lvl){/*TODO*/}
-void zu::type_checker::do_function_body_(zu::function_body_node * const node, int lvl){/*TODO*/}
+void zu::type_checker::do_function_body_node(zu::function_body_node * const node, int lvl){/*TODO*/}
 //---------------------------------------------------------------------------
 
 void zu::type_checker::do_assignment_node(zu::assignment_node * const node, int lvl) {

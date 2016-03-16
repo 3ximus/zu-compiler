@@ -10,7 +10,7 @@ namespace zu {
   class and_node: public cdk::binary_expression_node {
 
   public:
-    inline and_node(int lineno, cdk::expression_node *lvalue, cdk::expression_node *rvalue) : 
+    inline and_node(int lineno, cdk::expression_node *lvalue, cdk::expression_node *rvalue) :
         binary_expression_node(lineno, lvalue, rvalue) {
     }
 
