@@ -10,10 +10,15 @@ namespace zu {
    * Class for describing return nodes.
    */
   class return_node: public cdk::expression_node {
+	cdk::expression_node *_value;
 
   public:
     inline return_node(int lineno) :
         cdk::expression_node(lineno){
+    }
+
+    inline cdk::expression_node *value() {
+      return _value;
     }
 
     void accept(basic_ast_visitor *sp, int level) {

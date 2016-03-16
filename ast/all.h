@@ -26,8 +26,10 @@ namespace cdk {
 //---------------------------------------------------------------------------
 
 namespace zu {
+class continue_node; 
 class variable_node; 
 class function_body_node; 
+class break_node; 
 class lvalue_node; 
 class allocation_node; 
 class or_node; 
@@ -36,6 +38,7 @@ class index_node;
 class identity_node; 
 class read_node; 
 class priority_node; 
+class return_node; 
 class evaluation_node; 
 class rvalue_node; 
 class if_else_node; 
@@ -88,8 +91,10 @@ class print_node;
 //     THESE ARE THE NODES DEFINED SPECIFICALLY FOR THIS APPLICATION
 //---------------------------------------------------------------------------
 
+#include "ast/continue_node.h"
 #include "ast/variable_node.h"
 #include "ast/function_body_node.h"
+#include "ast/break_node.h"
 #include "ast/lvalue_node.h"
 #include "ast/allocation_node.h"
 #include "ast/or_node.h"
@@ -98,6 +103,7 @@ class print_node;
 #include "ast/identity_node.h"
 #include "ast/read_node.h"
 #include "ast/priority_node.h"
+#include "ast/return_node.h"
 #include "ast/evaluation_node.h"
 #include "ast/rvalue_node.h"
 #include "ast/if_else_node.h"
