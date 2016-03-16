@@ -26,6 +26,7 @@ namespace cdk {
 //---------------------------------------------------------------------------
 
 namespace zu {
+class variable_node; 
 class lvalue_node; 
 class allocation_node; 
 class or_node; 
@@ -86,6 +87,7 @@ class print_node;
 //     THESE ARE THE NODES DEFINED SPECIFICALLY FOR THIS APPLICATION
 //---------------------------------------------------------------------------
 
+#include "ast/variable_node.h"
 #include "ast/lvalue_node.h"
 #include "ast/allocation_node.h"
 #include "ast/or_node.h"

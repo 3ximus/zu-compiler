@@ -9,12 +9,17 @@ namespace zu {
   /**
    * Class for describing variable nodes.
    */
-  class variable_node: public zu::lvalue_node {
+  class variable_node: public cdk::identifier_node {
+    zu::lvalue_node* _value;	
 
   public:
-    inline variable_node(int lineno, const std::string &name) :
-        zu::left_value(lineno, name) {
+    inline variable_node(int lineno, const std::string &s, zu::lvalue_node* value):
+	identifier_node(lineno,s), _value(value) {
     }
+	
+    inline zu::lvalue_node* value(){
+    	return _value;
+    }  	
 
     void accept(basic_ast_visitor *sp, int level) {
       sp->do_variable_node(this, level);
