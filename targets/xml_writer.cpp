@@ -126,11 +126,11 @@ void zu::xml_writer::do_assignment_node(zu::assignment_node * const node, int lv
 
 //---------------------------------------------------------------------------
 
-void zu::xml_writer::do_program_node(zu::program_node * const node, int lvl) {
-  openTag(node, lvl);
-  node->statements()->accept(this, lvl + 4);
-  closeTag(node, lvl);
-}
+//void zu::xml_writer::do_program_node(zu::program_node * const node, int lvl) {
+//  openTag(node, lvl);
+//  node->statements()->accept(this, lvl + 4);
+//  closeTag(node, lvl);
+//}
 
 void zu::xml_writer::do_function_node(zu::function_node * const node, int lvl){/*TODO*/}
 
