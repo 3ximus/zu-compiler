@@ -61,6 +61,7 @@ namespace zu {
 	void do_or_node(zu::or_node * const node, int lvl);
 	void do_allocation_node(zu::allocation_node * const node, int lvl);
 	void do_index_node(zu::index_node * const node, int lvl);
+	void do_variable_node(zu::variable_node * const node, int lvl);
 
   public:
     void do_add_node(cdk::add_node * const node, int lvl);

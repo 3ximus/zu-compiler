@@ -51,6 +51,7 @@ void zu::xml_writer::do_and_node(zu::and_node * const node, int lvl) {/* TODO */
 void zu::xml_writer::do_or_node(zu::or_node * const node, int lvl) {/* TODO */}
 void zu::xml_writer::do_allocation_node(zu::allocation_node * const node, int lvl)  {/* TODO */}
 void zu::xml_writer::do_index_node(zu::index_node * const node, int lvl) {/* TODO */}
+void zu::xml_writer::do_variable_node(zu::variable_node * const node, int lvl) {/* TODO */}
 
 //---------------------------------------------------------------------------
 
