@@ -1,5 +1,5 @@
-#ifndef __FORNODE_H__
-#define __FORNODE_H__
+#ifndef __ZU_FORNODE_H__
+#define __ZU_FORNODE_H__
 
 #include <cdk/ast/expression_node.h>
 

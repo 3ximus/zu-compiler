@@ -1,6 +1,6 @@
 // $Id: if_node.h,v 1.1 2016/02/19 19:29:48 david Exp $ -*- c++ -*-
-#ifndef __CDK_IFNODE_H__
-#define __CDK_IFNODE_H__
+#ifndef __ZU_IFNODE_H__
+#define __ZU_IFNODE_H__
 
 #include <cdk/ast/expression_node.h>
 

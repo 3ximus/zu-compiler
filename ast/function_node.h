@@ -1,5 +1,5 @@
-#ifndef __CDK_FUNCTIONNODE_H__
-#define __CDK_FUNCTIONNODE_H__
+#ifndef __ZU_FUNCTIONNODE_H__
+#define __ZU_FUNCTIONNODE_H__
 
 #include <cdk/ast/expression_node.h>
 
