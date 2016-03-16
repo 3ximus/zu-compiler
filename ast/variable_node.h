@@ -3,22 +3,18 @@
 #define __ZU_VARIABLENODE_H__
 
 #include <string>
+#include "lvalue_node.h"
 
 namespace zu {
 
   /**
    * Class for describing variable nodes.
    */
-  class variable_node: public cdk::identifier_node {
-    zu::lvalue_node* _value;
+  class variable_node: public lvalue_node {
 
   public:
-    inline variable_node(int lineno, const std::string &s, zu::lvalue_node* value):
-	identifier_node(lineno,s), _value(value) {
-    }
-
-    inline zu::lvalue_node* value(){
-    	return _value;
+    inline variable_node(int lineno, const std::string &s):
+	lvalue_node(lineno,s) {
     }
 
     void accept(basic_ast_visitor *sp, int level) {

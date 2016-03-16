@@ -2,20 +2,20 @@
 #ifndef __ZU_INDEXNODE_H__
 #define __ZU_INDEXNODE_H__
 
-#include <string>
+#include "lvalue_node.h"
 
 namespace zu {
 
   /**
    * Class for describing index nodes.
    */
-  class index_node: public cdk::expression_node {
+  class index_node: public lvalue_node {
     cdk::expression_node *_lvalue;
     cdk::expression_node *_rvalue;
 
   public:
     inline index_node(int lineno, cdk::expression_node *lvalue, cdk::expression_node *rvalue) :
-       cdk::expression_node(lineno), _lvalue(lvalue), _rvalue(rvalue) {
+       lvalue_node(lineno), _lvalue(lvalue), _rvalue(rvalue) {
     }
 
   public:

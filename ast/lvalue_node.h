@@ -22,6 +22,10 @@ namespace zu {
         cdk::simple_value_node<std::string>(lineno, *s) {
     }
 
+    inline lvalue_node(int lineno) :
+        cdk::simple_value_node<std::string>(lineno, NULL) {
+    }
+
     /**
      * @param sp semantic processor visitor
      * @param level syntactic tree level
