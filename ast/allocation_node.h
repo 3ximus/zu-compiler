@@ -8,20 +8,16 @@ namespace zu {
    * Class for describing allocation nodes.
    */
   class allocation_node: public cdk::expression_node {
-    cdk::expression_node *_lvalue;
-    cdk::expression_node *_rvalue;
+    cdk::expression_node *_size;
 
   public:
-    inline allocation_node(int lineno, cdk::expression_node *lvalue, cdk::expression_node *rvalue) :
-        cdk::expression_node(lineno), _lvalue(lvalue), _rvalue(rvalue) {
+    inline allocation_node(int lineno, cdk::expression_node *size) :
+        cdk::expression_node(lineno), _size(size) {
     }
 
   public:
-    inline cdk::expression_node *lvalue() {
-      return _lvalue;
-    }
-    inline cdk::expression_node *rvalue() {
-      return _rvalue;
+    inline cdk::expression_node *size() {
+      return _size;
     }
 
     void accept(basic_ast_visitor *sp, int level) {
