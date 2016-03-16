@@ -1,7 +1,7 @@
 %option c++ yyclass="zu_scanner" outfile="zu_scanner.cpp"
 %option stack noyywrap yylineno 8bit
 %{
-/* $Id: zu_scanner.l,v 1.1 2016/02/19 19:29:48 david Exp $ */
+/* $Id: zu_scanner.l,v 1.2 2016/03/16 22:16:34 ist169481 Exp $ */
 // make relevant includes before including the parser's tab file
 #include <string>
 #include <cdk/ast/sequence_node.h>
