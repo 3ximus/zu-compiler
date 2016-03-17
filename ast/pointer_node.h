@@ -2,21 +2,20 @@
 #ifndef __ZU_AST_EXPRESSION_POINTER_H__
 #define __ZU_AST_EXPRESSION_POINTER_H__
 
-
 namespace zu {
 
   /**
    * Class for describing pointers in zu.
    */
   class pointer_node: public cdk::simple_value_node<int> {
-	  cdk::basic_type _type;
+	  basic_type *_type;
 
   public:
-    inline pointer_node(int lineno, int i, cdk::basic_type type) :
+    inline pointer_node(int lineno, int i, basic_type type) :
         simple_value_node(lineno, i), _type(type) {
     }
 
-    inline cdk::basic_type *type() {
+    inline basic_type *type() {
       return _type;
     }
 

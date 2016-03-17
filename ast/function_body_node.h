@@ -1,9 +1,8 @@
 #ifndef __ZU_FUNCTION_BODY_NODE_H__
 #define __ZU_FUNCTION_BODY_NODE_H__
 
-#include <cdk/ast/expression_node.h>
 #include "function_slim_node.h"
-
+#include <string>
 
 namespace zu {
 
@@ -14,8 +13,14 @@ namespace zu {
     cdk::basic_node *_block;
 
   public:
-    inline function_body_node(int lineno, cdk::sequence_node *args, cdk::basic_node *block) :
-       function_slim_node(lineno, args), _block(block) {
+    inline function_body_node(int lineno, cdk::sequence_node *args, cdk::basic_node *block, const char *s) :
+       function_slim_node(lineno, args, s), _block(block) {
+    }
+    inline function_body_node(int lineno, cdk::sequence_node *args, cdk::basic_node *block, const std::string &s) :
+       function_slim_node(lineno, args, s), _block(block) {
+    }
+    inline function_body_node(int lineno, cdk::sequence_node *args, cdk::basic_node *block, const std::string *s) :
+       function_slim_node(lineno, args, s), _block(block) {
     }
 
   public:

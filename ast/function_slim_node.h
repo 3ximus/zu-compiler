@@ -1,7 +1,7 @@
 #ifndef __ZU_FUNCTION_SLIM_NODE_H__
 #define __ZU_FUNCTION_SLIM_NODE_H__
 
-#include <cdk/ast/simple_value_node.h>
+#include <string>
 
 namespace zu {
 
