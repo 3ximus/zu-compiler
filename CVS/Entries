@@ -1,5 +1,3 @@
-D/ast////
-D/targets////
 /Makefile/1.1/Wed Mar 16 20:58:41 2016//
 /factory.cpp/1.1/Wed Mar 16 20:58:41 2016//
 /factory.h/1.1/Wed Mar 16 20:58:41 2016//
@@ -8,3 +6,5 @@ D/targets////
 /zu.doxyfile/1.2/Wed Mar 16 21:42:00 2016//
 /zu_parser.y/1.2/Wed Mar 16 22:18:27 2016//
 /zu_scanner.l/1.2/Wed Mar 16 22:18:27 2016//
+D/ast////
+D/targets////

@@ -1,4 +1,4 @@
-// $Id: xml_writer.cpp,v 1.2 2016/03/16 22:16:34 ist169481 Exp $ -*- c++ -*-
+// $Id: xml_writer.cpp,v 1.3 2016/03/17 17:58:35 ist169481 Exp $ -*- c++ -*-
 #include <string>
 #include "targets/xml_writer.h"
 #include "targets/type_checker.h"
