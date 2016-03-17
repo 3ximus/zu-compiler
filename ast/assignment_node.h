@@ -1,6 +1,6 @@
 // $Id: assignment_node.h,v 1.1 2016/02/19 19:29:48 david Exp $ -*- c++ -*-
-#ifndef __ZU_ASSIGNMENTNODE_H__
-#define __ZU_ASSIGNMENTNODE_H__
+#ifndef __ZU_ASSIGNMENT_NODE_H__
+#define __ZU_ASSIGNMENT_NODE_H__
 
 #include "ast/lvalue_node.h"
 

@@ -1,6 +1,6 @@
 // $Id: allocation_node.h,v 1.1 2016/03/16 22:16:34 ist169481 Exp $ -*- c++ -*-
-#ifndef __ZU_ALLOCATIONNODE_H__
-#define __ZU_ALLOCATIONNODE_H__
+#ifndef __ZU_ALLOCATION_NODE_H__
+#define __ZU_ALLOCATION_NODE_H__
 
 namespace zu {
 

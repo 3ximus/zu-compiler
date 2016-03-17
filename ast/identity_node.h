@@ -1,5 +1,5 @@
-#ifndef __ZU_IDENTITYNODE_H__
-#define __ZU_IDENTITYNODE_H__
+#ifndef __ZU_IDENTITY_NODE_H__
+#define __ZU_IDENTITY_NODE_H__
 
 namespace zu {
 

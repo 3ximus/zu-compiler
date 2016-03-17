@@ -1,5 +1,5 @@
-#ifndef __ZU_FUNCTION_SLIMNODE_H__
-#define __ZU_FUNCTION_SLIMNODE_H__
+#ifndef __ZU_FUNCTION_SLIM_NODE_H__
+#define __ZU_FUNCTION_SLIM_NODE_H__
 
 #include <cdk/ast/expression_node.h>
 

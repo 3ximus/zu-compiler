@@ -1,6 +1,6 @@
 // $Id: index_node.h,v 1.1 2016/03/16 22:16:34 ist169481 Exp $ -*- c++ -*-
-#ifndef __ZU_INDEXNODE_H__
-#define __ZU_INDEXNODE_H__
+#ifndef __ZU_INDEX_NODE_H__
+#define __ZU_INDEX_NODE_H__
 
 #include "lvalue_node.h"
 

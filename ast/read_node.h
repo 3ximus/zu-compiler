@@ -1,6 +1,6 @@
 // $Id: read_node.h,v 1.1 2016/02/19 19:29:48 david Exp $ -*- c++ -*-
-#ifndef __ZU_READNODE_H__
-#define __ZU_READNODE_H__
+#ifndef __ZU_READ_NODE_H__
+#define __ZU_READ_NODE_H__
 
 #include "ast/lvalue_node.h"
 

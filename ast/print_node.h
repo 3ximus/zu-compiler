@@ -1,6 +1,6 @@
 // $Id: print_node.h,v 1.1 2016/02/19 19:29:48 david Exp $ -*- c++ -*-
-#ifndef __ZU_PRINTNODE_H__
-#define __ZU_PRINTNODE_H__
+#ifndef __ZU_PRINT_NODE_H__
+#define __ZU_PRINT_NODE_H__
 
 #include <cdk/ast/expression_node.h>
 

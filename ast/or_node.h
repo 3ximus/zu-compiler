@@ -1,5 +1,5 @@
-#ifndef __ZU_ORNODE_H__
-#define __ZU_ORNODE_H__
+#ifndef __ZU_OR_NODE_H__
+#define __ZU_OR_NODE_H__
 
 namespace zu {
 

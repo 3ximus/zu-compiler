@@ -1,6 +1,6 @@
 // $Id: if_else_node.h,v 1.2 2016/03/16 22:16:34 ist169481 Exp $ -*- c++ -*-
-#ifndef __ZU_IFELSENODE_H__
-#define __ZU_IFELSENODE_H__
+#ifndef __ZU_IFELSE_NODE_H__
+#define __ZU_IFELSE_NODE_H__
 
 #include <cdk/ast/expression_node.h>
 

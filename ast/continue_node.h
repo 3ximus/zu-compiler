@@ -1,6 +1,6 @@
 // $Id: continue_node.h,v 1.1 2016/02/19 19:29:48 david Exp $ -*- c++ -*-
-#ifndef __ZU_CONTINUENODE_H__
-#define __ZU_CONTINUENODE_H__
+#ifndef __ZU_CONTINUE_NODE_H__
+#define __ZU_CONTINUE_NODE_H__
 
 namespace zu {
 

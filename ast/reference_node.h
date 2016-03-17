@@ -1,5 +1,5 @@
-#ifndef __ZU_REFERENCENODE_H__
-#define __ZU_REFERENCENODE_H__
+#ifndef __ZU_REFERENCE_NODE_H__
+#define __ZU_REFERENCE_NODE_H__
 
 namespace zu {
 

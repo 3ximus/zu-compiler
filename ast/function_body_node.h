@@ -1,5 +1,5 @@
-#ifndef __ZU_FUNCTION_BODYNODE_H__
-#define __ZU_FUNCTION_BODYNODE_H__
+#ifndef __ZU_FUNCTION_BODY_NODE_H__
+#define __ZU_FUNCTION_BODY_NODE_H__
 
 #include <cdk/ast/expression_node.h>
 #include "function_slim_node.h"

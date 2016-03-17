@@ -1,6 +1,6 @@
 // $Id: variable_node.h,v 1.1 2016/03/16 22:16:34 ist169481 Exp $ -*- c++ -*-
-#ifndef __ZU_VARIABLENODE_H__
-#define __ZU_VARIABLENODE_H__
+#ifndef __ZU_VARIABLE_NODE_H__
+#define __ZU_VARIABLE_NODE_H__
 
 #include <string>
 #include "lvalue_node.h"

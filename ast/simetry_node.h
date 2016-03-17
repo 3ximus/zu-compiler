@@ -1,5 +1,5 @@
-#ifndef __ZU_SIMETRYNODE_H__
-#define __ZU_SIMETRYNODE_H__
+#ifndef __ZU_SIMETRY_NODE_H__
+#define __ZU_SIMETRY_NODE_H__
 
 namespace zu {
 

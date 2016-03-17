@@ -1,6 +1,6 @@
 // $Id: break_node.h,v 1.1 2016/02/19 19:29:48 david Exp $ -*- c++ -*-
-#ifndef __ZU_BREAKNODE_H__
-#define __ZU_BREAKNODE_H__
+#ifndef __ZU_BREAK_NODE_H__
+#define __ZU_BREAK_NODE_H__
 
 
 namespace zu {
