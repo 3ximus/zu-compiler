@@ -175,3 +175,6 @@ void zu::type_checker::do_if_node(zu::if_node * const node, int lvl) {
 void zu::type_checker::do_if_else_node(zu::if_else_node * const node, int lvl) {
   node->condition()->accept(this, lvl + 4);
 }
+void zu::type_checker::do_return_node(zu::return_node * const node, int lvl) {/*TODO*/}
+void zu::type_checker::do_continue_node(zu::continue_node * const node, int lvl) {/*TODO*/}
+void zu::type_checker::do_break_node(zu::break_node * const node, int lvl) {/*TODO*/}

@@ -280,3 +280,8 @@ void zu::postfix_writer::do_if_else_node(zu::if_else_node * const node, int lvl)
   node->elseblock()->accept(this, lvl + 2);
   _pf.LABEL(mklbl(lbl1 = lbl2));
 }
+void zu::postfix_writer::do_return_node(zu::return_node * const node, int lvl) {/*TODO*/}
+void zu::postfix_writer::do_continue_node(zu::continue_node * const node, int lvl) {/*TODO*/}
+void zu::postfix_writer::do_break_node(zu::break_node * const node, int lvl) {/*TODO*/}
+
+
