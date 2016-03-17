@@ -11,7 +11,7 @@ namespace zu {
 	  basic_type *_type;
 
   public:
-    inline pointer_node(int lineno, int i, basic_type type) :
+    inline pointer_node(int lineno, int i, basic_type *type) :
         simple_value_node(lineno, i), _type(type) {
     }
 
