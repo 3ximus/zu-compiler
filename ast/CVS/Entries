@@ -1,12 +1,23 @@
-/.cvsignore/1.1/Fri Feb 19 19:29:48 2016//
-/assignment_node.h/1.1/Fri Feb 19 19:29:48 2016//
-/evaluation_node.h/1.1/Fri Feb 19 19:29:48 2016//
-/if_else_node.h/1.1/Fri Feb 19 19:29:48 2016//
-/if_node.h/1.1/Fri Feb 19 19:29:48 2016//
-/lvalue_node.h/1.1/Fri Feb 19 19:29:48 2016//
-/print_node.h/1.1/Fri Feb 19 19:29:48 2016//
-/program_node.h/1.1/Fri Feb 19 19:29:48 2016//
-/read_node.h/1.1/Fri Feb 19 19:29:48 2016//
-/rvalue_node.h/1.1/Fri Feb 19 19:29:48 2016//
-/while_node.h/1.1/Fri Feb 19 19:29:48 2016//
-D
+/.cvsignore/1.1/Wed Mar 16 20:58:41 2016//
+/assignment_node.h/1.1/Wed Mar 16 20:58:41 2016//
+/evaluation_node.h/1.1/Wed Mar 16 20:58:41 2016//
+/print_node.h/1.1/Wed Mar 16 20:58:41 2016//
+/read_node.h/1.1/Wed Mar 16 20:58:41 2016//
+/rvalue_node.h/1.1/Wed Mar 16 20:58:41 2016//
+D/CVS////
+/for_node.h/1.1/Wed Mar 16 21:42:00 2016//
+/function_body_node.h/1.1/Wed Mar 16 22:08:47 2016//
+/function_slim_node.h/1.1/Wed Mar 16 21:42:00 2016//
+/identity_node.h/1.1/Wed Mar 16 20:58:41 2016//
+/or_node.h/1.1/Wed Mar 16 20:58:41 2016//
+/reference_node.h/1.1/Wed Mar 16 20:58:41 2016//
+/simetry_node.h/1.1/Wed Mar 16 20:58:41 2016//
+/allocation_node.h/1.1/Wed Mar 16 22:18:27 2016//
+/and_node.h/1.1/Wed Mar 16 22:18:27 2016//
+/if_else_node.h/1.2/Wed Mar 16 22:18:27 2016//
+/if_node.h/1.2/Wed Mar 16 22:18:27 2016//
+/index_node.h/1.1/Wed Mar 16 22:18:27 2016//
+/lvalue_node.h/1.2/Wed Mar 16 22:18:27 2016//
+/priority_node.h/1.1/Wed Mar 16 22:18:27 2016//
+/variable_node.h/1.1/Wed Mar 16 22:18:27 2016//
+/all.h/1.1/Wed Mar 16 22:21:56 2016//

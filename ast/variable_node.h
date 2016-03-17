@@ -1,24 +1,20 @@
-// $Id: variable_node.h,v 1.1 2016/02/19 19:29:48 david Exp $ -*- c++ -*-
+// $Id: variable_node.h,v 1.1 2016/03/16 22:16:34 ist169481 Exp $ -*- c++ -*-
 #ifndef __ZU_VARIABLENODE_H__
 #define __ZU_VARIABLENODE_H__
 
 #include <string>
+#include "lvalue_node.h"
 
 namespace zu {
 
   /**
    * Class for describing variable nodes.
    */
-  class variable_node: public cdk::identifier_node {
-    zu::lvalue_node* _value;
+  class variable_node: public lvalue_node {
 
   public:
-    inline variable_node(int lineno, const std::string &s, zu::lvalue_node* value):
-	identifier_node(lineno,s), _value(value) {
-    }
-
-    inline zu::lvalue_node* value(){
-    	return _value;
+    inline variable_node(int lineno, const std::string &s):
+	lvalue_node(lineno,s) {
     }
 
     void accept(basic_ast_visitor *sp, int level) {

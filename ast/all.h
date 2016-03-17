@@ -11,13 +11,13 @@ namespace cdk {
   class basic_node;     class nil_node;      class data_node;
   class composite_node; class sequence_node; class expression_node;
   template <typename StoredType> class simple_value_node;
-  class double_node; class integer_node; class string_node;
+  class double_node; class integer_node; class string_node; 
   class identifier_node;
-  class unary_expression_node;
+  class unary_expression_node; 
   class neg_node;
   class binary_expression_node;
   class add_node;   class sub_node; class mul_node; class div_node;
-  class mod_node;   class lt_node;  class le_node;  class ge_node;
+  class mod_node;   class lt_node;  class le_node;  class ge_node;  
   class gt_node;    class eq_node;  class ne_node;
 } // namespace cdk
 
@@ -26,25 +26,26 @@ namespace cdk {
 //---------------------------------------------------------------------------
 
 namespace zu {
-class variable_node;
-class lvalue_node;
-class allocation_node;
-class or_node;
-class index_node;
-class identity_node;
-class read_node;
-class priority_node;
-class evaluation_node;
-class rvalue_node;
-class if_else_node;
-class and_node;
-class function_node;
-class simetry_node;
-class reference_node;
-class assignment_node;
-class for_node;
-class if_node;
-class print_node;
+class variable_node; 
+class function_body_node; 
+class lvalue_node; 
+class allocation_node; 
+class or_node; 
+class function_slim_node; 
+class index_node; 
+class identity_node; 
+class read_node; 
+class priority_node; 
+class evaluation_node; 
+class rvalue_node; 
+class if_else_node; 
+class and_node; 
+class simetry_node; 
+class reference_node; 
+class assignment_node; 
+class for_node; 
+class if_node; 
+class print_node; 
 
 } // namespace zu
 
@@ -88,9 +89,11 @@ class print_node;
 //---------------------------------------------------------------------------
 
 #include "ast/variable_node.h"
+#include "ast/function_body_node.h"
 #include "ast/lvalue_node.h"
 #include "ast/allocation_node.h"
 #include "ast/or_node.h"
+#include "ast/function_slim_node.h"
 #include "ast/index_node.h"
 #include "ast/identity_node.h"
 #include "ast/read_node.h"
@@ -99,7 +102,6 @@ class print_node;
 #include "ast/rvalue_node.h"
 #include "ast/if_else_node.h"
 #include "ast/and_node.h"
-#include "ast/function_node.h"
 #include "ast/simetry_node.h"
 #include "ast/reference_node.h"
 #include "ast/assignment_node.h"
