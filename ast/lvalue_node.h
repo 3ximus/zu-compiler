@@ -21,7 +21,6 @@ namespace zu {
     inline lvalue_node(int lineno, const std::string *s) :
         cdk::simple_value_node<std::string>(lineno, *s) {
     }
-
     inline lvalue_node(int lineno) :
         cdk::simple_value_node<std::string>(lineno, NULL) {
     }

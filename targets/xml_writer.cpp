@@ -26,6 +26,7 @@ void zu::xml_writer::do_double_node(cdk::double_node * const node, int lvl){
 void zu::xml_writer::do_string_node(cdk::string_node * const node, int lvl) {
   processSimple(node, lvl);
 }
+void zu::xml_writer::do_pointer_node(zu::pointer_node * const node, int lvl) {/* TODO */}
 
 //---------------------------------------------------------------------------
 

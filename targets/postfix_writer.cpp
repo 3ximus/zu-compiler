@@ -38,6 +38,7 @@ void zu::postfix_writer::do_string_node(cdk::string_node * const node, int lvl) 
   _pf.TEXT(); // return to the TEXT segment
   _pf.ADDR(mklbl(lbl1)); // the string to be printed
 }
+void zu::postfix_writer::do_pointer_node(zu::pointer_node * const node, int lvl) {/* TODO */}
 
 //---------------------------------------------------------------------------
 

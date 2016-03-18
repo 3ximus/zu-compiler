@@ -40,6 +40,7 @@ namespace zu {
     void do_integer_node(cdk::integer_node * const node, int lvl);
     void do_double_node(cdk::double_node * const node, int lvl);
     void do_string_node(cdk::string_node * const node, int lvl);
+    void do_pointer_node(cdk::pointer_node * const node, int lvl);
 
   protected:
     void processUnaryExpression(cdk::unary_expression_node * const node, int lvl);

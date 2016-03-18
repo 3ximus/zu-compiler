@@ -22,6 +22,7 @@ void zu::type_checker::do_string_node(cdk::string_node * const node, int lvl) {
   ASSERT_UNSPEC;
   node->type(new basic_type(4, basic_type::TYPE_STRING));
 }
+void zu::type_checker::do_pointer_node(zu::pointer_node * const node, int lvl) {/* TODO */}
 
 //---------------------------------------------------------------------------
 
