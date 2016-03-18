@@ -1,4 +1,4 @@
-// $Id: type_checker.cpp,v 1.4 2016/03/18 12:33:18 ist169481 Exp $ -*- c++ -*-
+// $Id: type_checker.cpp,v 1.5 2016/03/18 13:03:56 ist169481 Exp $ -*- c++ -*-
 #include <string>
 #include "targets/type_checker.h"
 #include "ast/all.h"  // automatically generated
