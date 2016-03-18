@@ -6,19 +6,19 @@
 namespace zu {
 
   /**
-   * Class function_slim describing function nodes.
+   * Class function_declaration describing function nodes.
    */
-  class function_slim_node: public cdk::simple_value_node<std::string> {
+  class function_declaration_node: public cdk::simple_value_node<std::string> {
     cdk::sequence_node *_args;
 
   public:
-    inline function_slim_node(int lineno, cdk::sequence_node *args, const char *s) :
+    inline function_declaration_node(int lineno, cdk::sequence_node *args, const char *s) :
         cdk::simple_value_node<std::string>(lineno, s), _args(args) {
     }
-    inline function_slim_node(int lineno, cdk::sequence_node *args, const std::string &s) :
+    inline function_declaration_node(int lineno, cdk::sequence_node *args, const std::string &s) :
         cdk::simple_value_node<std::string>(lineno, s), _args(args) {
     }
-    inline function_slim_node(int lineno, cdk::sequence_node *args, const std::string *s) :
+    inline function_declaration_node(int lineno, cdk::sequence_node *args, const std::string *s) :
         cdk::simple_value_node<std::string>(lineno, *s), _args(args) {
     }
 
@@ -28,7 +28,7 @@ namespace zu {
     }
 
     void accept(basic_ast_visitor *sp, int level) {
-      sp->do_function_slim_node(this, level);
+      sp->do_function_declaration_node(this, level);
     }
 
   };

@@ -199,7 +199,7 @@ void zu::postfix_writer::do_assignment_node(zu::assignment_node * const node, in
 //  _pf.EXTERN("println");
 //}
 
-void zu::postfix_writer::do_function_slim_node(zu::function_slim_node * const node, int lvl){/*TODO*/}
+void zu::postfix_writer::do_function_declaration_node(zu::function_declaration_node * const node, int lvl){/*TODO*/}
 void zu::postfix_writer::do_function_body_node(zu::function_body_node * const node, int lvl){/*TODO*/}
 
 //---------------------------------------------------------------------------

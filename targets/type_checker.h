@@ -80,7 +80,7 @@ namespace zu {
     void do_rvalue_node(zu::rvalue_node * const node, int lvl);
 
   public:
-    void do_function_slim_node(zu::function_slim_node * const node, int lvl);
+    void do_function_declaration_node(zu::function_declaration_node * const node, int lvl);
     void do_function_body_node(zu::function_body_node * const node, int lvl);
     void do_evaluation_node(zu::evaluation_node * const node, int lvl);
     void do_print_node(zu::print_node * const node, int lvl);
