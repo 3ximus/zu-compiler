@@ -28,6 +28,7 @@ namespace cdk {
 namespace zu {
 class continue_node; 
 class variable_node; 
+class identifier_node; 
 class function_body_node; 
 class break_node; 
 class lvalue_node; 
@@ -40,6 +41,8 @@ class return_node;
 class evaluation_node; 
 class rvalue_node; 
 class if_else_node; 
+class not_node; 
+class function_call_node; 
 class and_node; 
 class function_declaration_node; 
 class simetry_node; 
@@ -47,6 +50,7 @@ class reference_node;
 class assignment_node; 
 class for_node; 
 class if_node; 
+class block_node; 
 class print_node; 
 
 } // namespace zu
@@ -92,6 +96,7 @@ class print_node;
 
 #include "ast/continue_node.h"
 #include "ast/variable_node.h"
+#include "ast/identifier_node.h"
 #include "ast/function_body_node.h"
 #include "ast/break_node.h"
 #include "ast/lvalue_node.h"
@@ -104,6 +109,8 @@ class print_node;
 #include "ast/evaluation_node.h"
 #include "ast/rvalue_node.h"
 #include "ast/if_else_node.h"
+#include "ast/not_node.h"
+#include "ast/function_call_node.h"
 #include "ast/and_node.h"
 #include "ast/function_declaration_node.h"
 #include "ast/simetry_node.h"
@@ -111,6 +118,7 @@ class print_node;
 #include "ast/assignment_node.h"
 #include "ast/for_node.h"
 #include "ast/if_node.h"
+#include "ast/block_node.h"
 #include "ast/print_node.h"
 
 
