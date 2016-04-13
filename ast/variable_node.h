@@ -1,24 +1,41 @@
-// $Id: variable_node.h,v 1.2 2016/03/17 17:58:35 ist169481 Exp $ -*- c++ -*-
-#ifndef __ZU_VARIABLE_NODE_H__
-#define __ZU_VARIABLE_NODE_H__
+// $Id: variable_node.h,v 1.3 2016/03/18 12:33:18 ist169481 Exp $
+#ifndef __ZU_NODE_EXPRESSION_VARIABLE_H__
+#define __ZU_NODE_EXPRESSION_VARIABLE_H__
 
 #include <string>
-#include "lvalue_node.h"
 
 namespace zu {
 
   /**
-   * Class for describing variable nodes.
+   * Class for describing syntactic tree leaves for holding lvalues.
    */
-  class variable_node: public lvalue_node {
-
+  class variable_node: public cdk::lvalue_node<std::string> {
+	  std::string _name;
   public:
-    inline variable_node(int lineno, const std::string &s):
-	lvalue_node(lineno,s) {
+    inline variable_node(int lineno, const char *s) :
+        cdk::lvalue_node<std::string>(lineno), _name(s) {
+    }
+    inline variable_node(int lineno, const std::string &s) :
+        cdk::lvalue_node<std::string>(lineno), _name(s) {
+    }
+    inline variable_node(int lineno, const std::string *s) :
+        cdk::lvalue_node<std::string>(lineno), _name(*s) {
+    }
+    inline variable_node(int lineno) :
+        cdk::lvalue_node<std::string>(lineno) {
     }
 
-    void accept(basic_ast_visitor *sp, int level) {
-      sp->do_variable_node(this, level);
+  public:
+	inline std::string name(){
+		return _name;
+	}
+
+    /**
+     * @param sp semantic processor visitor
+     * @param level syntactic tree level
+     */
+    virtual void accept(basic_ast_visitor *sp, int level) {
+      sp->do_lvalue_node(this, level);
     }
 
   };
