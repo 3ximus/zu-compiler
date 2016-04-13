@@ -59,6 +59,7 @@
 %type <expression> expr fcal lit
 %type <lvalue> lval
 %type <ztype> type
+%type <s> str
 
 %{
 //-- The rules below will be included in yyparse, the main parsing function.
