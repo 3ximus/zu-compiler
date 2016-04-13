@@ -12,45 +12,62 @@
 // don't change this
 #define yyerror LexerError
 %}
-%x X_STRING X_IGNORE_STRING X_HEXINT
+%x X_STRING X_IGNORE_STRING X_COMMENT
 %%
 
-"//".*					; /* ignore comments */
+"//".*						; /* ignore comments */
 
-">="					return tGE;
-"<="					return tLE;
-"=="					return tEQ;
-"!="					return tNE;
+\/\*						yy_push_state(X_COMMENT);
+<X_COMMENT>\*\/				yy_pop_state();				
+<X_COMMENT>\/\*				yy_push_state(X_COMMENT);
+<X_COMMENT>.				; /* ignore */
+<X_COMMENT>.|\n
 
-"><"					return tBREAK;
-"<>"					return tCONTINUE;
-"!!!"					return tRETURN;
+">="						return tGE;
+"<="						return tLE;
+"=="						return tEQ;
+"!="						return tNE;
 
-[A-Za-z][A-Za-z0-9_]*	yylval.s = new std::string(yytext); return tIDENTIFIER; /* TODO Should we remove this ? */
+"><"						return tBREAK;
+"<>"						return tCONTINUE;
+"!!!"						return tRETURN;
 
-\"                     	yy_push_state(X_STRING); yylval.s = new std::string("");
-<X_STRING>\"           	yy_pop_state(); return tSTRING;
-<X_STRING>\\0			yy_push_state(X_IGNORE_STRING);
-<X_STRING>\\\"         	*yylval.s += yytext + 1;
-<X_STRING>.            	*yylval.s += yytext;
-<X_STRING>\n           	yyerror("newline in string");
+	/**
+	 * 	IDENTIFICADORES
+	 */
 
-<X_IGNORE_STRING>\"    	yy_pop_state(); return tSTRING;
-<X_IGNORE_STRING>.      ;
-<X_IGNORE_STRING>\n           	yyerror("newline in string");
+[_A-Za-z][A-Za-z0-9_]*		yylval.s = new std::string(yytext); return tIDENTIFIER;
 
-[0-9]+|0x+									yylval.i = strtol(yytext, nullptr, 10); return tINTEGER; /* TODO Verify this */
-[0-9]*\.(([0-9]+e[\-]?[0-9]+)|[0-9]+)		yylval.i = strtol(yytext, nullptr, 10); return tDOUBLE; /* TODO CHECK ME */
+	/**
+	 * 	STRINGS
+	 */
 
-	/* TODO Does this make sense ? */
-	/* 0x											yy_push_state(X_HEXINT); yyval.s = new std:string(yytext); */
-	/* <X_HEXINT>[0-9a-f]{1,8}						*yylval.s += yytext; */
-	/* <X_HEXINT>[^[:alnum:]]						yy_pop_state(); return tINTEGER; */
-	/* <X_HEXINT>[[:alnum:]]            			yyerror("impossivel representar literal. Overflow"); */
+\"							yy_push_state(X_STRING); yylval.s = new std::string("");
+<X_STRING>\"				yy_pop_state(); return tSTRING;
+<X_STRING>\\0				yy_pop_state(); yy_push_state(X_IGNORE_STRING);
+<X_STRING>\\\"				*yylval.s += yytext + 1;
+<X_STRING>.					*yylval.s += yytext;
+<X_STRING>\n				yyerror("newline in string");
 
-[-()<>=+*/%;{}.]       	return *yytext;
+<X_IGNORE_STRING>\"			yy_pop_state(); return tSTRING;
+<X_IGNORE_STRING>.			;
+<X_IGNORE_STRING>\n			yyerror("newline in string");
 
-[ \t\n]+               	; /* ignore whitespace */
+
+	/**
+	 * 	REAIS / INTEIROS
+	 */
+
+[0-9]\+\([\.]\?\([0-9]\+e[\-]\?[0-9]\+\)\|\.[0-9]\+\)			yylval.d = strtol(yytext, nullptr, 10); return tDOUBLE;		/* TODO Works on grep -- do i need all escape characters? */
+[0-9]\+\|0x[0-9a-fA-F]\+										yylval.i = strtol(yytext, nullptr, 10); return tINTEGER;	/* TODO Works on grep -- do i need all escape characters? */
+
+	/**
+	 *	SYMBOLS
+	 */
+
+[-()<>=+*/%;\[\]{}.&|]     	return *yytext; /* TODO i added a few more check if it is okay -- also, do i need to escape & ? */
+
+[ \t\n]+						; /* ignore whitespace */
 
 .                      	yyerror("Unknown character");
 
