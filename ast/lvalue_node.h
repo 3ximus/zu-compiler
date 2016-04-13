@@ -1,4 +1,4 @@
-// $Id: lvalue_node.h,v 1.3 2016/03/18 12:33:18 ist169481 Exp $
+// $Id: variable_node.h,v 1.3 2016/03/18 12:33:18 ist169481 Exp $
 #ifndef __ZU_NODE_EXPRESSION_LEFTVALUE_H__
 #define __ZU_NODE_EXPRESSION_LEFTVALUE_H__
 
@@ -10,18 +10,18 @@ namespace zu {
   /**
    * Class for describing syntactic tree leaves for holding lvalues.
    */
-  class lvalue_node: public cdk::simple_value_node<std::string> {
+  class variable_node: public cdk::simple_value_node<std::string> {
   public:
-    inline lvalue_node(int lineno, const char *s) :
+    inline variable_node(int lineno, const char *s) :
         cdk::simple_value_node<std::string>(lineno, s) {
     }
-    inline lvalue_node(int lineno, const std::string &s) :
+    inline variable_node(int lineno, const std::string &s) :
         cdk::simple_value_node<std::string>(lineno, s) {
     }
-    inline lvalue_node(int lineno, const std::string *s) :
+    inline variable_node(int lineno, const std::string *s) :
         cdk::simple_value_node<std::string>(lineno, *s) {
     }
-    inline lvalue_node(int lineno) :
+    inline variable_node(int lineno) :
         cdk::simple_value_node<std::string>(lineno, NULL) {
     }
 
