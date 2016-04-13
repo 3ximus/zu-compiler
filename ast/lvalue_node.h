@@ -9,10 +9,10 @@ namespace zu {
   /**
    * Class for describing syntactic tree leaves for holding lvalues.
    */
-  class lvalue_node: public cdk::expression_node<std::string> {
+  class lvalue_node: public cdk::expression_node {
   public:
     inline lvalue_node(int lineno) :
-        cdk::expression_node<std::string>(lineno) {
+        cdk::expression_node(lineno) {
     }
 
     /**

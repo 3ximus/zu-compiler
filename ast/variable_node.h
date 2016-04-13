@@ -10,20 +10,20 @@ namespace zu {
   /**
    * Class for describing syntactic tree leaves for holding lvalues.
    */
-  class variable_node: public cdk::lvalue_node<std::string> {
+  class variable_node: public zu::lvalue_node {
 	  std::string _name;
   public:
     inline variable_node(int lineno, const char *s) :
-        cdk::lvalue_node<std::string>(lineno), _name(s) {
+        zu::lvalue_node(lineno), _name(s) {
     }
     inline variable_node(int lineno, const std::string &s) :
-        cdk::lvalue_node<std::string>(lineno), _name(s) {
+        zu::lvalue_node(lineno), _name(s) {
     }
     inline variable_node(int lineno, const std::string *s) :
-        cdk::lvalue_node<std::string>(lineno), _name(*s) {
+        zu::lvalue_node(lineno), _name(*s) {
     }
     inline variable_node(int lineno) :
-        cdk::lvalue_node<std::string>(lineno) {
+        zu::lvalue_node(lineno) {
     }
 
   public:

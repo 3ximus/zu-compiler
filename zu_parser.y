@@ -24,13 +24,14 @@
 %token <i> tINTEGER
 %token <d> tDOUBLE
 %token <s> tIDENTIFIER tSTRING
-/* %token tFOR tIF tPRINT  tREAD  tBEGIN tEND */
 %token tBREAK tCONTINUE tRETURN /* TODO good ? */
+/* %token tFOR tIF tPRINT  tREAD  tBEGIN tEND */
 
-%nonassoc tIFX
+%nonassoc tIFX /* create
 /* %nonassoc tELSE */
 
 %right '='
+%right '['
 %left tGE tLE tEQ tNE '>' '<'
 %left '+' '-'
 %left '*' '/' '%'
@@ -38,8 +39,8 @@
 
 %type <node> stmt program
 %type <sequence> list
-%type <expression> expr
-%type <lvalue> lval
+%type <expression> expr lval
+/* %type <lvalue> lval */
 
 %{
 //-- The rules below will be included in yyparse, the main parsing function.
@@ -58,22 +59,22 @@ list : stmt	     						{ $$ = new cdk::sequence_node(LINE, $1); }
 stmt : expr									{ $$ = new zu::evaluation_node(LINE, $1); } /* TODO should be expression node ? */
  	 | expr '!'								{ $$ = new zu::print_node(LINE, $1); } /* TODO ? */
  	 | expr '!!'							{ $$ = new zu::print_node(LINE, $1); } /* TODO ? */
-     | lval '=' '@'							{ $$ = new zu::read_node(LINE, $1); }
-	 | '[' lval ';' expr ';' expr ']' stmt	{ $$ = new zu::for_node(LINE, $2, $4, $6, $7); }
-	 | '[' expr ';' expr ';' expr ']' stmt	{ $$ = new zu::for_node(LINE, $2, $4, $6, $7); }
+	 | '[' lval ';' expr ';' expr ']' stmt	{ $$ = new zu::for_node(LINE, $2, $4, $6, $8); }
+	 | '[' expr ';' expr ';' expr ']' stmt	{ $$ = new zu::for_node(LINE, $2, $4, $6, $8); }
      | '[' expr ']' '#' stmt %prec tIFX		{ $$ = new zu::if_node(LINE, $2, $5); }
      | '[' expr ']' '?' stmt ':' stmt		{ $$ = new zu::if_else_node(LINE, $2, $5, $7); }
-	 | tBREAK								{ $$ = new zu::break_node(LINE, $1); }
-	 | tCONTINUE							{ $$ = new zu::continue_node(LINE, $1); }
-	 | tRETURN								{ $$ = new zu::return_node(LINE, $1); }
+	 | tBREAK								{ $$ = new zu::break_node(LINE); }
+	 | tCONTINUE							{ $$ = new zu::continue_node(LINE); }
+	 | tRETURN								{ $$ = new zu::return_node(LINE); }
 	 | '[' expr ']'							{ $$ = new zu::allocation_node(LINE, $2); }
 /*   | '{' list '}'							{ $$ = $2; } */ 				/* TODO not needed ?? */
 /*	 | tPRINT expr ';'						{ $$ = new zu::print_node(LINE, $2); } */
      ;
 
 expr : tINTEGER               			{ $$ = new cdk::integer_node(LINE, $1); }
-	 | tSTRING                			{ $$ = new cdk::string_node(LINE, $1); } /* TODO add concatenation case here ? */
+	| tSTRING                			{ $$ = new cdk::string_node(LINE, $1); } /* TODO add concatenation case here ? */
      | tDOUBLE                			{ $$ = new cdk::double_node(LINE, $1); }
+     | '@'					{ $$ = new zu::read_node(LINE); }
      | '-' expr %prec tUNARY  			{ $$ = new cdk::neg_node(LINE, $2); }
      | expr '+' expr	      			{ $$ = new cdk::add_node(LINE, $1, $3); }
      | expr '-' expr	      			{ $$ = new cdk::sub_node(LINE, $1, $3); }

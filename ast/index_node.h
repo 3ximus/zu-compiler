@@ -9,13 +9,13 @@ namespace zu {
   /**
    * Class for describing index nodes.
    */
-  class index_node: public lvalue_node {
+  class index_node: public zu::lvalue_node {
     cdk::expression_node *_lvalue;
     cdk::expression_node *_rvalue;
 
   public:
     inline index_node(int lineno, cdk::expression_node *lvalue, cdk::expression_node *rvalue) :
-       lvalue_node(lineno), _lvalue(lvalue), _rvalue(rvalue) {
+       zu::lvalue_node(lineno), _lvalue(lvalue), _rvalue(rvalue) {
     }
 
   public:

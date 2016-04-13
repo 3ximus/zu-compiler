@@ -36,8 +36,6 @@ class or_node;
 class index_node; 
 class identity_node; 
 class read_node; 
-class pointer_node; 
-class priority_node; 
 class return_node; 
 class evaluation_node; 
 class rvalue_node; 
@@ -102,8 +100,6 @@ class print_node;
 #include "ast/index_node.h"
 #include "ast/identity_node.h"
 #include "ast/read_node.h"
-#include "ast/pointer_node.h"
-#include "ast/priority_node.h"
 #include "ast/return_node.h"
 #include "ast/evaluation_node.h"
 #include "ast/rvalue_node.h"

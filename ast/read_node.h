@@ -10,8 +10,8 @@ namespace zu {
   class read_node: public cdk::expression_node {
 
   public:
-    inline read_node(int lineno, lvalue_node *argument) :
-        cdk::basic_node(lineno), _argument(argument) {
+    inline read_node(int lineno) :
+        cdk::expression_node(lineno) {
     }
 
   public:
