@@ -2,7 +2,6 @@
 #ifndef __ZU_NODE_EXPRESSION_LEFTVALUE_H__
 #define __ZU_NODE_EXPRESSION_LEFTVALUE_H__
 
-#include <cdk/ast/simple_value_node.h>
 #include <string>
 
 namespace zu {

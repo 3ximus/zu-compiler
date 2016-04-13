@@ -2,6 +2,7 @@
 #ifndef __ZU_NODE_EXPRESSION_VARIABLE_H__
 #define __ZU_NODE_EXPRESSION_VARIABLE_H__
 
+#include "lvalue_node.h"
 #include <string>
 
 namespace zu {
