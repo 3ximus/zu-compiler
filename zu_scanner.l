@@ -43,10 +43,10 @@
 [0-9]*\.(([0-9]+e[\-]?[0-9]+)|[0-9]+)		yylval.i = strtol(yytext, nullptr, 10); return tDOUBLE; /* TODO CHECK ME */
 
 	/* TODO Does this make sense ? */
-0x											yy_push_state(X_HEXINT); yyval.s = new std:string(yytext);
-<X_HEXINT>[0-9a-f]{1,8}						*yylval.s += yytext;
-<X_HEXINT>[^[:alnum:]]						yy_pop_state(); return tINTEGER;
-<X_HEXINT>[[:alnum:]]            			yyerror("impossivel representar literal. Overflow");
+	/* 0x											yy_push_state(X_HEXINT); yyval.s = new std:string(yytext); */
+	/* <X_HEXINT>[0-9a-f]{1,8}						*yylval.s += yytext; */
+	/* <X_HEXINT>[^[:alnum:]]						yy_pop_state(); return tINTEGER; */
+	/* <X_HEXINT>[[:alnum:]]            			yyerror("impossivel representar literal. Overflow"); */
 
 [-()<>=+*/%;{}.]       	return *yytext;
 
