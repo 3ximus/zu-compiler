@@ -26,7 +26,6 @@ void zu::xml_writer::do_double_node(cdk::double_node * const node, int lvl){
 void zu::xml_writer::do_string_node(cdk::string_node * const node, int lvl) {
   processSimple(node, lvl);
 }
-void zu::xml_writer::do_pointer_node(zu::pointer_node * const node, int lvl) {/* TODO */}
 
 //---------------------------------------------------------------------------
 
@@ -44,7 +43,6 @@ void zu::xml_writer::do_neg_node(cdk::neg_node * const node, int lvl) {
 void zu::xml_writer::do_simetry_node(zu::simetry_node * const node, int lvl) {/* TODO */}
 void zu::xml_writer::do_reference_node(zu::reference_node * const node, int lvl) {/* TODO */}
 void zu::xml_writer::do_identity_node(zu::identity_node * const node, int lvl) {/* TODO */}
-void zu::xml_writer::do_priority_node(zu::priority_node * const node, int lvl) {/* TODO */}
 
 //---------------------------------------------------------------------------
 

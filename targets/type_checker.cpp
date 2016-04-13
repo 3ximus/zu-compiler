@@ -22,7 +22,6 @@ void zu::type_checker::do_string_node(cdk::string_node * const node, int lvl) {
   ASSERT_UNSPEC;
   node->type(new basic_type(4, basic_type::TYPE_STRING));
 }
-void zu::type_checker::do_pointer_node(zu::pointer_node * const node, int lvl) {/* TODO */}
 
 //---------------------------------------------------------------------------
 
@@ -42,7 +41,6 @@ void zu::type_checker::do_neg_node(cdk::neg_node * const node, int lvl) {
 void zu::type_checker::do_simetry_node(zu::simetry_node * const node, int lvl) {/* TODO */}
 void zu::type_checker::do_reference_node(zu::reference_node * const node, int lvl) {/* TODO */}
 void zu::type_checker::do_identity_node(zu::identity_node * const node, int lvl) {/* TODO */}
-void zu::type_checker::do_priority_node(zu::priority_node * const node, int lvl) {/* TODO */}
 
 //---------------------------------------------------------------------------
 
