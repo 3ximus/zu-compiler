@@ -56,17 +56,17 @@ list : stmt	     						{ $$ = new cdk::sequence_node(LINE, $1); }
 	 ;
 
 stmt : expr									{ $$ = new zu::evaluation_node(LINE, $1); } /* TODO should be expression node ? */
-	 | '[' expr ']'							{ $$ = new zu::allocation_node(LINE, $2); }
-	 | tBREAK								{ $$ = new zu::break_node(LINE, $1); }
-	 | tCONTINUE							{ $$ = new zu::continue_node(LINE, $1); }
-	 | tRETURN								{ $$ = new zu::return_node(LINE, $1); }
  	 | expr '!'								{ $$ = new zu::print_node(LINE, $1); } /* TODO ? */
  	 | expr '!!'							{ $$ = new zu::print_node(LINE, $1); } /* TODO ? */
      | lval '=' '@'							{ $$ = new zu::read_node(LINE, $1); }
-     | '[' expr ']' '#' stmt %prec tIFX		{ $$ = new zu::if_node(LINE, $2, $5); }
-     | '[' expr ']' '?' stmt ':' stmt		{ $$ = new zu::if_else_node(LINE, $2, $5, $7); }
 	 | '[' lval ';' expr ';' expr ']' stmt	{ $$ = new zu::for_node(LINE, $2, $4, $6, $7); }
 	 | '[' expr ';' expr ';' expr ']' stmt	{ $$ = new zu::for_node(LINE, $2, $4, $6, $7); }
+     | '[' expr ']' '#' stmt %prec tIFX		{ $$ = new zu::if_node(LINE, $2, $5); }
+     | '[' expr ']' '?' stmt ':' stmt		{ $$ = new zu::if_else_node(LINE, $2, $5, $7); }
+	 | tBREAK								{ $$ = new zu::break_node(LINE, $1); }
+	 | tCONTINUE							{ $$ = new zu::continue_node(LINE, $1); }
+	 | tRETURN								{ $$ = new zu::return_node(LINE, $1); }
+	 | '[' expr ']'							{ $$ = new zu::allocation_node(LINE, $2); }
 /*   | '{' list '}'							{ $$ = $2; } */ 				/* TODO not needed ?? */
 /*	 | tPRINT expr ';'						{ $$ = new zu::print_node(LINE, $2); } */
      ;
@@ -87,17 +87,17 @@ expr : tINTEGER               			{ $$ = new cdk::integer_node(LINE, $1); }
      | expr tNE expr	      			{ $$ = new cdk::ne_node(LINE, $1, $3); }
      | expr tEQ expr	      			{ $$ = new cdk::eq_node(LINE, $1, $3); }
      | '(' expr ')'           			{ $$ = $2; }
-     | lval                   			{ $$ = new zu::rvalue_node(LINE, $1); }  //FIXME
+     | lval                   			{ $$ = new zu::rvalue_node(LINE, $1); }  //FIXME (davidmatos)
      | lval '=' expr          			{ $$ = new zu::assignment_node(LINE, $1, $3); }
      ;
 
 lval : tIDENTIFIER             			{ $$ = new zu::lvalue_node(LINE, $1); } 	/* TODO Should we remove this ? */
-	 | '#' tVAR							{ $$ = new cdk::integer_node(LINE, $2); }	/* TODO vars ? */
-	 | '%' tVAR							{ $$ = new cdk::double_node(LINE, $2); }	/* TODO vars ? */
-	 | '$' tVAR							{ $$ = new cdk::string_node(LINE, $2); }	/* TODO vars ? */
-	 | '#' tVAR '!'						{ $$ = new cdk::integer_node(LINE, $2); }	/* TODO public vars ? */
-	 | '%' tVAR '!'						{ $$ = new cdk::double_node(LINE, $2); }	/* TODO public vars ? */
-	 | '$' tVAR '!'						{ $$ = new cdk::string_node(LINE, $2); }	/* TODO public vars ? */
+	 | '#' tIDENTIFIER							{ $$ = new cdk::integer_node(LINE, $2); }	/* TODO vars ? */
+	 | '%' tIDENTIFIER							{ $$ = new cdk::double_node(LINE, $2); }	/* TODO vars ? */
+	 | '$' tIDENTIFIER							{ $$ = new cdk::string_node(LINE, $2); }	/* TODO vars ? */
+	 | '#' tIDENTIFIER '!'						{ $$ = new cdk::integer_node(LINE, $2); }	/* TODO public vars ? */
+	 | '%' tIDENTIFIER '!'						{ $$ = new cdk::double_node(LINE, $2); }	/* TODO public vars ? */
+	 | '$' tIDENTIFIER '!'						{ $$ = new cdk::string_node(LINE, $2); }	/* TODO public vars ? */
 	 /* TODO ADD POINTERS HERE?? */
      ;
 

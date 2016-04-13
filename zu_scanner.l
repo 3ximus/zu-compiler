@@ -12,7 +12,7 @@
 // don't change this
 #define yyerror LexerError
 %}
-%x X_STRING X_HEXINT
+%x X_STRING X_IGNORE_STRING X_HEXINT
 %%
 
 "//".*					; /* ignore comments */
@@ -26,26 +26,27 @@
 "<>"					return tCONTINUE;
 "!!!"					return tRETURN;
 
-	/* FIXME ? variables */
-[_[:alpha:]][_[:alnum:]]+	yy_pop_state(); return tVAR;
-
 [A-Za-z][A-Za-z0-9_]*	yylval.s = new std::string(yytext); return tIDENTIFIER; /* TODO Should we remove this ? */
 
 \"                     	yy_push_state(X_STRING); yylval.s = new std::string("");
 <X_STRING>\"           	yy_pop_state(); return tSTRING;
+<X_STRING>\\0			yy_push_state(X_IGNORE_STRING);
 <X_STRING>\\\"         	*yylval.s += yytext + 1;
 <X_STRING>.            	*yylval.s += yytext;
 <X_STRING>\n           	yyerror("newline in string");
 
-[0-9]+|0x+							yylval.i = strtol(yytext, nullptr, 10); return tINTEGER; /* TODO Verify this */
+<X_IGNORE_STRING>\"    	yy_pop_state(); return tSTRING;
+<X_IGNORE_STRING>.      ;
+<X_IGNORE_STRING>\n           	yyerror("newline in string");
+
+[0-9]+|0x+									yylval.i = strtol(yytext, nullptr, 10); return tINTEGER; /* TODO Verify this */
 [0-9]*\.(([0-9]+e[\-]?[0-9]+)|[0-9]+)		yylval.i = strtol(yytext, nullptr, 10); return tDOUBLE; /* TODO CHECK ME */
 
 	/* TODO Does this make sense ? */
 0x											yy_push_state(X_HEXINT); yyval.s = new std:string(yytext);
 <X_HEXINT>[0-9a-f]{1,8}						*yylval.s += yytext;
-<X_HEXINT>\ \n								yy_pop_state(); return tINTEGER;
-<X_HEXINT>[0-9a-f]            				yyerror("impossivel representar literal. Overflow");
-
+<X_HEXINT>[^[:alnum:]]						yy_pop_state(); return tINTEGER;
+<X_HEXINT>[[:alnum:]]            			yyerror("impossivel representar literal. Overflow");
 
 [-()<>=+*/%;{}.]       	return *yytext;
 
