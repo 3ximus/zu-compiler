@@ -1,7 +1,7 @@
 <sequence_node size='3'>
   <function_body_node>
     <function_body_node>zu</function_body_node>
-    <int>4</int>
+    <int_1>4</int_1>
     <literal>
       <integer_node>0</integer_node>
     </literal>
@@ -12,7 +12,7 @@
             <sequence_node size='1'>
               <variable_node>
                 <variable_node>i</variable_node>
-                <int>4</int>
+                <int_1>4</int_1>
                 <isPublic>0</isPublic>
                 <isImported>0</isImported>
               </variable_node>
@@ -68,7 +68,7 @@
                       <sequence_node size='1'>
                         <variable_node>
                           <variable_node>j</variable_node>
-                          <int>4</int>
+                          <int_1>4</int_1>
                           <isPublic>0</isPublic>
                           <isImported>0</isImported>
                           <value>
@@ -198,7 +198,7 @@
   <sequence_node size='1'>
     <variable_node>
       <variable_node>d</variable_node>
-      <double>8</double>
+      <double_2>8</double_2>
       <isPublic>0</isPublic>
       <isImported>0</isImported>
       <value>
@@ -209,7 +209,7 @@
   <sequence_node size='1'>
     <variable_node>
       <variable_node>f</variable_node>
-      <pointer>4</pointer>
+      <pointer_16>4</pointer_16>
       <isPublic>0</isPublic>
       <isImported>0</isImported>
     </variable_node>

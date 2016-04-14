@@ -1,7 +1,7 @@
 <sequence_node size='2'>
   <function_body_node>
     <function_body_node>zu</function_body_node>
-    <int>4</int>
+    <int_1>4</int_1>
     <literal>
       <integer_node>0</integer_node>
     </literal>
@@ -24,7 +24,7 @@
   </function_body_node>
   <function_body_node>
     <function_body_node>f</function_body_node>
-    <string>4</string>
+    <string_8>4</string_8>
     <block>
       <block_node>
         <instructions>

@@ -66,11 +66,11 @@ namespace zu {
 			  name = "pointer";
 			  break;
 		  default:
-			  name = "unknown type";
+			  name = "unknown_type";
 			  break;
 	  }
 
-      os() << std::string(lvl, ' ') << "<" << name << ">" << node->size() << "</" << name << ">" << std::endl;
+      os() << std::string(lvl, ' ') << "<" << name + "_" << node->name() << ">" << node->size() << "</" << name + "_" << node->name() << ">" << std::endl;
 
     }
 
