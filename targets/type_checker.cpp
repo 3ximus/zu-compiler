@@ -28,8 +28,11 @@ void zu::type_checker::do_string_node(cdk::string_node * const node, int lvl) {
 
 inline void zu::type_checker::processUnaryExpression(cdk::unary_expression_node * const node, int lvl) {
   node->argument()->accept(this, lvl + 2);
+  if (node->argument()->type() != NULL) {
   if (node->argument()->type()->name() != basic_type::TYPE_INT)
     throw std::string("wrong type in argument of unary expression");
+  }
+  else std::cout << "ERROR in " << node->argument()->name() << std::endl;
 
   // in Zu, expressions are always int
   node->type(new basic_type(4, basic_type::TYPE_INT));
