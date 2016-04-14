@@ -18,7 +18,7 @@
 "//".*						; /* ignore comments */
 
 \/\*						yy_push_state(X_COMMENT);
-<X_COMMENT>\*\/				yy_pop_state();				
+<X_COMMENT>\*\/				yy_pop_state();
 <X_COMMENT>\/\*				yy_push_state(X_COMMENT);
 <X_COMMENT>.				; /* ignore */
 <X_COMMENT>.|\n
