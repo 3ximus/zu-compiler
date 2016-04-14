@@ -25,7 +25,7 @@
 
 
 /* ZU TOKENS */
-%token tBREAK tCONTINUE tRETURN tTYPE tPRINTLN 
+%token tBREAK tCONTINUE tRETURN tTYPE tPRINTLN
 
 /* LITERALS && IDENTIFIERS */
 %token <i> tINTEGER
@@ -36,6 +36,8 @@
 
 %nonassoc tIFX
 %nonassoc tELSEX
+%nonassoc tFDEC
+%nonassoc ':'
 
 %right '='
 %left '|'
@@ -47,13 +49,14 @@
 %left '*' '/' '%'
 %right '('
 %right '['
+%right '{'
 
 %nonassoc tUNARY
 
 /* TYPES OF NON-TERMINAL SYMBOLS */
 
 %type <node> dec arg var itr 	 		 /* declaration, argument, variable, instruction */
-%type <sequence> decs args vars itrs exprs fargs /* declarations,arguments,variables,instructions,expressions,function arguments*/  
+%type <sequence> decs args vars itrs exprs fargs /* declarations,arguments,variables,instructions,expressions,function arguments*/
 
 %type <node> vdec blk cond iter  /* variable declaration, block, condtional instruction, iteraion instruction */
 %type <function> fdec 		 /* function declaration */
@@ -69,7 +72,7 @@
 
 %%
 
-file : decs		{ compiler->ast( $1 ); }	
+file : decs		{ compiler->ast( $1 ); }
      |			{ compiler->ast(new cdk::nil_node(LINE)); }
      ;
 
@@ -77,13 +80,13 @@ decs : dec		{ $$ = new cdk::sequence_node(LINE, $1); }
      | dec decs		{ $$ = new cdk::sequence_node(LINE, $1, $2); }
      ;
 
-dec  : vars ';' 	{ $$ = $1; }
-     | fdec     	{ $$ = $1; }
-     | fdec blk		{ $$ = new zu::function_body_node(LINE, $1, $2); }
+dec  : vars ';' 			{ $$ = $1; }
+     | fdec %prec tFDEC    	{ $$ = $1; }
+     | fdec blk				{ $$ = new zu::function_body_node(LINE, $1, $2); }
      ;
 
 vars : var		{ $$ = new cdk::sequence_node(LINE, $1); }
-     | var ',' vars	{ $$ = new cdk::sequence_node(LINE, $1, $3); } 
+     | var ',' vars	{ $$ = new cdk::sequence_node(LINE, $1, $3); }
      ;
 
 var  : vdec		{ $$ = $1; }
@@ -129,7 +132,7 @@ lit  : tINTEGER			{ $$ = new cdk::integer_node(LINE, $1); }
      ;
 
 str  : tSTRING			{ $$ = $1; }
-     | str tSTRING		{ $$ = new std::string(*$1 + *$2); }
+     | str tSTRING 	{ $$ = new std::string(*$1 + *$2); }
      ;
 
 // Function arguments
@@ -139,7 +142,7 @@ fargs : args			{ $$ = $1; }
       ;
 
 args : arg			{ $$ = new cdk::sequence_node(LINE, $1); }
-     | args ',' arg		{ $$ = new cdk::sequence_node(LINE, $3, $1); }
+     | arg ',' args	{ $$ = new cdk::sequence_node(LINE, $1, $3); }
      ;
 
 arg  : type tIDENTIFIER		{ $$ = new zu::variable_node(LINE, $1, $2, false, false, NULL); }
@@ -150,7 +153,7 @@ arg  : type tIDENTIFIER		{ $$ = new zu::variable_node(LINE, $1, $2, false, false
 type : '#'						{ $$ = new basic_type(4, basic_type::TYPE_INT); }
      | '%'						{ $$ = new basic_type(8, basic_type::TYPE_DOUBLE); }
      | '$'						{ $$ = new basic_type(4, basic_type::TYPE_STRING); }
-     | '<' type '>'					{ $$ = new basic_type(4, basic_type::TYPE_POINTER); }
+     | '<' type '>'					{ $$ = new basic_type(4, basic_type::TYPE_POINTER); $$->_subtype = $2; }
      ;
 
 blk  : '{' decs itrs '}'				{ $$ = new zu::block_node(LINE, $2, $3); }
@@ -159,12 +162,13 @@ blk  : '{' decs itrs '}'				{ $$ = new zu::block_node(LINE, $2, $3); }
      | '{' '}'						{ $$ = new zu::block_node(LINE, NULL, NULL); }
      ;
 
-cond :  '[' expr ']' '#' itrs %prec tIFX		{ $$ = new zu::if_node(LINE, $2, $5); }
-     |  '[' expr ']' '?' itrs				{ $$ = new zu::if_else_node(LINE, $2, $5, NULL); }
-     |  '[' expr ']' '?' itrs ':' itrs			{ $$ = new zu::if_else_node(LINE, $2, $5, $7); }
+cond :  '[' expr ']' '#' itr %prec tIFX		{ $$ = new zu::if_node(LINE, $2, $5); }
+     |  '[' expr ']' '?' itr %prec tELSEX		{ $$ = new zu::if_else_node(LINE, $2, $5, NULL); }
+     |  '[' expr ']' '?' itr ':' itr			{ $$ = new zu::if_else_node(LINE, $2, $5, $7); }
      ;
 
-iter : '[' exprs ';' exprs ';' exprs ']' itrs		{ $$ = new zu::for_node(LINE, $2, $4, $6, $8); }
+iter : '[' exprs ';' exprs ';' exprs ']' itr		{ $$ = new zu::for_node(LINE, $2, $4, $6, $8); }
+     | '[' vars ';' exprs ';' exprs ']' itr		{ $$ = new zu::for_node(LINE, $2, $4, $6, $8); }
      ;
 
 expr : lit  						{ $$ = $1; }
@@ -204,7 +208,6 @@ fcal : tIDENTIFIER '(' exprs ')' 			{ $$ = new zu::function_call_node(LINE, $1, 
 
 exprs : expr ',' exprs					{ $$ = new cdk::sequence_node(LINE, $1, $3); }
       | expr						{ $$ = new cdk::sequence_node(LINE, $1); }
-      | vdec						{ $$ = new cdk::sequence_node(LINE, $1); }
       |							{ $$ = new cdk::sequence_node(LINE,NULL); }
       ;
 
