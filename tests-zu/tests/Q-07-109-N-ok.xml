@@ -5,6 +5,10 @@
     <literal>
       <integer_node>0</integer_node>
     </literal>
+    <args>
+      <sequence_node size='1'>
+      </sequence_node>
+    </args>
     <block>
       <block_node>
         <declarations>
@@ -131,6 +135,10 @@
     </args>
     <block>
       <block_node>
+        <declarations>
+          <sequence_node size='1'>
+          </sequence_node>
+        </declarations>
         <instructions>
           <sequence_node size='1'>
             <evaluation_node>

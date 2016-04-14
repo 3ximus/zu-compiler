@@ -5,8 +5,16 @@
     <literal>
       <integer_node>0</integer_node>
     </literal>
+    <args>
+      <sequence_node size='1'>
+      </sequence_node>
+    </args>
     <block>
       <block_node>
+        <declarations>
+          <sequence_node size='1'>
+          </sequence_node>
+        </declarations>
         <instructions>
           <sequence_node size='1'>
             <for_node>
@@ -52,6 +60,10 @@
               </step>
               <block>
                 <block_node>
+                  <declarations>
+                    <sequence_node size='1'>
+                    </sequence_node>
+                  </declarations>
                   <instructions>
                     <sequence_node size='1'>
                       <if_else_node>
@@ -68,6 +80,10 @@
                         </condition>
                         <then>
                           <block_node>
+                            <declarations>
+                              <sequence_node size='1'>
+                              </sequence_node>
+                            </declarations>
                             <instructions>
                               <sequence_node size='2'>
                                 <print_node>
@@ -117,6 +133,10 @@
                             </instructions>
                           </block_node>
                         </then>
+                        <else>
+                          <sequence_node size='1'>
+                          </sequence_node>
+                        </else>
                       </if_else_node>
                     </sequence_node>
                   </instructions>

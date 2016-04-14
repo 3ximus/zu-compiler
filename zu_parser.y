@@ -87,6 +87,7 @@ dec  : varsl 			{ $$ = $1; }
      ;
 
 varsl : vars ';'	{ $$ = $1; }
+      | vars varsl ';'	{ $$ = new cdk::sequence_node(LINE, $1, $2); }
       ;
 
 vars : var 		{ $$ = new cdk::sequence_node(LINE, $1); }
@@ -142,7 +143,7 @@ str  : tSTRING			{ $$ = $1; }
 // Function arguments
 
 fargs : args			{ $$ = $1; }
-      |				{ $$ = NULL; }
+      |				{ $$ = new cdk::sequence_node(LINE, new cdk::nil_node(LINE)); }
       ;
 
 args : arg			{ $$ = new cdk::sequence_node(LINE, $1); }
@@ -161,13 +162,13 @@ type : '#'						{ $$ = new basic_type(4, basic_type::TYPE_INT); }
      ;
 
 blk  : '{' varsl itrs '}'				{ $$ = new zu::block_node(LINE, $2, $3); }
-     | '{' varsl '}'					{ $$ = new zu::block_node(LINE, $2, NULL); }
-     | '{' itrs '}'					{ $$ = new zu::block_node(LINE, NULL, $2); }
-     | '{' '}'						{ $$ = new zu::block_node(LINE, NULL, NULL); }
+     | '{' varsl '}'					{ $$ = new zu::block_node(LINE, $2, new cdk::sequence_node(LINE, new cdk::nil_node(LINE))); }
+     | '{' itrs '}'					{ $$ = new zu::block_node(LINE, new cdk::sequence_node(LINE, new cdk::nil_node(LINE)), $2); }
+     | '{' '}'						{ $$ = new zu::block_node(LINE, new cdk::sequence_node(LINE, new cdk::nil_node(LINE)), new cdk::sequence_node(LINE, new cdk::nil_node(LINE))); }
      ;
 
 cond :  '[' expr ']' '#' itr %prec tIFX		{ $$ = new zu::if_node(LINE, $2, $5); }
-     |  '[' expr ']' '?' itr %prec tELSEX		{ $$ = new zu::if_else_node(LINE, $2, $5, NULL); }
+     |  '[' expr ']' '?' itr %prec tELSEX		{ $$ = new zu::if_else_node(LINE, $2, $5, new cdk::sequence_node(LINE, new cdk::nil_node(LINE))); }
      |  '[' expr ']' '?' itr ':' itr			{ $$ = new zu::if_else_node(LINE, $2, $5, $7); }
      ;
 
@@ -194,7 +195,7 @@ expr : lit  						{ $$ = $1; }
      | '-' expr %prec tUNARY  				{ $$ = new zu::simetry_node(LINE, $2); }
      | '+' expr %prec tUNARY  				{ $$ = new zu::identity_node(LINE, $2); }
      | expr '?'						{ $$ = new zu::position_node(LINE, $1); }
-     | '@'						{ $$ = new zu::read_node(LINE); } /* FIXME speacial read and print */
+     | '@'						{ $$ = new zu::read_node(LINE); }
      | '[' expr ']'	 				{ $$ = new zu::allocation_node(LINE, $2); }
      | '(' expr ')'					{ $$ = $2; }
      | lval 						{ $$ = $1; }
@@ -207,12 +208,12 @@ lval : tIDENTIFIER					{ $$ = new zu::id_node(LINE, $1); }
      ;
 
 fcal : tIDENTIFIER '(' exprs ')' 			{ $$ = new zu::function_call_node(LINE, $1, $3); }
-     | tIDENTIFIER '(' ')'				{ $$ = new zu::function_call_node(LINE, $1, NULL); }
+     | tIDENTIFIER '(' ')'				{ $$ = new zu::function_call_node(LINE, $1, new cdk::sequence_node(LINE, new cdk::nil_node(LINE))); }
      ;
 
 exprs : expr ',' exprs					{ $$ = new cdk::sequence_node(LINE, $1, $3); }
       | expr						{ $$ = new cdk::sequence_node(LINE, $1); }
-      |							{ $$ = new cdk::sequence_node(LINE,NULL); }
+      |							{ $$ = new cdk::sequence_node(LINE, new cdk::nil_node(LINE)); }
       ;
 
 %%
