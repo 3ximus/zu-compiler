@@ -84,12 +84,12 @@ void zu::type_checker::do_index_node(zu::index_node * const node, int lvl) {
 	if (node->rvalue()->type()->name() != basic_type::TYPE_INT)
 		throw std::string("wrong type in argument of index expression");
 
-	node->type(node->lvalue()->suptype());
+	node->type(node->lvalue()->type()->subtype());
 }
 
 void zu::type_checker::do_id_node(zu::id_node * const node, int lvl) {
 	ASSERT_UNSPEC;
-	const std::string &id = node->value();
+	const std::string &id = node->identifier();
 	std::shared_ptr<zu::symbol> symbol = _symtab.find(id);
 	if (!symbol)
 		throw id + " undeclared";
@@ -98,7 +98,7 @@ void zu::type_checker::do_id_node(zu::id_node * const node, int lvl) {
 
 void zu::type_checker::do_variable_node(zu::variable_node * const node, int lvl) {
 	ASSERT_UNSPEC;
-	std::string &id = node->identifier();
+	const std::string &id = node->identifier();
 	if (!_symtab.insert(id, std::make_shared<zu::symbol>(node->type(), id, 0)))
 		throw id + " redeclared";
 
@@ -127,12 +127,12 @@ inline void zu::type_checker::processBinaryExpression(cdk::binary_expression_nod
 }
 
 inline void zu::type_checker::processSameTypes(cdk::binary_expression_node * const node) {
-	if (node->right()->type()->name() != node->left()->type()->name()) {
+	if (node->right()->type()->name() != node->left()->type()->name())
 		throw std::string("diferent types on binary expression");
 }
 
 inline void zu::type_checker::processNotPointer(cdk::binary_expression_node * const node) {
-	if (node->left()->type()->name() == basic_type::TYPE_POINTER && node->right()->type()->name() == basic_type::TYPE_POINTER) {
+	if (node->left()->type()->name() == basic_type::TYPE_POINTER && node->right()->type()->name() == basic_type::TYPE_POINTER)
 		throw std::string("pointer not allowed on binary expression");
 }
 
@@ -202,7 +202,7 @@ void zu::type_checker::do_mod_node(cdk::mod_node * const node, int lvl) {
 	processBinaryExpression(node, lvl);
 	processNotPointer(node);
 
-	if (node->left()->type()->name() == basic_type::TYPE_DOUBLE && node->right()->type()->name() == basic_type::TYPE_DOUBLE) {
+	if (node->left()->type()->name() == basic_type::TYPE_DOUBLE && node->right()->type()->name() == basic_type::TYPE_DOUBLE)
 		throw std::string("wrong types in arguments of binary expression");
 	processSameTypes(node);
 	node->type(node->left()->type());
@@ -258,7 +258,7 @@ void zu::type_checker::do_eq_node(cdk::eq_node * const node, int lvl) {
 
 void zu::type_checker::do_and_node(zu::and_node * const node, int lvl) {
 	processBinaryExpression(node, lvl);
-	if(node->left()->type()->name() != basic_type::TYPE_INT || node->right()->type()->name() != basic_type::TYPE_INT) {
+	if(node->left()->type()->name() != basic_type::TYPE_INT || node->right()->type()->name() != basic_type::TYPE_INT)
 		throw std::string("wrong types in arguments of binary expression");
 
 	node->type(new basic_type(4, basic_type::TYPE_INT));
@@ -266,7 +266,7 @@ void zu::type_checker::do_and_node(zu::and_node * const node, int lvl) {
 
 void zu::type_checker::do_or_node(zu::or_node * const node, int lvl) {
 	processBinaryExpression(node, lvl);
-	if(node->left()->type()->name() != basic_type::TYPE_INT || node->right()->type()->name() != basic_type::TYPE_INT) {
+	if(node->left()->type()->name() != basic_type::TYPE_INT || node->right()->type()->name() != basic_type::TYPE_INT)
 		throw std::string("wrong types in arguments of binary expression");
 
 	node->type(new basic_type(4, basic_type::TYPE_INT));
@@ -281,14 +281,14 @@ void zu::type_checker::do_lvalue_node(zu::lvalue_node * const node, int lvl) {
 
 void zu::type_checker::do_function_declaration_node(zu::function_declaration_node * const node, int lvl){
 	ASSERT_UNSPEC;
-	std::string &id = node->identifier();
+	const std::string &id = node->identifier();
 	if (!_symtab.insert(id, std::make_shared<zu::symbol>(node->type(), id, 0)))
 		throw id + " redeclared";
 
-	if (node->value()) {
-		node->value()->accept(this, lvl + 2);
+	if (node->literal()) {
+		node->literal()->accept(this, lvl + 2);
 		/* throw error if types dont match or it isnt a conversion from int to double */
-		if ((node->type()->name() != basic_type::TYPE_DOUBLE && node->value()->type()->name() != basic_type::TYPE_INT) || node->type()->name() != node->value()->type()->name())
+		if ((node->type()->name() != basic_type::TYPE_DOUBLE && node->literal()->type()->name() != basic_type::TYPE_INT) || node->type()->name() != node->literal()->type()->name())
 			throw std::string("wrong type for initializer");
 	}
 	node->type(node->zu_type());

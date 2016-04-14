@@ -87,7 +87,6 @@ public:
 
 public:
   virtual void do_lvalue_node(zu::lvalue_node * const node, int lvl) = 0;
-  virtual void do_rvalue_node(zu::rvalue_node * const node, int lvl) = 0;
 
 public:
   virtual void do_function_declaration_node(zu::function_declaration_node * const node, int lvl) = 0;

@@ -8,12 +8,12 @@
 namespace zu {
 
     class symbol {
-      const basic_type *_type;
+      basic_type *_type;
       std::string _name;
       long _value; // hack!
 
     public:
-      inline symbol(const basic_type *type, const std::string &name, long value) :
+      inline symbol(basic_type *type, const std::string &name, long value) :
           _type(type), _name(name), _value(value) {
       }
 
@@ -21,7 +21,7 @@ namespace zu {
         delete _type;
       }
 
-      inline const basic_type *type() const {
+      inline basic_type *type() const {
         return _type;
       }
       inline const std::string &name() const {
