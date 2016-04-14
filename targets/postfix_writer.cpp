@@ -138,33 +138,33 @@ void zu::postfix_writer::do_rvalue_node(zu::rvalue_node * const node, int lvl) {
 //---------------------------------------------------------------------------
 
 void zu::postfix_writer::do_lvalue_node(zu::lvalue_node * const node, int lvl) {
-  CHECK_TYPES(_compiler, _symtab, node);
-  // simplified generation: all variables are global
-  _pf.ADDR(node->value());
+  //CHECK_TYPES(_compiler, _symtab, node);
+  //// simplified generation: all variables are global
+  //_pf.ADDR(node->value());
 }
 
 //---------------------------------------------------------------------------
 
 void zu::postfix_writer::do_assignment_node(zu::assignment_node * const node, int lvl) {
-  CHECK_TYPES(_compiler, _symtab, node);
+  //CHECK_TYPES(_compiler, _symtab, node);
 
-  // DAVID: horrible hack!
-  // (this is caused by Zu not having explicit variable declarations)
-  const std::string &id = node->lvalue()->value();
-  std::shared_ptr<zu::symbol> symbol = _symtab.find(id);
-  if (symbol->value() == -1) {
-    _pf.DATA(); // variables are all global and live in DATA
-    _pf.ALIGN(); // make sure we are aligned
-    _pf.LABEL(id); // name variable location
-    _pf.CONST(0); // initialize it to 0 (zero)
-    _pf.TEXT(); // return to the TEXT segment
-    symbol->value(0);
-  }
+  //// DAVID: horrible hack!
+  //// (this is caused by Zu not having explicit variable declarations)
+  //const std::string &id = node->lvalue()->value();
+  //std::shared_ptr<zu::symbol> symbol = _symtab.find(id);
+  //if (symbol->value() == -1) {
+  //  _pf.DATA(); // variables are all global and live in DATA
+  //  _pf.ALIGN(); // make sure we are aligned
+  //  _pf.LABEL(id); // name variable location
+  //  _pf.CONST(0); // initialize it to 0 (zero)
+  //  _pf.TEXT(); // return to the TEXT segment
+  //  symbol->value(0);
+  //}
 
-  node->rvalue()->accept(this, lvl); // determine the new value
-  _pf.DUP();
-  node->lvalue()->accept(this, lvl); // where to store the value
-  _pf.STORE(); // store the value at address
+  //node->rvalue()->accept(this, lvl); // determine the new value
+  //_pf.DUP();
+  //node->lvalue()->accept(this, lvl); // where to store the value
+  //_pf.STORE(); // store the value at address
 }
 
 //---------------------------------------------------------------------------
@@ -238,11 +238,11 @@ void zu::postfix_writer::do_print_node(zu::print_node * const node, int lvl) {
 //---------------------------------------------------------------------------
 
 void zu::postfix_writer::do_read_node(zu::read_node * const node, int lvl) {
-  CHECK_TYPES(_compiler, _symtab, node);
-  _pf.CALL("readi");
-  _pf.PUSH();
-  node->argument()->accept(this, lvl);
-  _pf.STORE();
+  //CHECK_TYPES(_compiler, _symtab, node);
+  //_pf.CALL("readi");
+  //_pf.PUSH();
+  //node->argument()->accept(this, lvl);
+  //_pf.STORE();
 }
 
 //---------------------------------------------------------------------------
