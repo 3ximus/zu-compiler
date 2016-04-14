@@ -108,8 +108,8 @@ void zu::xml_writer::do_rvalue_node(zu::rvalue_node * const node, int lvl) {
 //---------------------------------------------------------------------------
 
 void zu::xml_writer::do_lvalue_node(zu::lvalue_node * const node, int lvl) {
-  CHECK_TYPES(_compiler, _symtab, node);
-  processSimple(node, lvl);
+  //CHECK_TYPES(_compiler, _symtab, node);
+  //processSimple(node, lvl);
 }
 
 //---------------------------------------------------------------------------
@@ -154,9 +154,9 @@ void zu::xml_writer::do_print_node(zu::print_node * const node, int lvl) {
 //---------------------------------------------------------------------------
 
 void zu::xml_writer::do_read_node(zu::read_node * const node, int lvl) {
-  openTag(node, lvl);
-  node->argument()->accept(this, lvl + 2);
-  closeTag(node, lvl);
+  //openTag(node, lvl);
+  //node->argument()->accept(this, lvl + 2);
+  //closeTag(node, lvl);
 }
 
 //---------------------------------------------------------------------------

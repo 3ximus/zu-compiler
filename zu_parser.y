@@ -37,7 +37,7 @@
 %left '*' '/' '%'
 %nonassoc tUNARY /* not recognized by lexical analizer and is used to specify precedence */
 
-%type <node> stmt program type
+%type <node> stmt
 %type <sequence> list
 %type <expression> expr
 %type <lvalue> lval
