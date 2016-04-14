@@ -32,6 +32,8 @@
 "<>"						return tCONTINUE;
 "!!!"						return tRETURN;
 
+[#%$]						return tTYPE;
+
 	/**
 	 * 	IDENTIFICADORES
 	 */

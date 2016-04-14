@@ -24,7 +24,7 @@
 %token <i> tINTEGER
 %token <d> tDOUBLE
 %token <s> tIDENTIFIER tSTRING
-%token tBREAK tCONTINUE tRETURN
+%token tBREAK tCONTINUE tRETURN tTYPE
 /* %token tFOR tIF tPRINT  tREAD  tBEGIN tEND */
 
 %nonassoc tIFX /* create
@@ -95,15 +95,11 @@ expr : tINTEGER               				{ $$ = new cdk::integer_node(LINE, $1); }
      ;
 
 lval : tIDENTIFIER ';'             			{ $$ = new zu::variable_node(LINE, $1); }
-	 | type tIDENTIFIER						{ $$ = new zu::variable_node(LINE, $2); }	/* TODO vars ? */
-	 | type tIDENTIFIER	'!'					{ $$ = new zu::variable_node(LINE, $2); }	/* TODO global vars ? */
-	 | type tIDENTIFIER	'?'					{ $$ = new zu::variable_node(LINE, $2); }	/* TODO foreign vars ? */
+	 | tTYPE tIDENTIFIER					{ $$ = new zu::variable_node(LINE, $2); }	/* TODO vars ? */
+	 | tTYPE tIDENTIFIER	'!'				{ $$ = new zu::variable_node(LINE, $2); }	/* TODO global vars ? */
+	 | tTYPE tIDENTIFIER	'?'				{ $$ = new zu::variable_node(LINE, $2); }	/* TODO foreign vars ? */
+	 | '<' tTYPE '>'						{ $$ = 0; } /* TODO FIXME XXX */
      ;
-
-type : '#'
-	 | '%'
-	 | '$'
-	 | '<' type '>'
 	 ;
 
 %%
