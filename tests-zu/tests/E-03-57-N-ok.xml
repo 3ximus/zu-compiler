@@ -24,3 +24,61 @@
               </init>
               <test>
                 <sequence_node size='1'>
+                  <lt_node>
+                    <id_node>
+                      <id_node>x</id_node>
+                    </id_node>
+                    <simetry_node>
+                      <integer_node>3</integer_node>
+                    </simetry_node>
+                  </lt_node>
+                </sequence_node>
+              </test>
+              <step>
+                <sequence_node size='1'>
+                  <assignment_node>
+                    <id_node>
+                      <id_node>x</id_node>
+                    </id_node>
+                    <rvalue>
+                      <add_node>
+                        <id_node>
+                          <id_node>x</id_node>
+                        </id_node>
+                        <integer_node>1</integer_node>
+                      </add_node>
+                    </rvalue>
+                  </assignment_node>
+                </sequence_node>
+              </step>
+              <block>
+                <sequence_node size='1'>
+                  <print_node>
+                    <id_node>
+                      <id_node>x</id_node>
+                    </id_node>
+                    <newLine>0</newLine>
+                  </print_node>
+                </sequence_node>
+              </block>
+            </for_node>
+            <print_node>
+              <integer_node>9</integer_node>
+              <newLine>0</newLine>
+            </print_node>
+          </sequence_node>
+        </instructions>
+      </block_node>
+    </block>
+    <isPublic>1</isPublic>
+    <isImported>0</isImported>
+  </function_body_node>
+  <sequence_node size='1'>
+    <variable_node>
+      <variable_node>x</variable_node>
+      <int>4</int>
+      <isPublic>0</isPublic>
+      <isImported>0</isImported>
+    </variable_node>
+  </sequence_node>
+</sequence_node>
