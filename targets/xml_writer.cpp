@@ -8,9 +8,10 @@
 
 void zu::xml_writer::do_sequence_node(cdk::sequence_node * const node, int lvl) {
   os() << std::string(lvl, ' ') << "<sequence_node size='" << node->size() << "'>" << std::endl;
-  for (size_t i = 0; i < node->size(); i++)
+  for (size_t i = 0; i < node->size(); i++) {
 	if (node->node(i) == NULL) break; /* if null there are no more isnstructions */
     node->node(i)->accept(this, lvl + 2);
+  }
   closeTag(node, lvl);
 }
 
