@@ -1,7 +1,7 @@
 <sequence_node size='2'>
   <function_body_node>
     <function_body_node>zu</function_body_node>
-    <1>4</1>
+    <int>4</int>
     <literal>
       <integer_node>0</integer_node>
     </literal>
@@ -19,11 +19,11 @@
       </block_node>
     </block>
     <isPublic>1</isPublic>
-    <isImported>0</<isImported>
+    <isImported>0</isImported>
   </function_body_node>
   <function_body_node>
     <function_body_node>f</function_body_node>
-    <1073741824>0</1073741824>
+    <unknown type>0</unknown type>
     <block>
       <block_node>
         <declarations>
@@ -31,9 +31,9 @@
             <sequence_node size='1'>
               <variable_node>
                 <variable_node>zu</variable_node>
-                <1>4</1>
+                <int>4</int>
                 <isPublic>0</isPublic>
-                <isImported>0</<isImported>
+                <isImported>0</isImported>
                 <value>
                   <integer_node>3</integer_node>
                 </value>
@@ -47,7 +47,7 @@
               <id_node>
                 <id_node>zu</id_node>
               </id_node>
-              <newLine>0</<newLine>
+              <newLine>0</newLine>
             </print_node>
             <evaluation_node>
               <id_node>
@@ -59,6 +59,6 @@
       </block_node>
     </block>
     <isPublic>0</isPublic>
-    <isImported>0</<isImported>
+    <isImported>0</isImported>
   </function_body_node>
 </sequence_node>

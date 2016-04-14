@@ -1,7 +1,7 @@
 <sequence_node size='1'>
   <function_body_node>
     <function_body_node>zu</function_body_node>
-    <1>4</1>
+    <int>4</int>
     <literal>
       <integer_node>0</integer_node>
     </literal>

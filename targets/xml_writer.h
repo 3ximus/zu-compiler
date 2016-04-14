@@ -65,10 +65,12 @@ namespace zu {
 		  case 16:
 			  name = "pointer";
 			  break;
-		default:
-			  name = "unknown type"
+		  default:
+			  name = "unknown type";
+			  break;
+	  }
 
-      os() << std::string(lvl, ' ') << "<" << node->name() << ">" << node->size() << "</" << node->name() << ">" << std::endl;
+      os() << std::string(lvl, ' ') << "<" << name << ">" << node->size() << "</" << name << ">" << std::endl;
 
     }
 

@@ -1,7 +1,7 @@
 <sequence_node size='2'>
   <function_body_node>
     <function_body_node>zu</function_body_node>
-    <1>4</1>
+    <int>4</int>
     <literal>
       <integer_node>0</integer_node>
     </literal>
@@ -18,7 +18,7 @@
                   </sequence_node>
                 </args>
               </function_call_node>
-              <newLine>0</<newLine>
+              <newLine>0</newLine>
             </print_node>
             <print_node>
               <function_call_node>
@@ -29,18 +29,18 @@
                   </sequence_node>
                 </args>
               </function_call_node>
-              <newLine>0</<newLine>
+              <newLine>0</newLine>
             </print_node>
           </sequence_node>
         </instructions>
       </block_node>
     </block>
     <isPublic>1</isPublic>
-    <isImported>0</<isImported>
+    <isImported>0</isImported>
   </function_body_node>
   <function_body_node>
     <function_body_node>f</function_body_node>
-    <2>8</2>
+    <double>8</double>
     <literal>
       <integer_node>9</integer_node>
     </literal>
@@ -48,9 +48,9 @@
       <sequence_node size='1'>
         <variable_node>
           <variable_node>y</variable_node>
-          <2>8</2>
+          <double>8</double>
           <isPublic>0</isPublic>
-          <isImported>0</<isImported>
+          <isImported>0</isImported>
         </variable_node>
       </sequence_node>
     </args>
@@ -59,6 +59,6 @@
       </block_node>
     </block>
     <isPublic>0</isPublic>
-    <isImported>0</<isImported>
+    <isImported>0</isImported>
   </function_body_node>
 </sequence_node>

@@ -1,7 +1,7 @@
 <sequence_node size='2'>
   <function_body_node>
     <function_body_node>zu</function_body_node>
-    <1>4</1>
+    <int>4</int>
     <literal>
       <integer_node>0</integer_node>
     </literal>
@@ -12,9 +12,9 @@
             <sequence_node size='1'>
               <variable_node>
                 <variable_node>q</variable_node>
-                <16>4</16>
+                <pointer>4</pointer>
                 <isPublic>0</isPublic>
-                <isImported>0</<isImported>
+                <isImported>0</isImported>
                 <value>
                   <integer_node>0</integer_node>
                 </value>
@@ -23,9 +23,9 @@
             <sequence_node size='1'>
               <variable_node>
                 <variable_node>p</variable_node>
-                <16>4</16>
+                <pointer>4</pointer>
                 <isPublic>0</isPublic>
-                <isImported>0</<isImported>
+                <isImported>0</isImported>
                 <value>
                   <integer_node>0</integer_node>
                 </value>
@@ -46,7 +46,7 @@
                   <integer_node>1</integer_node>
                 </rvalue>
               </index_node>
-              <newLine>0</<newLine>
+              <newLine>0</newLine>
             </print_node>
             <evaluation_node>
               <assignment_node>
@@ -137,18 +137,18 @@
       </block_node>
     </block>
     <isPublic>1</isPublic>
-    <isImported>0</<isImported>
+    <isImported>0</isImported>
   </function_body_node>
   <function_body_node>
     <function_body_node>main</function_body_node>
-    <16>4</16>
+    <pointer>4</pointer>
     <args>
       <sequence_node size='1'>
         <variable_node>
           <variable_node>p</variable_node>
-          <16>4</16>
+          <pointer>4</pointer>
           <isPublic>0</isPublic>
-          <isImported>0</<isImported>
+          <isImported>0</isImported>
         </variable_node>
       </sequence_node>
     </args>

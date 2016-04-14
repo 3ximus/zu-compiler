@@ -1,7 +1,7 @@
 <sequence_node size='1'>
   <function_body_node>
     <function_body_node>zu</function_body_node>
-    <1>4</1>
+    <int>4</int>
     <literal>
       <integer_node>0</integer_node>
     </literal>
@@ -14,9 +14,9 @@
                 <sequence_node size='1'>
                   <variable_node>
                     <variable_node>y</variable_node>
-                    <1>4</1>
+                    <int>4</int>
                     <isPublic>0</isPublic>
-                    <isImported>0</<isImported>
+                    <isImported>0</isImported>
                     <value>
                       <integer_node>1</integer_node>
                     </value>

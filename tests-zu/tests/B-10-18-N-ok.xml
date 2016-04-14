@@ -1,7 +1,7 @@
 <sequence_node size='1'>
   <function_body_node>
     <function_body_node>zu</function_body_node>
-    <1>4</1>
+    <int>4</int>
     <literal>
       <integer_node>0</integer_node>
     </literal>
@@ -14,13 +14,13 @@
                 <integer_node>10</integer_node>
                 <integer_node>3</integer_node>
               </le_node>
-              <newLine>0</<newLine>
+              <newLine>0</newLine>
             </print_node>
           </sequence_node>
         </instructions>
       </block_node>
     </block>
     <isPublic>1</isPublic>
-    <isImported>0</<isImported>
+    <isImported>0</isImported>
   </function_body_node>
 </sequence_node>

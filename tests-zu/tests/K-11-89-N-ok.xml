@@ -1,7 +1,7 @@
 <sequence_node size='4'>
   <function_body_node>
     <function_body_node>zu</function_body_node>
-    <1>4</1>
+    <int>4</int>
     <literal>
       <integer_node>0</integer_node>
     </literal>
@@ -24,18 +24,18 @@
       </block_node>
     </block>
     <isPublic>1</isPublic>
-    <isImported>0</<isImported>
+    <isImported>0</isImported>
   </function_body_node>
   <function_body_node>
     <function_body_node>g</function_body_node>
-    <1>4</1>
+    <int>4</int>
     <args>
       <sequence_node size='1'>
         <variable_node>
           <variable_node>n</variable_node>
-          <1>4</1>
+          <int>4</int>
           <isPublic>0</isPublic>
-          <isImported>0</<isImported>
+          <isImported>0</isImported>
         </variable_node>
       </sequence_node>
     </args>
@@ -57,25 +57,25 @@
               <id_node>
                 <id_node>n</id_node>
               </id_node>
-              <newLine>0</<newLine>
+              <newLine>0</newLine>
             </print_node>
           </sequence_node>
         </instructions>
       </block_node>
     </block>
     <isPublic>0</isPublic>
-    <isImported>0</<isImported>
+    <isImported>0</isImported>
   </function_body_node>
   <function_body_node>
     <function_body_node>f</function_body_node>
-    <1>4</1>
+    <int>4</int>
     <args>
       <sequence_node size='1'>
         <variable_node>
           <variable_node>s</variable_node>
-          <8>4</8>
+          <string>4</string>
           <isPublic>0</isPublic>
-          <isImported>0</<isImported>
+          <isImported>0</isImported>
         </variable_node>
       </sequence_node>
     </args>
@@ -97,29 +97,29 @@
               <id_node>
                 <id_node>s</id_node>
               </id_node>
-              <newLine>0</<newLine>
+              <newLine>0</newLine>
             </print_node>
           </sequence_node>
         </instructions>
       </block_node>
     </block>
     <isPublic>0</isPublic>
-    <isImported>0</<isImported>
+    <isImported>0</isImported>
   </function_body_node>
   <function_declaration_node>
     <function_declaration_node>g</function_declaration_node>
-    <1>4</1>
+    <int>4</int>
     <args>
       <sequence_node size='1'>
         <variable_node>
           <variable_node>n</variable_node>
-          <1>4</1>
+          <int>4</int>
           <isPublic>0</isPublic>
-          <isImported>0</<isImported>
+          <isImported>0</isImported>
         </variable_node>
       </sequence_node>
     </args>
     <isPublic>0</isPublic>
-    <isImported>0</<isImported>
+    <isImported>0</isImported>
   </function_declaration_node>
 </sequence_node>
