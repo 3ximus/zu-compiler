@@ -9,5 +9,3 @@
       <block_node>
         <instructions>
           <sequence_node size='1'>
-            <print_node>
-              <and_node>
