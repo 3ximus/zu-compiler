@@ -150,9 +150,8 @@ arg  : type tIDENTIFIER		{ $$ = new zu::variable_node(LINE, $1, $2, false, false
 type : '#'						{ $$ = new basic_type(4, basic_type::TYPE_INT); }
      | '%'						{ $$ = new basic_type(8, basic_type::TYPE_DOUBLE); }
      | '$'						{ $$ = new basic_type(4, basic_type::TYPE_STRING); }
-	 /* TODO ADD POINTER !! */
+     | '<' type '>'					{ $$ = new basic_type(4, basic_type::TYPE_POINTER); }
      ;
-
 
 blk  : '{' decs itrs '}'				{ $$ = new zu::block_node(LINE, $2, $3); }
      | '{' decs '}'					{ $$ = new zu::block_node(LINE, $2, NULL); }
