@@ -37,7 +37,7 @@
 %left '*' '/' '%'
 %nonassoc tUNARY /* not recognized by lexical analizer and is used to specify precedence */
 
-%type <node> stmt program
+%type <node> stmt program type
 %type <sequence> list
 %type <expression> expr
 %type <lvalue> lval
@@ -94,19 +94,16 @@ expr : tINTEGER               				{ $$ = new cdk::integer_node(LINE, $1); }
      | lval '=' expr          				{ $$ = new zu::assignment_node(LINE, $1, $3); }
      ;
 
-lval : tIDENTIFIER ';'             			{ $$ = new zu::lvalue_node(LINE, $1); }
-	 | '<' '#' '>'							{ $$ = 0; } /* TODO correct me */
-	 | '<' '%' '>'							{ $$ = 0; } /* TODO correct me */
-	 | '<' '$' '>'							{ $$ = 0; } /* TODO correct me */
-	 | '#' tIDENTIFIER						{ $$ = new cdk::integer_node(LINE, $2); }	/* TODO vars ? */
-	 | '%' tIDENTIFIER						{ $$ = new cdk::double_node(LINE, $2); }	/* TODO vars ? */
-	 | '$' tIDENTIFIER						{ $$ = new cdk::string_node(LINE, $2); }	/* TODO vars ? */
-	 | '#' tIDENTIFIER '!'					{ $$ = new cdk::integer_node(LINE, $2); }	/* TODO public vars ? */
-	 | '%' tIDENTIFIER '!'					{ $$ = new cdk::double_node(LINE, $2); }	/* TODO public vars ? */
-	 | '$' tIDENTIFIER '!'					{ $$ = new cdk::string_node(LINE, $2); }	/* TODO public vars ? */
-	 | '#' tIDENTIFIER '?'					{ $$ = new cdk::integer_node(LINE, $2); }	/* TODO foreign vars ? */
-	 | '%' tIDENTIFIER '?'					{ $$ = new cdk::double_node(LINE, $2); }	/* TODO foreign vars ? */
-	 | '$' tIDENTIFIER '?'					{ $$ = new cdk::string_node(LINE, $2); }	/* TODO foreign vars ? */
+lval : tIDENTIFIER ';'             			{ $$ = new zu::variable_node(LINE, $1); }
+	 | type tIDENTIFIER						{ $$ = new zu::variable_node(LINE, $2); }	/* TODO vars ? */
+	 | type tIDENTIFIER	'!'					{ $$ = new zu::variable_node(LINE, $2); }	/* TODO global vars ? */
+	 | type tIDENTIFIER	'?'					{ $$ = new zu::variable_node(LINE, $2); }	/* TODO foreign vars ? */
      ;
+
+type : '#'
+	 | '%'
+	 | '$'
+	 | '<' type '>'
+	 ;
 
 %%
