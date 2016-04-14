@@ -1,5 +1,52 @@
 <sequence_node size='2'>
   <function_body_node>
+    <function_body_node>main</function_body_node>
+    <double_2>8</double_2>
+    <args>
+      <sequence_node size='1'>
+        <variable_node>
+          <variable_node>p</variable_node>
+          <pointer_16>4</pointer_16>
+          <isPublic>0</isPublic>
+          <isImported>0</isImported>
+        </variable_node>
+      </sequence_node>
+    </args>
+    <block>
+      <block_node>
+        <declarations>
+          <sequence_node size='1'>
+          </sequence_node>
+        </declarations>
+        <instructions>
+          <sequence_node size='1'>
+            <evaluation_node>
+              <assignment_node>
+                <id_node>
+                  <id_node>main</id_node>
+                </id_node>
+                <rvalue>
+                  <index_node>
+                    <lvalue>
+                      <id_node>
+                        <id_node>p</id_node>
+                      </id_node>
+                    </lvalue>
+                    <rvalue>
+                      <integer_node>0</integer_node>
+                    </rvalue>
+                  </index_node>
+                </rvalue>
+              </assignment_node>
+            </evaluation_node>
+          </sequence_node>
+        </instructions>
+      </block_node>
+    </block>
+    <isPublic>1</isPublic>
+    <isImported>0</isImported>
+  </function_body_node>
+  <function_body_node>
     <function_body_node>zu</function_body_node>
     <int_1>4</int_1>
     <literal>
@@ -110,53 +157,6 @@
                       <integer_node>3</integer_node>
                     </size>
                   </allocation_node>
-                </rvalue>
-              </assignment_node>
-            </evaluation_node>
-          </sequence_node>
-        </instructions>
-      </block_node>
-    </block>
-    <isPublic>1</isPublic>
-    <isImported>0</isImported>
-  </function_body_node>
-  <function_body_node>
-    <function_body_node>main</function_body_node>
-    <double_2>8</double_2>
-    <args>
-      <sequence_node size='1'>
-        <variable_node>
-          <variable_node>p</variable_node>
-          <pointer_16>4</pointer_16>
-          <isPublic>0</isPublic>
-          <isImported>0</isImported>
-        </variable_node>
-      </sequence_node>
-    </args>
-    <block>
-      <block_node>
-        <declarations>
-          <sequence_node size='1'>
-          </sequence_node>
-        </declarations>
-        <instructions>
-          <sequence_node size='1'>
-            <evaluation_node>
-              <assignment_node>
-                <id_node>
-                  <id_node>main</id_node>
-                </id_node>
-                <rvalue>
-                  <index_node>
-                    <lvalue>
-                      <id_node>
-                        <id_node>p</id_node>
-                      </id_node>
-                    </lvalue>
-                    <rvalue>
-                      <integer_node>0</integer_node>
-                    </rvalue>
-                  </index_node>
                 </rvalue>
               </assignment_node>
             </evaluation_node>

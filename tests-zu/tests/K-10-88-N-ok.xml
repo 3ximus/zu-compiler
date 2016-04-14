@@ -1,46 +1,7 @@
 <sequence_node size='4'>
-  <function_body_node>
-    <function_body_node>zu</function_body_node>
+  <function_declaration_node>
+    <function_declaration_node>g</function_declaration_node>
     <int_1>4</int_1>
-    <literal>
-      <integer_node>0</integer_node>
-    </literal>
-    <args>
-      <sequence_node size='1'>
-      </sequence_node>
-    </args>
-    <block>
-      <block_node>
-        <declarations>
-          <sequence_node size='1'>
-          </sequence_node>
-        </declarations>
-        <instructions>
-          <sequence_node size='1'>
-            <print_node>
-              <function_call_node>
-                <function_call_node>f</function_call_node>
-                <args>
-                  <sequence_node size='1'>
-                    <string_node>ola</string_node>
-                  </sequence_node>
-                </args>
-              </function_call_node>
-              <newLine>0</newLine>
-            </print_node>
-          </sequence_node>
-        </instructions>
-      </block_node>
-    </block>
-    <isPublic>1</isPublic>
-    <isImported>0</isImported>
-  </function_body_node>
-  <function_body_node>
-    <function_body_node>g</function_body_node>
-    <int_1>4</int_1>
-    <literal>
-      <integer_node>14</integer_node>
-    </literal>
     <args>
       <sequence_node size='1'>
         <variable_node>
@@ -51,27 +12,9 @@
         </variable_node>
       </sequence_node>
     </args>
-    <block>
-      <block_node>
-        <declarations>
-          <sequence_node size='1'>
-          </sequence_node>
-        </declarations>
-        <instructions>
-          <sequence_node size='1'>
-            <print_node>
-              <id_node>
-                <id_node>n</id_node>
-              </id_node>
-              <newLine>0</newLine>
-            </print_node>
-          </sequence_node>
-        </instructions>
-      </block_node>
-    </block>
     <isPublic>0</isPublic>
     <isImported>0</isImported>
-  </function_body_node>
+  </function_declaration_node>
   <function_body_node>
     <function_body_node>f</function_body_node>
     <int_1>4</int_1>
@@ -115,9 +58,12 @@
     <isPublic>0</isPublic>
     <isImported>0</isImported>
   </function_body_node>
-  <function_declaration_node>
-    <function_declaration_node>g</function_declaration_node>
+  <function_body_node>
+    <function_body_node>g</function_body_node>
     <int_1>4</int_1>
+    <literal>
+      <integer_node>14</integer_node>
+    </literal>
     <args>
       <sequence_node size='1'>
         <variable_node>
@@ -128,7 +74,61 @@
         </variable_node>
       </sequence_node>
     </args>
+    <block>
+      <block_node>
+        <declarations>
+          <sequence_node size='1'>
+          </sequence_node>
+        </declarations>
+        <instructions>
+          <sequence_node size='1'>
+            <print_node>
+              <id_node>
+                <id_node>n</id_node>
+              </id_node>
+              <newLine>0</newLine>
+            </print_node>
+          </sequence_node>
+        </instructions>
+      </block_node>
+    </block>
     <isPublic>0</isPublic>
     <isImported>0</isImported>
-  </function_declaration_node>
+  </function_body_node>
+  <function_body_node>
+    <function_body_node>zu</function_body_node>
+    <int_1>4</int_1>
+    <literal>
+      <integer_node>0</integer_node>
+    </literal>
+    <args>
+      <sequence_node size='1'>
+      </sequence_node>
+    </args>
+    <block>
+      <block_node>
+        <declarations>
+          <sequence_node size='1'>
+          </sequence_node>
+        </declarations>
+        <instructions>
+          <sequence_node size='1'>
+            <print_node>
+              <function_call_node>
+                <function_call_node>f</function_call_node>
+                <args>
+                  <sequence_node size='1'>
+                    <string_node>ola</string_node>
+                  </sequence_node>
+                </args>
+              </function_call_node>
+              <newLine>0</newLine>
+            </print_node>
+          </sequence_node>
+        </instructions>
+      </block_node>
+    </block>
+    <isPublic>1</isPublic>
+    <isImported>0</isImported>
+  </function_body_node>
 </sequence_node>

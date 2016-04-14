@@ -56,8 +56,8 @@
 
 /* TYPES OF NON-TERMINAL SYMBOLS */
 
-%type <node> dec itr smp_vdec blk_var	 	/* declaration, argument, variable, instruction */
-%type <sequence> decs vars itrs exprs fargs /* declarations,arguments,variables,instructions,expressions,function arguments*/
+%type <node> dec itr smp_vdec 	/* declaration, argument, variable, instruction */
+%type <sequence> decs vars itrs blk_var exprs fargs /* declarations,arguments,variables,instructions,expressions,function arguments*/
 
 %type <node> vdec blk cond iter  			/* variable declaration, block, condtional instruction, iteraion instruction */
 %type <function> fdec 						/* function declaration */
@@ -138,13 +138,13 @@ str  : tSTRING			{ $$ = $1; }
 
 // Function arguments
 
-fargs : smp_vdec			{ $$ = $1; }
+fargs : smp_vdec			{ $$ = new cdk::sequence_node(LINE, $1); }
       |	fargs ',' smp_vdec	{ $$ = new cdk::sequence_node(LINE, $3, $1); }
 	  |						{ $$ = new cdk::sequence_node(LINE, new cdk::nil_node(LINE)); }
       ;
 
 blk_var : smp_vdec ';'			{ $$ = new cdk::sequence_node(LINE, $1); }
-		| blk_var smp_vdec ';'	{ $$ = new cdk::sequence_node(LINE, $3, $1); }
+		| blk_var smp_vdec ';'	{ $$ = new cdk::sequence_node(LINE, $2, $1); }
 		;
 
 // Zu types

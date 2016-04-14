@@ -1,5 +1,30 @@
 <sequence_node size='2'>
   <function_body_node>
+    <function_body_node>f</function_body_node>
+    <int_1>4</int_1>
+    <literal>
+      <integer_node>2</integer_node>
+    </literal>
+    <args>
+      <sequence_node size='1'>
+      </sequence_node>
+    </args>
+    <block>
+      <block_node>
+        <declarations>
+          <sequence_node size='1'>
+          </sequence_node>
+        </declarations>
+        <instructions>
+          <sequence_node size='1'>
+          </sequence_node>
+        </instructions>
+      </block_node>
+    </block>
+    <isPublic>0</isPublic>
+    <isImported>0</isImported>
+  </function_body_node>
+  <function_body_node>
     <function_body_node>zu</function_body_node>
     <int_1>4</int_1>
     <literal>
@@ -32,31 +57,6 @@
       </block_node>
     </block>
     <isPublic>1</isPublic>
-    <isImported>0</isImported>
-  </function_body_node>
-  <function_body_node>
-    <function_body_node>f</function_body_node>
-    <int_1>4</int_1>
-    <literal>
-      <integer_node>2</integer_node>
-    </literal>
-    <args>
-      <sequence_node size='1'>
-      </sequence_node>
-    </args>
-    <block>
-      <block_node>
-        <declarations>
-          <sequence_node size='1'>
-          </sequence_node>
-        </declarations>
-        <instructions>
-          <sequence_node size='1'>
-          </sequence_node>
-        </instructions>
-      </block_node>
-    </block>
-    <isPublic>0</isPublic>
     <isImported>0</isImported>
   </function_body_node>
 </sequence_node>

@@ -1,12 +1,34 @@
 <sequence_node size='4'>
+  <function_declaration_node>
+    <function_declaration_node>g</function_declaration_node>
+    <int_1>4</int_1>
+    <args>
+      <sequence_node size='1'>
+        <variable_node>
+          <variable_node>i</variable_node>
+          <int_1>4</int_1>
+          <isPublic>0</isPublic>
+          <isImported>0</isImported>
+        </variable_node>
+      </sequence_node>
+    </args>
+    <isPublic>0</isPublic>
+    <isImported>0</isImported>
+  </function_declaration_node>
   <function_body_node>
-    <function_body_node>zu</function_body_node>
+    <function_body_node>f</function_body_node>
     <int_1>4</int_1>
     <literal>
-      <integer_node>0</integer_node>
+      <integer_node>9</integer_node>
     </literal>
     <args>
       <sequence_node size='1'>
+        <variable_node>
+          <variable_node>i</variable_node>
+          <int_1>4</int_1>
+          <isPublic>0</isPublic>
+          <isImported>0</isImported>
+        </variable_node>
       </sequence_node>
     </args>
     <block>
@@ -17,22 +39,62 @@
         </declarations>
         <instructions>
           <sequence_node size='1'>
-            <print_node>
-              <function_call_node>
-                <function_call_node>f</function_call_node>
-                <args>
-                  <sequence_node size='1'>
-                    <integer_node>3</integer_node>
-                  </sequence_node>
-                </args>
-              </function_call_node>
-              <newLine>0</newLine>
-            </print_node>
+            <if_else_node>
+              <condition>
+                <eq_node>
+                  <id_node>
+                    <id_node>i</id_node>
+                  </id_node>
+                  <integer_node>0</integer_node>
+                </eq_node>
+              </condition>
+              <then>
+                <evaluation_node>
+                  <assignment_node>
+                    <id_node>
+                      <id_node>f</id_node>
+                    </id_node>
+                    <rvalue>
+                      <integer_node>0</integer_node>
+                    </rvalue>
+                  </assignment_node>
+                </evaluation_node>
+              </then>
+              <else>
+                <evaluation_node>
+                  <assignment_node>
+                    <id_node>
+                      <id_node>f</id_node>
+                    </id_node>
+                    <rvalue>
+                      <add_node>
+                        <function_call_node>
+                          <function_call_node>g</function_call_node>
+                          <args>
+                            <sequence_node size='1'>
+                              <sub_node>
+                                <id_node>
+                                  <id_node>i</id_node>
+                                </id_node>
+                                <integer_node>1</integer_node>
+                              </sub_node>
+                            </sequence_node>
+                          </args>
+                        </function_call_node>
+                        <id_node>
+                          <id_node>i</id_node>
+                        </id_node>
+                      </add_node>
+                    </rvalue>
+                  </assignment_node>
+                </evaluation_node>
+              </else>
+            </if_else_node>
           </sequence_node>
         </instructions>
       </block_node>
     </block>
-    <isPublic>1</isPublic>
+    <isPublic>0</isPublic>
     <isImported>0</isImported>
   </function_body_node>
   <function_body_node>
@@ -118,19 +180,13 @@
     <isImported>0</isImported>
   </function_body_node>
   <function_body_node>
-    <function_body_node>f</function_body_node>
+    <function_body_node>zu</function_body_node>
     <int_1>4</int_1>
     <literal>
-      <integer_node>9</integer_node>
+      <integer_node>0</integer_node>
     </literal>
     <args>
       <sequence_node size='1'>
-        <variable_node>
-          <variable_node>i</variable_node>
-          <int_1>4</int_1>
-          <isPublic>0</isPublic>
-          <isImported>0</isImported>
-        </variable_node>
       </sequence_node>
     </args>
     <block>
@@ -141,78 +197,22 @@
         </declarations>
         <instructions>
           <sequence_node size='1'>
-            <if_else_node>
-              <condition>
-                <eq_node>
-                  <id_node>
-                    <id_node>i</id_node>
-                  </id_node>
-                  <integer_node>0</integer_node>
-                </eq_node>
-              </condition>
-              <then>
-                <evaluation_node>
-                  <assignment_node>
-                    <id_node>
-                      <id_node>f</id_node>
-                    </id_node>
-                    <rvalue>
-                      <integer_node>0</integer_node>
-                    </rvalue>
-                  </assignment_node>
-                </evaluation_node>
-              </then>
-              <else>
-                <evaluation_node>
-                  <assignment_node>
-                    <id_node>
-                      <id_node>f</id_node>
-                    </id_node>
-                    <rvalue>
-                      <add_node>
-                        <function_call_node>
-                          <function_call_node>g</function_call_node>
-                          <args>
-                            <sequence_node size='1'>
-                              <sub_node>
-                                <id_node>
-                                  <id_node>i</id_node>
-                                </id_node>
-                                <integer_node>1</integer_node>
-                              </sub_node>
-                            </sequence_node>
-                          </args>
-                        </function_call_node>
-                        <id_node>
-                          <id_node>i</id_node>
-                        </id_node>
-                      </add_node>
-                    </rvalue>
-                  </assignment_node>
-                </evaluation_node>
-              </else>
-            </if_else_node>
+            <print_node>
+              <function_call_node>
+                <function_call_node>f</function_call_node>
+                <args>
+                  <sequence_node size='1'>
+                    <integer_node>3</integer_node>
+                  </sequence_node>
+                </args>
+              </function_call_node>
+              <newLine>0</newLine>
+            </print_node>
           </sequence_node>
         </instructions>
       </block_node>
     </block>
-    <isPublic>0</isPublic>
+    <isPublic>1</isPublic>
     <isImported>0</isImported>
   </function_body_node>
-  <function_declaration_node>
-    <function_declaration_node>g</function_declaration_node>
-    <int_1>4</int_1>
-    <args>
-      <sequence_node size='1'>
-        <variable_node>
-          <variable_node>i</variable_node>
-          <int_1>4</int_1>
-          <isPublic>0</isPublic>
-          <isImported>0</isImported>
-        </variable_node>
-      </sequence_node>
-    </args>
-    <isPublic>0</isPublic>
-    <isImported>0</isImported>
-  </function_declaration_node>
 </sequence_node>
