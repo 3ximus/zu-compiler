@@ -342,7 +342,6 @@ void zu::type_checker::do_evaluation_node(zu::evaluation_node * const node, int 
 }
 
 void zu::type_checker::do_print_node(zu::print_node * const node, int lvl) {
-	ASSERT_UNSPEC;
 	node->argument()->accept(this, lvl + 2);
 	if (node->argument()->type()->name() != basic_type::TYPE_INT && node->argument()->type()->name() != basic_type::TYPE_DOUBLE && node->argument()->type()->name() != basic_type::TYPE_STRING)
 		throw std::string("wrong type in argument of print expression");
