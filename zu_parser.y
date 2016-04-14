@@ -93,7 +93,7 @@ var  : vdec		{ $$ = $1; }
      ;
 
 itrs : itr		{ $$ = new cdk::sequence_node(LINE, $1); }
-     | itrs itr		{ $$ = new cdk::sequence_node(LINE, $2, $1); }
+     | itr itrs		{ $$ = new cdk::sequence_node(LINE, $1, $2); }
      ;
 
 itr  : expr ';'		{ $$ = new zu::evaluation_node(LINE, $1); }
@@ -142,7 +142,7 @@ fargs : args			{ $$ = $1; }
       ;
 
 args : arg			{ $$ = new cdk::sequence_node(LINE, $1); }
-     | args ',' arg		{ $$ = new cdk::sequence_node(LINE, $3, $1); }
+     | arg ',' args	{ $$ = new cdk::sequence_node(LINE, $1, $3); }
      ;
 
 arg  : type tIDENTIFIER		{ $$ = new zu::variable_node(LINE, $1, $2, false, false, NULL); }
