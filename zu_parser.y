@@ -36,6 +36,7 @@
 
 %nonassoc tIFX
 %nonassoc tELSEX
+%nonassoc ':'
 
 %right '='
 %left '|'
@@ -47,6 +48,8 @@
 %left '*' '/' '%'
 %right '('
 %right '['
+%right '{'
+%left ';'
 
 %nonassoc tUNARY
 
@@ -90,7 +93,7 @@ var  : vdec		{ $$ = $1; }
      ;
 
 itrs : itr		{ $$ = new cdk::sequence_node(LINE, $1); }
-     | itr itrs		{ $$ = new cdk::sequence_node(LINE, $1, $2); }
+     | itrs itr		{ $$ = new cdk::sequence_node(LINE, $2, $1); }
      ;
 
 itr  : expr ';'		{ $$ = new zu::evaluation_node(LINE, $1); }
@@ -129,7 +132,7 @@ lit  : tINTEGER			{ $$ = new cdk::integer_node(LINE, $1); }
      ;
 
 str  : tSTRING			{ $$ = $1; }
-     | str tSTRING		{ $$ = new std::string(*$1 + *$2); }
+     | str tSTRING 	{ $$ = new std::string(*$1 + *$2); }
      ;
 
 // Function arguments
@@ -150,7 +153,7 @@ arg  : type tIDENTIFIER		{ $$ = new zu::variable_node(LINE, $1, $2, false, false
 type : '#'						{ $$ = new basic_type(4, basic_type::TYPE_INT); }
      | '%'						{ $$ = new basic_type(8, basic_type::TYPE_DOUBLE); }
      | '$'						{ $$ = new basic_type(4, basic_type::TYPE_STRING); }
-     | '<' type '>'					{ $$ = new basic_type(4, basic_type::TYPE_POINTER); }
+     | '<' type '>'					{ $$ = new basic_type(4, basic_type::TYPE_POINTER); $$->_subtype = $2; }
      ;
 
 blk  : '{' decs itrs '}'				{ $$ = new zu::block_node(LINE, $2, $3); }
@@ -165,6 +168,7 @@ cond :  '[' expr ']' '#' itrs %prec tIFX		{ $$ = new zu::if_node(LINE, $2, $5); 
      ;
 
 iter : '[' exprs ';' exprs ';' exprs ']' itrs		{ $$ = new zu::for_node(LINE, $2, $4, $6, $8); }
+     | '[' vars ';' exprs ';' exprs ']' itrs		{ $$ = new zu::for_node(LINE, $2, $4, $6, $8); }
      ;
 
 expr : lit  						{ $$ = $1; }
@@ -204,7 +208,6 @@ fcal : tIDENTIFIER '(' exprs ')' 			{ $$ = new zu::function_call_node(LINE, $1, 
 
 exprs : expr ',' exprs					{ $$ = new cdk::sequence_node(LINE, $1, $3); }
       | expr						{ $$ = new cdk::sequence_node(LINE, $1); }
-      | vdec						{ $$ = new cdk::sequence_node(LINE, $1); }
       |							{ $$ = new cdk::sequence_node(LINE,NULL); }
       ;
 
