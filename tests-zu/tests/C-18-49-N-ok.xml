@@ -15,3 +15,64 @@
               </id_node>
               <newLine>0</newLine>
             </print_node>
+            <evaluation_node>
+              <or_node>
+                <ne_node>
+                  <id_node>
+                    <id_node>x</id_node>
+                  </id_node>
+                  <id_node>
+                    <id_node>y</id_node>
+                  </id_node>
+                </ne_node>
+                <assignment_node>
+                  <id_node>
+                    <id_node>z</id_node>
+                  </id_node>
+                  <rvalue>
+                    <integer_node>7</integer_node>
+                  </rvalue>
+                </assignment_node>
+              </or_node>
+            </evaluation_node>
+          </sequence_node>
+        </instructions>
+      </block_node>
+    </block>
+    <isPublic>1</isPublic>
+    <isImported>0</isImported>
+  </function_body_node>
+  <sequence_node size='1'>
+    <variable_node>
+      <variable_node>z</variable_node>
+      <int>4</int>
+      <isPublic>0</isPublic>
+      <isImported>0</isImported>
+      <value>
+        <integer_node>30</integer_node>
+      </value>
+    </variable_node>
+  </sequence_node>
+  <sequence_node size='1'>
+    <variable_node>
+      <variable_node>y</variable_node>
+      <int>4</int>
+      <isPublic>0</isPublic>
+      <isImported>0</isImported>
+      <value>
+        <integer_node>3</integer_node>
+      </value>
+    </variable_node>
+  </sequence_node>
+  <sequence_node size='1'>
+    <variable_node>
+      <variable_node>x</variable_node>
+      <int>4</int>
+      <isPublic>0</isPublic>
+      <isImported>0</isImported>
+      <value>
+        <integer_node>10</integer_node>
+      </value>
+    </variable_node>
+  </sequence_node>
+</sequence_node>
