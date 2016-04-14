@@ -188,11 +188,11 @@ expr : lit  						{ $$ = $1; }
      | '~' expr %prec tUNARY  				{ $$ = new zu::not_node(LINE, $2); }
      | '-' expr %prec tUNARY  				{ $$ = new zu::simetry_node(LINE, $2); }
      | '+' expr %prec tUNARY  				{ $$ = new zu::identity_node(LINE, $2); }
-     | expr '?'						{ $$ = new zu::position_node(LINE, $1); }
      | '@'						{ $$ = new zu::read_node(LINE); }
      | '[' expr ']'	 				{ $$ = new zu::allocation_node(LINE, $2); }
      | '(' expr ')'					{ $$ = $2; }
      | lval 						{ $$ = $1; }
+     | lval '?'						{ $$ = new zu::position_node(LINE, $1); }
      | lval '=' expr					{ $$ = new zu::assignment_node(LINE, $1, $3); }
      ;
 
