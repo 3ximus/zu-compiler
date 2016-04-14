@@ -110,11 +110,11 @@ void zu::type_checker::do_rvalue_node(zu::rvalue_node * const node, int lvl) {
 //---------------------------------------------------------------------------
 
 void zu::type_checker::do_lvalue_node(zu::lvalue_node * const node, int lvl) {
-  const std::string &id = node->value();
-  std::shared_ptr<zu::symbol> symbol = _symtab.find(id);
-  if (symbol == nullptr) throw id + " undeclared";
-  // hackish stuff...
-  node->type(new basic_type(4, basic_type::TYPE_INT));
+  //const std::string &id = node->value();
+  //std::shared_ptr<zu::symbol> symbol = _symtab.find(id);
+  //if (symbol == nullptr) throw id + " undeclared";
+  //// hackish stuff...
+  //node->type(new basic_type(4, basic_type::TYPE_INT));
 }
 
 void zu::type_checker::do_function_declaration_node(zu::function_declaration_node * const node, int lvl){/*TODO*/}
@@ -122,25 +122,25 @@ void zu::type_checker::do_function_body_node(zu::function_body_node * const node
 //---------------------------------------------------------------------------
 
 void zu::type_checker::do_assignment_node(zu::assignment_node * const node, int lvl) {
-  ASSERT_UNSPEC;
+  //ASSERT_UNSPEC;
 
-  // DAVID: horrible hack!
-  // (this is caused by Zu not having explicit variable declarations)
-  const std::string &id = node->lvalue()->value();
-  if (!_symtab.find(id)) {
-    _symtab.insert(id, std::make_shared<zu::symbol>(new basic_type(4, basic_type::TYPE_INT), id, -1)); // put in the symbol table
-  }
+  //// DAVID: horrible hack!
+  //// (this is caused by Zu not having explicit variable declarations)
+  //const std::string &id = node->lvalue()->value();
+  //if (!_symtab.find(id)) {
+  //  _symtab.insert(id, std::make_shared<zu::symbol>(new basic_type(4, basic_type::TYPE_INT), id, -1)); // put in the symbol table
+  //}
 
-  node->lvalue()->accept(this, lvl + 2);
-  if (node->lvalue()->type()->name() != basic_type::TYPE_INT)
-    throw std::string("wrong type in left argument of assignment expression");
+  //node->lvalue()->accept(this, lvl + 2);
+  //if (node->lvalue()->type()->name() != basic_type::TYPE_INT)
+  //  throw std::string("wrong type in left argument of assignment expression");
 
-  node->rvalue()->accept(this, lvl + 2);
-  if (node->rvalue()->type()->name() != basic_type::TYPE_INT)
-    throw std::string("wrong type in right argument of assignment expression");
+  //node->rvalue()->accept(this, lvl + 2);
+  //if (node->rvalue()->type()->name() != basic_type::TYPE_INT)
+  //  throw std::string("wrong type in right argument of assignment expression");
 
-  // in Zu, expressions are always int
-  node->type(new basic_type(4, basic_type::TYPE_INT));
+  //// in Zu, expressions are always int
+  //node->type(new basic_type(4, basic_type::TYPE_INT));
 }
 
 //---------------------------------------------------------------------------
@@ -156,7 +156,7 @@ void zu::type_checker::do_print_node(zu::print_node * const node, int lvl) {
 //---------------------------------------------------------------------------
 
 void zu::type_checker::do_read_node(zu::read_node * const node, int lvl) {
-  node->argument()->accept(this, lvl + 2);
+  //node->argument()->accept(this, lvl + 2);
 }
 
 //---------------------------------------------------------------------------
