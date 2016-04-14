@@ -37,6 +37,7 @@
 %nonassoc tIFX
 %nonassoc tELSEX
 %nonassoc tFDEC
+%nonassoc tGEN
 %nonassoc ':'
 
 %right '='
@@ -56,7 +57,7 @@
 /* TYPES OF NON-TERMINAL SYMBOLS */
 
 %type <node> dec arg var itr 	 		 /* declaration, argument, variable, instruction */
-%type <sequence> decs args vars itrs exprs fargs /* declarations,arguments,variables,instructions,expressions,function arguments*/
+%type <sequence> decs args vars varsl itrs exprs fargs /* declarations,arguments,variables,instructions,expressions,function arguments*/
 
 %type <node> vdec blk cond iter  /* variable declaration, block, condtional instruction, iteraion instruction */
 %type <function> fdec 		 /* function declaration */
@@ -80,13 +81,16 @@ decs : dec		{ $$ = new cdk::sequence_node(LINE, $1); }
      | dec decs		{ $$ = new cdk::sequence_node(LINE, $1, $2); }
      ;
 
-dec  : vars ';' 			{ $$ = $1; }
+dec  : varsl 			{ $$ = $1; }
      | fdec %prec tFDEC    	{ $$ = $1; }
      | fdec blk				{ $$ = new zu::function_body_node(LINE, $1, $2); }
      ;
 
-vars : var		{ $$ = new cdk::sequence_node(LINE, $1); }
-     | var ',' vars	{ $$ = new cdk::sequence_node(LINE, $1, $3); }
+varsl : vars ';'	{ $$ = $1; }
+      ;
+
+vars : var 		{ $$ = new cdk::sequence_node(LINE, $1); }
+     | var ',' vars 	{ $$ = new cdk::sequence_node(LINE, $1, $3); }
      ;
 
 var  : vdec		{ $$ = $1; }
@@ -156,8 +160,8 @@ type : '#'						{ $$ = new basic_type(4, basic_type::TYPE_INT); }
      | '<' type '>'					{ $$ = new basic_type(4, basic_type::TYPE_POINTER); $$->_subtype = $2; }
      ;
 
-blk  : '{' decs itrs '}'				{ $$ = new zu::block_node(LINE, $2, $3); }
-     | '{' decs '}'					{ $$ = new zu::block_node(LINE, $2, NULL); }
+blk  : '{' varsl itrs '}'				{ $$ = new zu::block_node(LINE, $2, $3); }
+     | '{' varsl '}'					{ $$ = new zu::block_node(LINE, $2, NULL); }
      | '{' itrs '}'					{ $$ = new zu::block_node(LINE, NULL, $2); }
      | '{' '}'						{ $$ = new zu::block_node(LINE, NULL, NULL); }
      ;
@@ -191,7 +195,7 @@ expr : lit  						{ $$ = $1; }
      | '+' expr %prec tUNARY  				{ $$ = new zu::identity_node(LINE, $2); }
      | expr '?'						{ $$ = new zu::position_node(LINE, $1); }
      | '@'						{ $$ = new zu::read_node(LINE); } /* FIXME speacial read and print */
-     | '[' expr ']'					{ $$ = new zu::allocation_node(LINE, $2); }
+     | '[' expr ']'	 				{ $$ = new zu::allocation_node(LINE, $2); }
      | '(' expr ')'					{ $$ = $2; }
      | lval 						{ $$ = $1; }
      | lval '=' expr					{ $$ = new zu::assignment_node(LINE, $1, $3); }
