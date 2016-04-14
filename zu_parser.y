@@ -49,7 +49,6 @@
 %right '('
 %right '['
 %right '{'
-%left ';'
 
 %nonassoc tUNARY
 
@@ -162,13 +161,13 @@ blk  : '{' decs itrs '}'				{ $$ = new zu::block_node(LINE, $2, $3); }
      | '{' '}'						{ $$ = new zu::block_node(LINE, NULL, NULL); }
      ;
 
-cond :  '[' expr ']' '#' itrs %prec tIFX		{ $$ = new zu::if_node(LINE, $2, $5); }
-     |  '[' expr ']' '?' itrs				{ $$ = new zu::if_else_node(LINE, $2, $5, NULL); }
-     |  '[' expr ']' '?' itrs ':' itrs			{ $$ = new zu::if_else_node(LINE, $2, $5, $7); }
+cond :  '[' expr ']' '#' itr %prec tIFX		{ $$ = new zu::if_node(LINE, $2, $5); }
+     |  '[' expr ']' '?' itr %prec tELSEX		{ $$ = new zu::if_else_node(LINE, $2, $5, NULL); }
+     |  '[' expr ']' '?' itr ':' itr			{ $$ = new zu::if_else_node(LINE, $2, $5, $7); }
      ;
 
-iter : '[' exprs ';' exprs ';' exprs ']' itrs		{ $$ = new zu::for_node(LINE, $2, $4, $6, $8); }
-     | '[' vars ';' exprs ';' exprs ']' itrs		{ $$ = new zu::for_node(LINE, $2, $4, $6, $8); }
+iter : '[' exprs ';' exprs ';' exprs ']' itr		{ $$ = new zu::for_node(LINE, $2, $4, $6, $8); }
+     | '[' vars ';' exprs ';' exprs ']' itr		{ $$ = new zu::for_node(LINE, $2, $4, $6, $8); }
      ;
 
 expr : lit  						{ $$ = $1; }
