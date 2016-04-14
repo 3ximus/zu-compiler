@@ -57,49 +57,45 @@
                 </eq_node>
               </condition>
               <then>
-                <sequence_node size='1'>
-                  <evaluation_node>
-                    <assignment_node>
-                      <id_node>
-                        <id_node>g</id_node>
-                      </id_node>
-                      <rvalue>
-                        <integer_node>0</integer_node>
-                      </rvalue>
-                    </assignment_node>
-                  </evaluation_node>
-                </sequence_node>
+                <evaluation_node>
+                  <assignment_node>
+                    <id_node>
+                      <id_node>g</id_node>
+                    </id_node>
+                    <rvalue>
+                      <integer_node>0</integer_node>
+                    </rvalue>
+                  </assignment_node>
+                </evaluation_node>
               </then>
               <else>
-                <sequence_node size='1'>
-                  <evaluation_node>
-                    <assignment_node>
-                      <id_node>
-                        <id_node>g</id_node>
-                      </id_node>
-                      <rvalue>
-                        <add_node>
-                          <function_call_node>
-                            <function_call_node>f</function_call_node>
-                            <args>
-                              <sequence_node size='1'>
-                                <sub_node>
-                                  <id_node>
-                                    <id_node>i</id_node>
-                                  </id_node>
-                                  <integer_node>1</integer_node>
-                                </sub_node>
-                              </sequence_node>
-                            </args>
-                          </function_call_node>
-                          <id_node>
-                            <id_node>i</id_node>
-                          </id_node>
-                        </add_node>
-                      </rvalue>
-                    </assignment_node>
-                  </evaluation_node>
-                </sequence_node>
+                <evaluation_node>
+                  <assignment_node>
+                    <id_node>
+                      <id_node>g</id_node>
+                    </id_node>
+                    <rvalue>
+                      <add_node>
+                        <function_call_node>
+                          <function_call_node>f</function_call_node>
+                          <args>
+                            <sequence_node size='1'>
+                              <sub_node>
+                                <id_node>
+                                  <id_node>i</id_node>
+                                </id_node>
+                                <integer_node>1</integer_node>
+                              </sub_node>
+                            </sequence_node>
+                          </args>
+                        </function_call_node>
+                        <id_node>
+                          <id_node>i</id_node>
+                        </id_node>
+                      </add_node>
+                    </rvalue>
+                  </assignment_node>
+                </evaluation_node>
               </else>
             </if_else_node>
           </sequence_node>
@@ -139,49 +135,45 @@
                 </eq_node>
               </condition>
               <then>
-                <sequence_node size='1'>
-                  <evaluation_node>
-                    <assignment_node>
-                      <id_node>
-                        <id_node>f</id_node>
-                      </id_node>
-                      <rvalue>
-                        <integer_node>0</integer_node>
-                      </rvalue>
-                    </assignment_node>
-                  </evaluation_node>
-                </sequence_node>
+                <evaluation_node>
+                  <assignment_node>
+                    <id_node>
+                      <id_node>f</id_node>
+                    </id_node>
+                    <rvalue>
+                      <integer_node>0</integer_node>
+                    </rvalue>
+                  </assignment_node>
+                </evaluation_node>
               </then>
               <else>
-                <sequence_node size='1'>
-                  <evaluation_node>
-                    <assignment_node>
-                      <id_node>
-                        <id_node>f</id_node>
-                      </id_node>
-                      <rvalue>
-                        <add_node>
-                          <function_call_node>
-                            <function_call_node>g</function_call_node>
-                            <args>
-                              <sequence_node size='1'>
-                                <sub_node>
-                                  <id_node>
-                                    <id_node>i</id_node>
-                                  </id_node>
-                                  <integer_node>1</integer_node>
-                                </sub_node>
-                              </sequence_node>
-                            </args>
-                          </function_call_node>
-                          <id_node>
-                            <id_node>i</id_node>
-                          </id_node>
-                        </add_node>
-                      </rvalue>
-                    </assignment_node>
-                  </evaluation_node>
-                </sequence_node>
+                <evaluation_node>
+                  <assignment_node>
+                    <id_node>
+                      <id_node>f</id_node>
+                    </id_node>
+                    <rvalue>
+                      <add_node>
+                        <function_call_node>
+                          <function_call_node>g</function_call_node>
+                          <args>
+                            <sequence_node size='1'>
+                              <sub_node>
+                                <id_node>
+                                  <id_node>i</id_node>
+                                </id_node>
+                                <integer_node>1</integer_node>
+                              </sub_node>
+                            </sequence_node>
+                          </args>
+                        </function_call_node>
+                        <id_node>
+                          <id_node>i</id_node>
+                        </id_node>
+                      </add_node>
+                    </rvalue>
+                  </assignment_node>
+                </evaluation_node>
               </else>
             </if_else_node>
           </sequence_node>

@@ -51,31 +51,27 @@
                 </sequence_node>
               </step>
               <block>
-                <sequence_node size='1'>
-                  <if_else_node>
-                    <condition>
-                      <eq_node>
-                        <mod_node>
-                          <id_node>
-                            <id_node>x</id_node>
-                          </id_node>
-                          <integer_node>2</integer_node>
-                        </mod_node>
-                        <integer_node>0</integer_node>
-                      </eq_node>
-                    </condition>
-                    <then>
-                      <sequence_node size='1'>
-                        <print_node>
-                          <id_node>
-                            <id_node>x</id_node>
-                          </id_node>
-                          <newLine>1</newLine>
-                        </print_node>
-                      </sequence_node>
-                    </then>
-                  </if_else_node>
-                </sequence_node>
+                <if_else_node>
+                  <condition>
+                    <eq_node>
+                      <mod_node>
+                        <id_node>
+                          <id_node>x</id_node>
+                        </id_node>
+                        <integer_node>2</integer_node>
+                      </mod_node>
+                      <integer_node>0</integer_node>
+                    </eq_node>
+                  </condition>
+                  <then>
+                    <print_node>
+                      <id_node>
+                        <id_node>x</id_node>
+                      </id_node>
+                      <newLine>1</newLine>
+                    </print_node>
+                  </then>
+                </if_else_node>
               </block>
             </for_node>
           </sequence_node>

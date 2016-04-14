@@ -51,14 +51,12 @@
                 </sequence_node>
               </step>
               <block>
-                <sequence_node size='1'>
-                  <print_node>
-                    <id_node>
-                      <id_node>x</id_node>
-                    </id_node>
-                    <newLine>1</newLine>
-                  </print_node>
-                </sequence_node>
+                <print_node>
+                  <id_node>
+                    <id_node>x</id_node>
+                  </id_node>
+                  <newLine>1</newLine>
+                </print_node>
               </block>
             </for_node>
           </sequence_node>

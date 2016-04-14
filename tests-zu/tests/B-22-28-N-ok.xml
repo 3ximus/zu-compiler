@@ -14,20 +14,16 @@
                 <integer_node>0</integer_node>
               </condition>
               <then>
-                <sequence_node size='1'>
-                  <print_node>
-                    <string_node>KO</string_node>
-                    <newLine>0</newLine>
-                  </print_node>
-                </sequence_node>
+                <print_node>
+                  <string_node>KO</string_node>
+                  <newLine>0</newLine>
+                </print_node>
               </then>
               <else>
-                <sequence_node size='1'>
-                  <print_node>
-                    <string_node>OK</string_node>
-                    <newLine>0</newLine>
-                  </print_node>
-                </sequence_node>
+                <print_node>
+                  <string_node>OK</string_node>
+                  <newLine>0</newLine>
+                </print_node>
               </else>
             </if_else_node>
           </sequence_node>

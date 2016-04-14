@@ -51,82 +51,76 @@
                 </sequence_node>
               </step>
               <block>
-                <sequence_node size='1'>
-                  <block_node>
-                    <instructions>
-                      <sequence_node size='1'>
-                        <if_else_node>
-                          <condition>
-                            <eq_node>
-                              <mod_node>
-                                <id_node>
-                                  <id_node>x</id_node>
-                                </id_node>
-                                <integer_node>2</integer_node>
-                              </mod_node>
-                              <integer_node>0</integer_node>
-                            </eq_node>
-                          </condition>
-                          <then>
-                            <sequence_node size='1'>
-                              <block_node>
-                                <instructions>
-                                  <sequence_node size='1'>
-                                    <for_node>
-                                      <init>
-                                        <sequence_node size='1'>
-                                        </sequence_node>
-                                      </init>
-                                      <test>
-                                        <sequence_node size='1'>
-                                          <lt_node>
+                <block_node>
+                  <instructions>
+                    <sequence_node size='1'>
+                      <if_else_node>
+                        <condition>
+                          <eq_node>
+                            <mod_node>
+                              <id_node>
+                                <id_node>x</id_node>
+                              </id_node>
+                              <integer_node>2</integer_node>
+                            </mod_node>
+                            <integer_node>0</integer_node>
+                          </eq_node>
+                        </condition>
+                        <then>
+                          <block_node>
+                            <instructions>
+                              <sequence_node size='2'>
+                                <print_node>
+                                  <id_node>
+                                    <id_node>x</id_node>
+                                  </id_node>
+                                  <newLine>1</newLine>
+                                </print_node>
+                                <for_node>
+                                  <init>
+                                    <sequence_node size='1'>
+                                    </sequence_node>
+                                  </init>
+                                  <test>
+                                    <sequence_node size='1'>
+                                      <lt_node>
+                                        <id_node>
+                                          <id_node>x</id_node>
+                                        </id_node>
+                                        <integer_node>15</integer_node>
+                                      </lt_node>
+                                    </sequence_node>
+                                  </test>
+                                  <step>
+                                    <sequence_node size='1'>
+                                    </sequence_node>
+                                  </step>
+                                  <block>
+                                    <evaluation_node>
+                                      <assignment_node>
+                                        <id_node>
+                                          <id_node>x</id_node>
+                                        </id_node>
+                                        <rvalue>
+                                          <add_node>
                                             <id_node>
                                               <id_node>x</id_node>
                                             </id_node>
-                                            <integer_node>15</integer_node>
-                                          </lt_node>
-                                        </sequence_node>
-                                      </test>
-                                      <step>
-                                        <sequence_node size='1'>
-                                        </sequence_node>
-                                      </step>
-                                      <block>
-                                        <sequence_node size='2'>
-                                          <print_node>
-                                            <id_node>
-                                              <id_node>x</id_node>
-                                            </id_node>
-                                            <newLine>1</newLine>
-                                          </print_node>
-                                          <evaluation_node>
-                                            <assignment_node>
-                                              <id_node>
-                                                <id_node>x</id_node>
-                                              </id_node>
-                                              <rvalue>
-                                                <add_node>
-                                                  <id_node>
-                                                    <id_node>x</id_node>
-                                                  </id_node>
-                                                  <integer_node>1</integer_node>
-                                                </add_node>
-                                              </rvalue>
-                                            </assignment_node>
-                                          </evaluation_node>
-                                        </sequence_node>
-                                      </block>
-                                    </for_node>
-                                  </sequence_node>
-                                </instructions>
-                              </block_node>
-                            </sequence_node>
-                          </then>
-                        </if_else_node>
-                      </sequence_node>
-                    </instructions>
-                  </block_node>
-                </sequence_node>
+                                            <integer_node>1</integer_node>
+                                          </add_node>
+                                        </rvalue>
+                                      </assignment_node>
+                                    </evaluation_node>
+                                  </block>
+                                </for_node>
+                              </sequence_node>
+                            </instructions>
+                          </block_node>
+                        </then>
+                      </if_else_node>
+                    </sequence_node>
+                  </instructions>
+                </block_node>
               </block>
             </for_node>
           </sequence_node>
