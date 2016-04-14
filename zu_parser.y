@@ -204,6 +204,7 @@ fcal : tIDENTIFIER '(' exprs ')' 			{ $$ = new zu::function_call_node(LINE, $1, 
 
 exprs : expr ',' exprs					{ $$ = new cdk::sequence_node(LINE, $1, $3); }
       | expr						{ $$ = new cdk::sequence_node(LINE, $1); }
+      | vdec						{ $$ = new cdk::sequence_node(LINE, $1); }
       |							{ $$ = new cdk::sequence_node(LINE,NULL); }
       ;
 
