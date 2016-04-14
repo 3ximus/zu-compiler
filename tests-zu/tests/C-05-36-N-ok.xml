@@ -1,0 +1,23 @@
+<sequence_node size='3'>
+  <function_body_node>
+    <function_body_node>zu</function_body_node>
+    <1>4</1>
+    <literal>
+      <integer_node>0</integer_node>
+    </literal>
+    <block>
+      <block_node>
+        <instructions>
+          <sequence_node size='2'>
+            <print_node>
+              <id_node>
+                <id_node>y</id_node>
+              </id_node>
+              <newLine>0</<newLine>
+            </print_node>
+            <evaluation_node>
+              <assignment_node>
+                <id_node>
+                  <id_node>y</id_node>
+                </id_node>
+                <rvalue>
