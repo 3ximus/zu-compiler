@@ -10,26 +10,41 @@ namespace zu {
    * Class function_body describing function nodes.
    */
   class function_body_node: public zu::function_declaration_node {
-	zu::
     cdk::basic_node *_block;
 
   public:
-    inline function_body_node(int lineno, const char *s, cdk::sequence_node *args, cdk::basic_node *block) :
-       zu::function_declaration_node(lineno, s, args), _block(block) {
+    inline function_body_node(int lineno, basic_type *zu_type, const char *s, bool isPublic, cdk::sequence_node *args, cdk::basic_node *block) :
+       zu::function_declaration_node(lineno, zu_type, s, isPublic, args), _block(block) {
     }
-    inline function_body_node(int lineno, const std::string &s, cdk::sequence_node *args, cdk::basic_node *block) :
-       zu::function_declaration_node(lineno, s, args), _block(block) {
+    inline function_body_node(int lineno, basic_type *zu_type, const std::string &s, bool isPublic, cdk::sequence_node *args, cdk::basic_node *block) :
+       zu::function_declaration_node(lineno, zu_type, s, isPublic, args), _block(block) {
     }
-    inline function_body_node(int lineno, const std::string *s, cdk::sequence_node *args, cdk::basic_node *block) :
-       zu::function_declaration_node(lineno, s, args), _block(block) {
+    inline function_body_node(int lineno, basic_type *zu_type, const std::string *s, bool isPublic, cdk::sequence_node *args, cdk::basic_node *block) :
+       zu::function_declaration_node(lineno, zu_type, s, isPublic, args), _block(block) {
     }
 
-		/*
+	/* declaration constructor TODO correct ? */
 	inline function_body_node(int lineno, zu::function_declaration_node *declaration, cdk::basic_node *block) :
-		function_body_node(lineno, declaration->
-		*/
+		zu::function_declaration_node(lineno, declaration->zu_type(), new std::string(declaration->name()), declaration->isPublic()),  _block(block) {
+    }
 
   public:
+	inline basic_type zu_type() {
+		return _zu_type;
+	}
+
+    inline std::string name() {
+      return _name;
+    }
+
+	inline bool isPublic() {
+		return _isPublic;
+	}
+
+    inline cdk::sequence_node *args() {
+      return _args;
+    }
+
     inline cdk::basic_node *block() {
       return _block;
     }

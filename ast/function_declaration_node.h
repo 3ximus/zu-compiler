@@ -9,6 +9,7 @@ namespace zu {
    * Class function_declaration describing function nodes.
    */
   class function_declaration_node: public cdk::expression_node {
+  protected:
 	basic_type *_zu_type;
 	std::string *_name;
     cdk::sequence_node *_args;
@@ -26,7 +27,7 @@ namespace zu {
     }
 
   public:
-  	inline basic_type zu_type() {
+	inline basic_type *zu_type() {
 		return _zu_type;
 	}
 
