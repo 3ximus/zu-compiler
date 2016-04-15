@@ -61,8 +61,7 @@ list : vars	     							{ $$ = new cdk::sequence_node(LINE, $1); }
 	 | list ';' func						{ $$ = new cdk::sequence_node(LINE, $3, $1); }
 	 ;
 
-vars :										{ $$ = 0; }
-	 | expr									{ $$ = new cdk::sequence_node(LINE, $1); }
+vars : expr									{ $$ = new cdk::sequence_node(LINE, $1); }
 	 | vars ',' expr						{ $$ = new cdk::sequence_node(LINE, $3, $1); }
 
 func : tTYPE tIDENTIFIER '(' vars ')'							{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
@@ -77,7 +76,7 @@ func : tTYPE tIDENTIFIER '(' vars ')'							{ $$ = new zu::function_declaration_
 blck : '{' body '}'					{ $$ = new cdk::sequence_node(LINE, $2); }
 	 ;
 
-body :								{ $$ = 0; } /* EMPTY ?? */
+body :								{ } /* EMPTY ?? */
 	 | list							{ $$ = new cdk::sequence_node(LINE, $1); }
 	 | stmt 						{ $$ = new cdk::sequence_node(LINE, $1); }
 	 | body list  					{ $$ = new cdk::sequence_node(LINE, $1); }
