@@ -9,25 +9,25 @@ namespace zu {
    * Class function_declaration describing function nodes.
    */
   class function_declaration_node: public cdk::expression_node {
-	basic_type *_type;
+	basic_type *_zu_type;
 	std::string *_name;
     cdk::sequence_node *_args;
 	bool _isPublic;
 
   public:
-    inline function_declaration_node(int lineno, basic_type *type, const char *s, bool isPublic, cdk::sequence_node *args) :
-        cdk::expression_node(lineno), _type(type), _name(s), _isPublic(isPublic), _args(args) {
+    inline function_declaration_node(int lineno, basic_type *zu_type, const char *s, bool isPublic, cdk::sequence_node *args) :
+        cdk::expression_node(lineno), _zu_type(zu_type), _name(s), _isPublic(isPublic), _args(args) {
     }
-    inline function_declaration_node(int lineno, basic_type *type, const std::string &s, bool isPublic, cdk::sequence_node *args) :
-        cdk::expression_node(lineno), _type(type), _name(s), _isPublic(isPublic), _args(args) {
+    inline function_declaration_node(int lineno, basic_type *zu_type, const std::string &s, bool isPublic, cdk::sequence_node *args) :
+        cdk::expression_node(lineno), _zu_type(zu_type), _name(s), _isPublic(isPublic), _args(args) {
     }
-    inline function_declaration_node(int lineno, basic_type *type, const std::string *s, bool isPublic, cdk::sequence_node *args) :
-        cdk::expression_node(lineno), _type(type), _name(*s), _isPublic(isPublic), _args(args) {
+    inline function_declaration_node(int lineno, basic_type *zu_type, const std::string *s, bool isPublic, cdk::sequence_node *args) :
+        cdk::expression_node(lineno), _zu_type(zu_type), _name(*s), _isPublic(isPublic), _args(args) {
     }
 
   public:
-  	inline basic_type type() {
-		return _type;
+  	inline basic_type zu_type() {
+		return _zu_type;
 	}
 
     inline std::string name() {

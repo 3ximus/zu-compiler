@@ -11,27 +11,24 @@ namespace zu {
    * Class for describing syntactic tree leaves for holding lvalues.
    */
   class variable_node: public zu::lvalue_node {
-	basic_type *_type;
+	basic_type *_zu_type;
 	std::string _name;
 	bool _isPublic;
 
   public:
-    inline variable_node(int lineno, basic_type *type, const char *s, bool isPublic) :
-        zu::lvalue_node(lineno), _type(type), _name(s), _isPublic(isPublic) {
+    inline variable_node(int lineno, basic_type *zu_type, const char *s, bool isPublic) :
+        zu::lvalue_node(lineno), _zu_type(zu_type), _name(s), _isPublic(isPublic) {
+   
+    inline variable_node(int lineno, basic_type *zu_type, const std::string &s, bool isPublic) :
+        zu::lvalue_node(lineno), _zu_type(zu_type), _name(s), _isPublic(isPublic) {
     }
-    inline variable_node(int linenoint lineno, basic_type *type, const std::string &s, bool isPublic) :
-        zu::lvalue_node(lineno), _type(type), _name(s), _isPublic(isPublic) {
-    }
-    inline variable_node(int lineno, basic_type *type, const std::string *s, bool isPublic) :
-        zu::lvalue_node(lineno), _type(type), _name(*s), _isPublic(isPublic) {
-    }
-    inline variable_node(int lineno) :
-        zu::lvalue_node(lineno) {
+    inline variable_node(int lineno, basic_type *zu_type, const std::string *s, bool isPublic) :
+        zu::lvalue_node(lineno), _zu_type(zu_type), _name(*s), _isPublic(isPublic) {
     }
 
   public:
-  	inline basic_type type() {
-		return _type;
+  	inline basic_type *zu_type() {
+		return _zu_type;
 	}
 
     inline std::string name() {
