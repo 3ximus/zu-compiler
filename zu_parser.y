@@ -103,7 +103,7 @@ func : tTYPE tIDENTIFIER '(' list ')'							{ $$ = new zu::function_declaration_
 	 | '!' tIDENTIFIER '(' list ')'								{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
 	 | tTYPE tIDENTIFIER '(' list ')' '=' lit					{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
 	 | tTYPE tIDENTIFIER '(' list ')' stmt %prec tBDY			{ $$ = new zu::function_body_node(LINE, $2, $4, $6); }
-	 | tTYPE tIDENTIFIER '(' list ')' '=' lit stmt %prec tBDY	{ $$ = new zu::function_body_node(LINE, $2, $4, $6); }
+	 | tTYPE tIDENTIFIER '(' list ')' '=' lit stmt %prec tBDY	{ $$ = new zu::function_body_node(LINE, $2, $4, $8); }
 	 ;
 
 lval : tIDENTIFIER ';'             			{ $$ = new zu::variable_node(LINE, $1); }	/* TODO Can devclaraations be here ? */
