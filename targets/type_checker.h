@@ -60,6 +60,7 @@ namespace zu {
 
   protected:
     void processBinaryExpression(cdk::binary_expression_node * const node, int lvl);
+    bool processBinaryRead(cdk::binary_expression_node * const node);
     void processSameTypes(cdk::binary_expression_node * const node);
     void processNotPointer(cdk::binary_expression_node * const node);
 
