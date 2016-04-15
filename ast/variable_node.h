@@ -11,18 +11,18 @@ namespace zu {
    * Class for describing syntactic tree leaves for holding lvalues.
    */
   class variable_node: public zu::lvalue_node {
-	cdk::basic_type *_type;
+	basic_type *_type;
 	std::string _name;
 	bool _isPublic;
 
   public:
-    inline variable_node(int lineno, cdk::basic_type *type, const char *s, bool isPublic) :
+    inline variable_node(int lineno, basic_type *type, const char *s, bool isPublic) :
         zu::lvalue_node(lineno), _type(type), _name(s), _isPublic(isPublic) {
     }
-    inline variable_node(int linenoint lineno, cdk::basic_type *type, const std::string &s, bool isPublic) :
+    inline variable_node(int linenoint lineno, basic_type *type, const std::string &s, bool isPublic) :
         zu::lvalue_node(lineno), _type(type), _name(s), _isPublic(isPublic) {
     }
-    inline variable_node(int lineno, cdk::basic_type *type, const std::string *s, bool isPublic) :
+    inline variable_node(int lineno, basic_type *type, const std::string *s, bool isPublic) :
         zu::lvalue_node(lineno), _type(type), _name(*s), _isPublic(isPublic) {
     }
     inline variable_node(int lineno) :
@@ -30,7 +30,7 @@ namespace zu {
     }
 
   public:
-  	inline cdk::basic_type type() {
+  	inline basic_type type() {
 		return _type;
 	}
 

@@ -24,8 +24,10 @@ namespace zu {
        zu::function_declaration_node(lineno, s, args), _block(block) {
     }
 
+		/*
 	inline function_body_node(int lineno, zu::function_declaration_node *declaration, cdk::basic_node *block) :
 		function_body_node(lineno, declaration->
+		*/
 
   public:
     inline cdk::basic_node *block() {

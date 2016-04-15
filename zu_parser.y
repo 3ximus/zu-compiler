@@ -18,7 +18,7 @@
   cdk::basic_node     				*node;	/* node pointer */
   cdk::sequence_node  				*sequence;
   cdk::expression_node				*expression;
-  cdk::basiz_type					*type;
+  basic_type						*ztype;
   zu::lvalue_node  					*lvalue;
   zu::function_declaration_node 	*function;
 };
@@ -47,8 +47,11 @@
 
 /* TYPES OF NON-TERMINAL SYMBOLS */
 
+/*
 %type <node> stmt blck vardecl
 %type <sequence> list vars body
+%type <function> func
+*/
 
 %type <node> dec arg var
 %type <sequence> decs args vars
