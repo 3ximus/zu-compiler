@@ -42,7 +42,6 @@ void zu::xml_writer::do_neg_node(cdk::neg_node * const node, int lvl) {
 
 void zu::xml_writer::do_simetry_node(zu::simetry_node * const node, int lvl) {/* TODO */}
 void zu::xml_writer::do_not_node(zu::not_node * const node, int lvl) {/* TODO */}
-void zu::xml_writer::do_reference_node(zu::reference_node * const node, int lvl) {/* TODO */}
 void zu::xml_writer::do_identity_node(zu::identity_node * const node, int lvl) {/* TODO */}
 void zu::xml_writer::do_position_node(zu::position_node * const node, int lvl) {/* TODO */}
 
@@ -92,7 +91,7 @@ void zu::xml_writer::do_variable_node(zu::variable_node * const node, int lvl) {
   CHECK_TYPES(_compiler, _symtab, node);
   openTag(node, lvl);
   os() << std::string(lvl + 2, ' ') << "<" << node->name() << ">" << node->identifier() << "</" << node->name() << ">" << std::endl;
-  processBasicType(node->zu_type(), lvl + 2);
+  ProcessZuType(node->zu_type(), lvl + 2);
   os() << std::string(lvl + 2, ' ') << "<isPublic>" << node->isPublic() << "</isPublic>" << std::endl;
   os() << std::string(lvl + 2, ' ') << "<isImported>" << node->isImported() << "</<isImported>" << std::endl;
   if(node->value() != NULL) {
@@ -180,7 +179,7 @@ void zu::xml_writer::do_function_declaration_node(zu::function_declaration_node 
   CHECK_TYPES(_compiler, _symtab, node);
   openTag(node, lvl);
   os() << std::string(lvl + 2, ' ') << "<" << node->name() << ">" << node->identifier() << "</" << node->name() << ">" << std::endl;
-  processBasicType(node->zu_type(), lvl + 2);
+  ProcessZuType(node->zu_type(), lvl + 2);
   if(node->literal() != NULL) {
     openTag("literal", lvl + 2);
     node->literal()->accept(this, lvl + 4);
@@ -199,7 +198,7 @@ void zu::xml_writer::do_function_body_node(zu::function_body_node * const node, 
   CHECK_TYPES(_compiler, _symtab, node);
   openTag(node, lvl);
   os() << std::string(lvl + 2, ' ') << "<" << node->name() << ">" << node->identifier() << "</" << node->name() << ">" << std::endl;
-  processBasicType(node->zu_type(), lvl + 2);
+  ProcessZuType(node->zu_type(), lvl + 2);
   if(node->literal() != NULL) {
     openTag("literal", lvl + 2);
     node->literal()->accept(this, lvl + 4);

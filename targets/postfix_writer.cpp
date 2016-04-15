@@ -48,7 +48,6 @@ void zu::postfix_writer::do_neg_node(cdk::neg_node * const node, int lvl) {
 }
 void zu::postfix_writer::do_simetry_node(zu::simetry_node * const node, int lvl) {/* TODO */}
 void zu::postfix_writer::do_not_node(zu::not_node * const node, int lvl) {/* TODO */}
-void zu::postfix_writer::do_reference_node(zu::reference_node * const node, int lvl) {/* TODO */}
 void zu::postfix_writer::do_identity_node(zu::identity_node * const node, int lvl) {/* TODO */}
 void zu::postfix_writer::do_position_node(zu::position_node * const node, int lvl) {/* TODO */}
 

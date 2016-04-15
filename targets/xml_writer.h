@@ -50,6 +50,11 @@ namespace zu {
       os() << std::string(lvl, ' ') << "<" << node->name() << ">" << node->value() << "</" << node->name() << ">" << std::endl;
     }
 
+    void ProcessZuType(basic_type * const node, int lvl) {
+      os() << std::string(lvl, ' ') << "<" << node->name() << ">" << node->size() << "</" << node->name() << ">" << std::endl;
+
+    }
+
   public:
     void do_integer_node(cdk::integer_node * const node, int lvl);
     void do_double_node(cdk::double_node * const node, int lvl);
@@ -62,7 +67,6 @@ namespace zu {
     void do_neg_node(cdk::neg_node * const node, int lvl);
 	void do_simetry_node(zu::simetry_node * const node, int lvl);
 	void do_not_node(zu::not_node * const node, int lvl);
-	void do_reference_node(zu::reference_node * const node, int lvl);
 	void do_identity_node(zu::identity_node * const node, int lvl);
 	void do_position_node(zu::position_node * const node, int lvl);
 

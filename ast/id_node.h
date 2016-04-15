@@ -21,7 +21,7 @@ namespace zu {
     }
 
   public:
-    inline std::string name() {
+    inline std::string identifier() {
       return _identifier;
     }
 

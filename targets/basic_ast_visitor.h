@@ -62,7 +62,6 @@ public:
   virtual void do_neg_node(cdk::neg_node * const node, int lvl) = 0;
   virtual void do_simetry_node(zu::simetry_node * const node, int lvl) = 0;
   virtual void do_not_node(zu::not_node * const node, int lvl) = 0;
-  virtual void do_reference_node(zu::reference_node * const node, int lvl) = 0;
   virtual void do_identity_node(zu::identity_node * const node, int lvl) = 0;
   virtual void do_position_node(zu::position_node * const node, int lvl) = 0;
 

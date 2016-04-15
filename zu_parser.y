@@ -53,7 +53,8 @@
 %type <node> vdec blk cond iter /* variable declaration, block, condtional instruction, iteraion instruction */
 %type <function> fdec
 
-%type <expression> expr fcal lit lval
+%type <expression> expr fcal lit
+%type <lvalue> lval
 %type <ztype> type
 
 %{
