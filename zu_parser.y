@@ -36,7 +36,7 @@
 %left tGE tLE tEQ tNE '>' '<'
 %left '+' '-'
 %left '*' '/' '%'
-%left '!' '!!'
+%left '!' tNLPRINT
 %right '['
 %right '('
 %nonassoc tUNARY /* not recognized by lexical analizer and is used to specify precedence */
@@ -74,9 +74,7 @@ func : tTYPE tIDENTIFIER '(' vars ')'							{ $$ = new zu::function_declaration_
 	 | tTYPE tIDENTIFIER '(' vars ')' '=' expr blck %prec tBDY	{ $$ = new zu::function_body_node(LINE, $2, $4, $8); }
 	 ;
 
-blck :
-	 | '{' list '}'					{ $$ = new cdk::sequence_node(LINE, $2); }
-	 | '{' stmt '}'					{ $$ = new cdk::sequence_node(LINE, $2); }
+blck : '{' body '}'					{ $$ = new cdk::sequence_node(LINE, $2); }
 	 ;
 
 body :								{ $$ = 0; } /* EMPTY ?? */
@@ -94,7 +92,7 @@ stmt : expr									{ $$ = new zu::evaluation_node(LINE, $1); }
      | '[' expr ']' '?' stmt ':' stmt		{ $$ = new zu::if_else_node(LINE, $2, $5, $7); }
      | '[' expr ']'							{ $$ = new zu::allocation_node(LINE, $2); }
      | expr '!'								{ $$ = new zu::print_node(LINE, $1); } /* TODO simple print ? */
-     | expr '!!'							{ $$ = new zu::print_node(LINE, $1); } /* TODO new line print ? */
+     | expr tNLPRINT						{ $$ = new zu::print_node(LINE, $1); } /* TODO new line print ? */
      | tBREAK								{ $$ = new zu::break_node(LINE); }
      | tCONTINUE							{ $$ = new zu::continue_node(LINE); }
      | tRETURN								{ $$ = new zu::return_node(LINE); }
