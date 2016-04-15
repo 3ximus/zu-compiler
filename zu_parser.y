@@ -43,16 +43,8 @@
 %left tGE tLE tEQ tNE '>' '<'
 %left '+' '-'
 %left '*' '/' '%'
-%left '!' tPRINTLN
-
-/*
-%left tGE tLE tEQ tNE '>' '<'
-%left '+' '-'
-%left '*' '/' '%'
 %right '('
-%right '='
 %right '['
-*/
 
 %nonassoc tUNARY
 
@@ -163,10 +155,8 @@ cond :  '[' expr ']' '#' itrs %prec tIFX	{ $$ = new zu::if_node(LINE, $2, $5); }
 iter : '[' exprs ';' exprs ';' exprs ']' itrs	{ $$ = new zu::for_node(LINE, $2, $4, $6, $8); }
 	 ;
 
-expr : lval 							{ $$ = $1; }
-	 | lit  							{ $$ = $1; }
+expr : lit  							{ $$ = $1; }
 	 | fcal 							{ $$ = $1; }
-	 | '@'								{ $$ = new zu::read_node(LINE); } /* FIXME speacial read and print */
      | expr '+' expr					{ $$ = new cdk::add_node(LINE, $1, $3); }
      | expr '-' expr					{ $$ = new cdk::sub_node(LINE, $1, $3); }
      | expr '*' expr					{ $$ = new cdk::mul_node(LINE, $1, $3); }
@@ -184,9 +174,11 @@ expr : lval 							{ $$ = $1; }
      | '-' expr %prec tUNARY  			{ $$ = new zu::simetry_node(LINE, $2); }
      | '+' expr %prec tUNARY  			{ $$ = new zu::identity_node(LINE, $2); }
 	 | expr '?'	%prec tUNARY			{ $$ = new zu::position_node(LINE, $1); }
-	 | lval '=' expr					{ $$ = new zu::assignment_node(LINE, $1, $3); }
+	 | '@'								{ $$ = new zu::read_node(LINE); } /* FIXME speacial read and print */
      | '[' expr ']'						{ $$ = new zu::allocation_node(LINE, $2); }
      | '(' expr ')'						{ $$ = $2; }
+ 	 | lval 							{ $$ = $1; }
+	 | lval '=' expr					{ $$ = new zu::assignment_node(LINE, $1, $3); }
 	 ;
 
 lval : tIDENTIFIER						{ $$ = new zu::id_node(LINE, $1); }
