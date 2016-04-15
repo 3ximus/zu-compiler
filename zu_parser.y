@@ -43,12 +43,12 @@
 %left tGE tLE tEQ tNE '>' '<'
 %left '+' '-'
 %left '*' '/' '%'
+%left '!' tPRINTLN
 
 /*
 %left tGE tLE tEQ tNE '>' '<'
 %left '+' '-'
 %left '*' '/' '%'
-%left '!' tPRINTLN
 %right '('
 %right '='
 %right '['
