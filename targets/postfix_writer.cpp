@@ -8,7 +8,7 @@
 // Uncomment for extra spam
 #define __PFWRITER_DEBUG__
 
-void cpt::semantics::PFwriter::debug(cdk::node::Node * const node, int lvl) {
+void zu::postfix_writer::debug(cdk::basic_node* const node, int lvl) {
 #ifdef __PFWRITER_DEBUG__
 	os() << ";" << std::string(10, '~');
 	for(int i=0; i<lvl; i++) {
@@ -43,7 +43,7 @@ void zu::postfix_writer::do_double_node(cdk::double_node * const node, int lvl) 
 	debug(node, lvl);
 
 	_pf.RODATA();
-	_pf.ALLIGN();
+	_pf.ALIGN();
 	_pf.LABEL(mklbl(lbl1 = ++_lbl));
 	_pf.DOUBLE(node->value());
 
@@ -102,9 +102,9 @@ void zu::postfix_writer::do_position_node(zu::position_node * const node, int lv
 void zu::postfix_writer::do_and_node(zu::and_node * const node, int lvl) {
 	CHECK_TYPES(_compiler, _symtab, node);
 	debug(node, lvl);
-	int lbl = _lbl++;
+	int lbl1 = _lbl++;
 
-	node->left->accept(this,lvl+2); // visit left child
+	node->left()->accept(this,lvl+2); // visit left child
 
 	_pf.DUP(); // duplicate to get the value for jmp, if its zero jump is taken
 	_pf.JZ(mklbl(lbl1)); // jump over right node
@@ -112,22 +112,22 @@ void zu::postfix_writer::do_and_node(zu::and_node * const node, int lvl) {
 	if (node->left()->name() == "index_node" || node->left()->name() == "id_node")
 		_pf.LOAD(); // load
 
-	node->right->accept(this,lvl+2);
+	node->right()->accept(this,lvl+2);
 
 	if (node->left()->name() == "index_node" || node->left()->name() == "id_node")
 		_pf.LOAD(); // load
 
 	_pf.AND();
 	_pf.ALIGN(); // align symbols
-	_pf.LABEL(mklbl(lbl)); // TODO optimization??
+	_pf.LABEL(mklbl(lbl1)); // TODO optimization??
 }
 
 void zu::postfix_writer::do_or_node(zu::or_node * const node, int lvl) {
 	CHECK_TYPES(_compiler, _symtab, node);
 	debug(node, lvl);
-	int lbl = _lbl++;
+	int lbl1 = _lbl++;
 
-	node->left->accept(this,lvl+2); // visit left child
+	node->left()->accept(this,lvl+2); // visit left child
 
 	_pf.DUP(); // duplicate to get the value for jmp, if its non zero jump is taken
 	_pf.JNZ(mklbl(lbl1)); // jump over right node
@@ -135,14 +135,14 @@ void zu::postfix_writer::do_or_node(zu::or_node * const node, int lvl) {
 	if (node->left()->name() == "index_node" || node->left()->name() == "id_node")
 		_pf.LOAD(); // load
 
-	node->right->accept(this,lvl+2);
+	node->right()->accept(this,lvl+2);
 
 	if (node->left()->name() == "index_node" || node->left()->name() == "id_node")
 		_pf.LOAD(); // load
 
 	_pf.AND();
 	_pf.ALIGN(); // align symbols
-	_pf.LABEL(mklbl(lbl)); // TODO optimization??
+	_pf.LABEL(mklbl(lbl1)); // TODO optimization??
 }
 
 void zu::postfix_writer::do_allocation_node(zu::allocation_node * const node, int lvl)  {
@@ -321,15 +321,15 @@ void zu::postfix_writer::do_function_body_node(zu::function_body_node * const no
 
 	_pf.TEXT();
 
-	if(node->is_public())
-		_pf.GLOBAL(zuFunctionName(identifier), _pf.FUNC());
+	if(node->isPublic())
+		_pf.GLOBAL(zuFunctionName(node->identifier()), _pf.FUNC());
 
 	_pf.ALIGN();
-	_pf.LABEL(identifier);
+	_pf.LABEL(node->identifier());
 
 	if (node->block()->declarations())
 		for (size_t i=0; i < node->block()->declarations()->size(); i++)
-			dec_size += ((*zu::variable_node)node->block_node()->declarations(i))->zu_type()->size();
+			dec_size += ((zu::variable_node*)node->block()->declarations()->node(i))->zu_type()->size();
 
 	_pf.ENTER(dec_size);
 

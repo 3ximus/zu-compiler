@@ -19,6 +19,7 @@
   cdk::sequence_node  				*sequence;
   cdk::expression_node				*expression;
   zu::function_declaration_node 	*function;
+zu::block_node				*block;
   zu::lvalue_node					*lvalue;
   basic_type						*ztype;
 };
@@ -59,7 +60,8 @@
 %type <node> dec itr smp_vdec 	/* declaration, argument, variable, instruction */
 %type <sequence> decs vars itrs blk_var exprs fargs /* declarations,arguments,variables,instructions,expressions,function arguments*/
 
-%type <node> vdec blk cond iter  			/* variable declaration, block, condtional instruction, iteraion instruction */
+%type <node> vdec cond iter  			/* variable declaration, block, condtional instruction, iteraion instruction */
+%type <block> blk
 %type <function> fdec 						/* function declaration */
 
 %type <expression> expr fcal lit 			/* expression, function call, literal */

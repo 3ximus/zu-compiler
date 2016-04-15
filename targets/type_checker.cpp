@@ -312,7 +312,7 @@ void zu::type_checker::do_function_declaration_node(zu::function_declaration_nod
 
 	if(node->args() != NULL) {
 		for (size_t i = 0; i < node->args()->size(); i++) {
-			node->node(i)->accept(this, lvl+2);
+			node->args()->node(i)->accept(this, lvl+2);
 		}
 	}
 
@@ -334,7 +334,7 @@ void zu::type_checker::do_function_body_node(zu::function_body_node * const node
 
 	if(node->args() != NULL) {
 		for (size_t i = 0; i < node->args()->size(); i++) {
-			node->node(i)->accept(this, lvl+2);
+			node->args()->node(i)->accept(this, lvl+2);
 		}
 	}
 
@@ -357,7 +357,7 @@ void zu::type_checker::do_function_call_node(zu::function_call_node * const node
 
 	if(node->args() != NULL) {
 		for (size_t i = 0; i < node->args()->size(); i++) {
-			node->node(i)->accept(this, lvl+2);
+			node->args()->node(i)->accept(this, lvl+2);
 		}
 	}
 

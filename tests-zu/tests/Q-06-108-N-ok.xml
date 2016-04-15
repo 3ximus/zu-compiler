@@ -73,16 +73,6 @@
         </declarations>
         <instructions>
           <sequence_node size='1'>
-            <print_node>
-              <function_call_node>
-                <function_call_node>main</function_call_node>
-                <args>
-                  <sequence_node size='1'>
-                  </sequence_node>
-                </args>
-              </function_call_node>
-              <newLine>0</newLine>
-            </print_node>
           </sequence_node>
         </instructions>
       </block_node>

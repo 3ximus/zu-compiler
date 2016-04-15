@@ -42,21 +42,23 @@ namespace zu {
     }
 
   private:
+    	inline void debug(cdk::basic_node* const node, int lvl);
+
 	inline std::string zuFunctionName(std::string identifier) {
 		// postix must have _main function
 		if(identifier == "zu") return "_main";
 		if(identifier == "_main") return "zu";
 		return identifier;
 	}
-	inline std::string zuFunctionName(zu::function_call_node * const node) {
-		return zuFunctionName(node->identifier());
-	}
-	inline std::string zuFunctionName(zu::function_declaration_node * const node) {
-		return zuFunctionName(node->identifier());
-	}
-	inline std::string zuFunctionName(zu::function_body_node * const node) {
-		return zuFunctionName(node->identifier());
-	}
+//	inline std::string zuFunctionName(zu::function_call_node * const node) {
+//		return zuFunctionName(node->identifier());
+//	}
+//	inline std::string zuFunctionName(zu::function_declaration_node * const node) {
+//		return zuFunctionName(node->identifier());
+//	}
+//	inline std::string zuFunctionName(zu::function_body_node * const node) {
+//		return zuFunctionName(node->identifier());
+//	}
 
   public:
     void do_sequence_node(cdk::sequence_node * const node, int lvl);
