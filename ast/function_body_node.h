@@ -14,13 +14,13 @@ namespace zu {
 
   public:
     inline function_body_node(int lineno, const char *s, cdk::sequence_node *args, cdk::basic_node *block) :
-       function_declaration_node(lineno, args, s), _block(block) {
+       function_declaration_node(lineno, s, args), _block(block) {
     }
     inline function_body_node(int lineno, const std::string &s, cdk::sequence_node *args, cdk::basic_node *block) :
-       function_declaration_node(lineno, args, s), _block(block) {
+       function_declaration_node(lineno, s, args), _block(block) {
     }
     inline function_body_node(int lineno, const std::string *s, cdk::sequence_node *args, cdk::basic_node *block) :
-       function_declaration_node(lineno, args, s), _block(block) {
+       function_declaration_node(lineno, s, args), _block(block) {
     }
 
   public:
