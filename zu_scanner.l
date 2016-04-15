@@ -31,7 +31,7 @@
 "><"						return tBREAK;
 "<>"						return tCONTINUE;
 "!!!"						return tRETURN;
-"!!"						return tNLPRINT
+"!!"						return tNLPRINT;
 
 [#%$]						return tTYPE;
 

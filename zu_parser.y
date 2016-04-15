@@ -28,18 +28,17 @@
 %token tBREAK tCONTINUE tRETURN tTYPE
 /* %token tFOR tIF tPRINT  tREAD  tBEGIN tEND */
 
-%nonassoc tIFX
-%nonassoc tBDY
+%nonassoc tIFX tBDY
 %nonassoc ':'
 
-%right '='
 %left tGE tLE tEQ tNE '>' '<'
 %left '+' '-'
 %left '*' '/' '%'
 %left '!' tNLPRINT
 %right '['
 %right '('
-%nonassoc tUNARY /* not recognized by lexical analizer and is used to specify precedence */
+%right '='
+%nonassoc tUNARY
 
 %type <node> stmt blck
 %type <sequence> list vars body
