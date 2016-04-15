@@ -1,1 +1,44 @@
 <sequence_node size='1'>
+  <function_body_node>
+    <function_body_node>zu</function_body_node>
+    <int_1>4</int_1>
+    <literal>
+      <integer_node>0</integer_node>
+    </literal>
+    <args>
+      <sequence_node size='1'>
+      </sequence_node>
+    </args>
+    <block>
+      <block_node>
+        <declarations>
+          <sequence_node size='2'>
+            <variable_node>
+              <variable_node>x</variable_node>
+              <int_1>4</int_1>
+              <isPublic>0</isPublic>
+              <isImported>0</isImported>
+              <value>
+                <integer_node>1</integer_node>
+              </value>
+            </variable_node>
+            <variable_node>
+              <variable_node>y</variable_node>
+              <int_1>4</int_1>
+              <isPublic>0</isPublic>
+              <isImported>0</isImported>
+              <value>
+                <integer_node>1</integer_node>
+              </value>
+            </variable_node>
+          </sequence_node>
+        </declarations>
+        <instructions>
+          <sequence_node size='1'>
+            <for_node>
+              <init>
+                <sequence_node size='1'>
+                </sequence_node>
+              </init>
+              <test>
+                <sequence_node size='1'>

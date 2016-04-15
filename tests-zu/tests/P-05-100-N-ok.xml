@@ -5,3 +5,21 @@
     <isPublic>0</isPublic>
     <isImported>0</isImported>
   </variable_node>
+  <function_body_node>
+    <function_body_node>zu</function_body_node>
+    <int_1>4</int_1>
+    <literal>
+      <integer_node>0</integer_node>
+    </literal>
+    <args>
+      <sequence_node size='1'>
+      </sequence_node>
+    </args>
+    <block>
+      <block_node>
+        <declarations>
+          <sequence_node size='1'>
+          </sequence_node>
+        </declarations>
+        <instructions>
+          <sequence_node size='4'>
