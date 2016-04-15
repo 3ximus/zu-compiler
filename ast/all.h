@@ -46,7 +46,6 @@ class function_call_node;
 class and_node; 
 class function_declaration_node; 
 class simetry_node; 
-class reference_node; 
 class assignment_node; 
 class for_node; 
 class if_node; 
@@ -115,7 +114,6 @@ class print_node;
 #include "ast/and_node.h"
 #include "ast/function_declaration_node.h"
 #include "ast/simetry_node.h"
-#include "ast/reference_node.h"
 #include "ast/assignment_node.h"
 #include "ast/for_node.h"
 #include "ast/if_node.h"
