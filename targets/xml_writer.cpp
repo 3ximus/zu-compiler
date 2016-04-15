@@ -20,7 +20,7 @@ void zu::xml_writer::do_integer_node(cdk::integer_node * const node, int lvl) {
 }
 
 void zu::xml_writer::do_double_node(cdk::double_node * const node, int lvl){
-	/* TODO */
+  processSimple(node, lvl);
 }
 
 void zu::xml_writer::do_string_node(cdk::string_node * const node, int lvl) {
@@ -89,12 +89,14 @@ void zu::xml_writer::do_index_node(zu::index_node * const node, int lvl) {
   }
   closeTag(node, lvl);
 }
+
 void zu::xml_writer::do_id_node(zu::id_node * const node, int lvl) {
   CHECK_TYPES(_compiler, _symtab, node);
   openTag(node, lvl);
   os() << std::string(lvl + 2, ' ') << "<" << node->name() << ">" << node->identifier() << "</" << node->name() << ">" << std::endl;
   closeTag(node, lvl);
 }
+
 void zu::xml_writer::do_variable_node(zu::variable_node * const node, int lvl) {
   CHECK_TYPES(_compiler, _symtab, node);
   openTag(node, lvl);
@@ -266,6 +268,7 @@ void zu::xml_writer::do_print_node(zu::print_node * const node, int lvl) {
   CHECK_TYPES(_compiler, _symtab, node);
   openTag(node, lvl);
   node->argument()->accept(this, lvl + 2);
+  os() << std::string(lvl + 2, ' ') << "<newLine>" << node->newLine() << "</<newLine>" << std::endl;
   closeTag(node, lvl);
 }
 
