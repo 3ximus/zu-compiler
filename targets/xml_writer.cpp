@@ -272,22 +272,32 @@ void zu::xml_writer::do_print_node(zu::print_node * const node, int lvl) {
 //---------------------------------------------------------------------------
 
 void zu::xml_writer::do_read_node(zu::read_node * const node, int lvl) {
-  //openTag(node, lvl);
-  //node->argument()->accept(this, lvl + 2);
-  //closeTag(node, lvl);
+  openTag(node, lvl);
+  closeTag(node, lvl);
 }
 
 //---------------------------------------------------------------------------
 
 void zu::xml_writer::do_for_node(zu::for_node * const node, int lvl) {
-  //openTag(node, lvl);
-  //openTag("condition", lvl + 2);
-  //node->condition()->accept(this, lvl + 4);
-  //closeTag("condition", lvl + 2);
-  //openTag("block", lvl + 2);
-  //node->block()->accept(this, lvl + 4);
-  //closeTag("block", lvl + 2);
-  //closeTag(node, lvl);
+  openTag(node, lvl);
+
+  openTag("init", lvl + 2);
+  node->init()->accept(this, lvl + 4);
+  closeTag("init", lvl + 2);
+
+  openTag("test", lvl + 2);
+  node->test()->accept(this, lvl + 4);
+  closeTag("test", lvl + 2);
+
+  openTag("step", lvl + 2);
+  node->step()->accept(this, lvl + 4);
+  closeTag("step", lvl + 2);
+
+  openTag("block", lvl + 2);
+  node->block()->accept(this, lvl + 4);
+  closeTag("block", lvl + 2);
+
+  closeTag(node, lvl);
 }
 
 //---------------------------------------------------------------------------
@@ -317,8 +327,14 @@ void zu::xml_writer::do_if_else_node(zu::if_else_node * const node, int lvl) {
   closeTag(node, lvl);
 }
 void zu::xml_writer::do_return_node(zu::return_node * const node, int lvl) {
+  openTag(node, lvl);
+  closeTag(node, lvl);
 }
 void zu::xml_writer::do_continue_node(zu::continue_node * const node, int lvl) {
+  openTag(node, lvl);
+  closeTag(node, lvl);
 }
 void zu::xml_writer::do_break_node(zu::break_node * const node, int lvl) {
+  openTag(node, lvl);
+  closeTag(node, lvl);
 }
