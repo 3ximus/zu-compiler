@@ -11,24 +11,35 @@ namespace zu {
    * Class for describing syntactic tree leaves for holding lvalues.
    */
   class variable_node: public zu::lvalue_node {
-	  std::string _name;
+	cdk::basic_type *_type;
+	std::string _name;
+	bool _isPublic;
+
   public:
-    inline variable_node(int lineno, const char *s) :
-        zu::lvalue_node(lineno), _name(s) {
+    inline variable_node(int lineno, cdk::basic_type *type, const char *s, bool isPublic) :
+        zu::lvalue_node(lineno), _type(type), _name(s), _isPublic(isPublic) {
     }
-    inline variable_node(int lineno, const std::string &s) :
-        zu::lvalue_node(lineno), _name(s) {
+    inline variable_node(int linenoint lineno, cdk::basic_type *type, const std::string &s, bool isPublic) :
+        zu::lvalue_node(lineno), _type(type), _name(s), _isPublic(isPublic) {
     }
-    inline variable_node(int lineno, const std::string *s) :
-        zu::lvalue_node(lineno), _name(*s) {
+    inline variable_node(int lineno, cdk::basic_type *type, const std::string *s, bool isPublic) :
+        zu::lvalue_node(lineno), _type(type), _name(*s), _isPublic(isPublic) {
     }
     inline variable_node(int lineno) :
         zu::lvalue_node(lineno) {
     }
 
   public:
-	inline std::string name(){
-		return _name;
+  	inline cdk::basic_type type() {
+		return _type;
+	}
+
+    inline std::string name() {
+      return _name;
+    }
+
+	inline bool isPublic() {
+		return _isPublic;
 	}
 
     /**

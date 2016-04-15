@@ -18,32 +18,47 @@
   cdk::basic_node     				*node;	/* node pointer */
   cdk::sequence_node  				*sequence;
   cdk::expression_node				*expression;
+  cdk::basiz_type					*type;
   zu::lvalue_node  					*lvalue;
   zu::function_declaration_node 	*function;
 };
 
+/* LITERALS && IDENTIFIERS */
 %token <i> tINTEGER
 %token <d> tDOUBLE
 %token <s> tIDENTIFIER tSTRING
-%token tBREAK tCONTINUE tRETURN tTYPE
-/* %token tFOR tIF tPRINT  tREAD  tBEGIN tEND */
 
-%nonassoc tIFX tBDY
-%nonassoc ':'
+/* ZU TOKENS */
+%token tBREAK tCONTINUE tRETURN tTYPE
+
+/* PRECEDENCES */
+
+%nonassoc tIFX
+%nonassoc tELSEX
 
 %left tGE tLE tEQ tNE '>' '<'
 %left '+' '-'
 %left '*' '/' '%'
 %left '!' tPRINTLN
-%right '['
 %right '('
 %right '='
+%right '['
 %nonassoc tUNARY
 
-%type <node> stmt blck
+/* TYPES OF NON-TERMINAL SYMBOLS */
+
+%type <node> stmt blck vardecl
 %type <sequence> list vars body
-%type <expression> expr func
+
+%type <node> dec arg var
+%type <sequence> decs args vars
+
+%type <node> vdec blck
+%type <function> fdec
+
+%type <expression> expr fcall
 %type <lvalue> lval
+%type <type> type
 
 %{
 //-- The rules below will be included in yyparse, the main parsing function.
@@ -53,6 +68,20 @@
 /*
 program	: tBEGIN list tEND { compiler->ast(new zu::program_node(LINE, $2)); }
         ;
+*/
+/*
+
+file : decs							{ compiler->ast( $1 ); }
+	 | 								{ }
+	 ;
+
+decs : dec							{ $$ = new cdk::sequence_node(LINE, $1); }
+	 | decs dec 					{ $$ = new cdk::sequence_node(LINE, $2, $1); }
+	 ;
+
+dec  : vars ';'						{ $$ = $1; }
+	 | fdec
+
 */
 
 list : vars	     							{ $$ = new cdk::sequence_node(LINE, $1); }
@@ -65,12 +94,12 @@ vars : expr									{ $$ = new cdk::sequence_node(LINE, $1); }
 	 | vars ',' expr						{ $$ = new cdk::sequence_node(LINE, $3, $1); }
 	 ;
 
-func : tTYPE tIDENTIFIER '(' vars ')'							{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
-	 | '!' tIDENTIFIER '(' vars ')'								{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
-	 | tTYPE tIDENTIFIER '(' vars ')' '=' expr					{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
-	 | tTYPE tIDENTIFIER '(' vars ')' blck %prec tBDY			{ $$ = new zu::function_body_node(LINE, $2, $4, $6); }
-	 | '!' tIDENTIFIER '(' vars ')' blck %prec tBDY				{ $$ = new zu::function_body_node(LINE, $2, $4, $6); }
-	 | tTYPE tIDENTIFIER '(' vars ')' '=' expr blck %prec tBDY	{ $$ = new zu::function_body_node(LINE, $2, $4, $8); }
+func : tTYPE tIDENTIFIER '(' vars ')'					{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
+	 | '!' tIDENTIFIER '(' vars ')'						{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
+	 | tTYPE tIDENTIFIER '(' vars ')' '=' expr			{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
+	 | tTYPE tIDENTIFIER '(' vars ')' blck 				{ $$ = new zu::function_body_node(LINE, $2, $4, $6); }
+	 | '!' tIDENTIFIER '(' vars ')' blck 				{ $$ = new zu::function_body_node(LINE, $2, $4, $6); }
+	 | tTYPE tIDENTIFIER '(' vars ')' '=' expr blck		{ $$ = new zu::function_body_node(LINE, $2, $4, $8); }
 	 ;
 
 blck : '{' body '}'					{ $$ = new cdk::sequence_node(LINE, $2); }
@@ -83,18 +112,18 @@ body :								{ } /* EMPTY ?? */
 	 | body stmt  					{ $$ = new cdk::sequence_node(LINE, $1); }
 	 ;
 
-stmt : expr									{ $$ = new zu::evaluation_node(LINE, $1); }
-	 | stmt ';' expr						{ $$ = new zu::evaluation_node(LINE, $3); }
-	 | blck									{ $$ = $1; }
-     | '[' list ';' list ';' list ']' stmt	{ $$ = new zu::for_node(LINE, $2, $4, $6, $8); }
-     | '[' expr ']' '#' stmt %prec tIFX		{ $$ = new zu::if_node(LINE, $2, $5); }
-     | '[' expr ']' '?' stmt ':' stmt		{ $$ = new zu::if_else_node(LINE, $2, $5, $7); }
-     | '[' expr ']'							{ $$ = new zu::allocation_node(LINE, $2); }
-     | expr '!'								{ $$ = new zu::print_node(LINE, $1); } /* TODO simple print ? */
-     | expr tPRINTLN						{ $$ = new zu::print_node(LINE, $1); } /* TODO new line print ? */
-     | tBREAK								{ $$ = new zu::break_node(LINE); }
-     | tCONTINUE							{ $$ = new zu::continue_node(LINE); }
-     | tRETURN								{ $$ = new zu::return_node(LINE); }
+stmt : expr												{ $$ = new zu::evaluation_node(LINE, $1); }
+	 | stmt ';' expr									{ $$ = new zu::evaluation_node(LINE, $3); }
+	 | blck												{ $$ = $1; }
+     | '[' list ';' list ';' list ']' stmt				{ $$ = new zu::for_node(LINE, $2, $4, $6, $8); }
+     | '[' expr ']' '#' stmt %prec tIFX					{ $$ = new zu::if_node(LINE, $2, $5); }
+     | '[' expr ']' '?' stmt ':' stmt %prec tELSEX		{ $$ = new zu::if_else_node(LINE, $2, $5, $7); }
+     | '[' expr ']'										{ $$ = new zu::allocation_node(LINE, $2); }
+     | expr '!'											{ $$ = new zu::print_node(LINE, $1); } /* TODO simple print ? */
+     | expr tPRINTLN									{ $$ = new zu::print_node(LINE, $1); } /* TODO new line print ? */
+     | tBREAK											{ $$ = new zu::break_node(LINE); }
+     | tCONTINUE										{ $$ = new zu::continue_node(LINE); }
+     | tRETURN											{ $$ = new zu::return_node(LINE); }
      ;
 
 expr : tINTEGER						{ $$ = new cdk::integer_node(LINE, $1); }

@@ -9,19 +9,23 @@ namespace zu {
   /**
    * Class function_body describing function nodes.
    */
-  class function_body_node: public function_declaration_node {
+  class function_body_node: public zu::function_declaration_node {
+	zu::
     cdk::basic_node *_block;
 
   public:
     inline function_body_node(int lineno, const char *s, cdk::sequence_node *args, cdk::basic_node *block) :
-       function_declaration_node(lineno, s, args), _block(block) {
+       zu::function_declaration_node(lineno, s, args), _block(block) {
     }
     inline function_body_node(int lineno, const std::string &s, cdk::sequence_node *args, cdk::basic_node *block) :
-       function_declaration_node(lineno, s, args), _block(block) {
+       zu::function_declaration_node(lineno, s, args), _block(block) {
     }
     inline function_body_node(int lineno, const std::string *s, cdk::sequence_node *args, cdk::basic_node *block) :
-       function_declaration_node(lineno, s, args), _block(block) {
+       zu::function_declaration_node(lineno, s, args), _block(block) {
     }
+
+	inline function_body_node(int lineno, zu::function_declaration_node *declaration, cdk::basic_node *block) :
+		function_body_node(lineno, declaration->
 
   public:
     inline cdk::basic_node *block() {
