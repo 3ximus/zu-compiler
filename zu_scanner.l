@@ -61,7 +61,7 @@
 	 */
 
 [0-9]\+\([\.]\?\([0-9]\+e[\-]\?[0-9]\+\)\|\.[0-9]\+\)			yylval.d = strtol(yytext, nullptr, 10); return tDOUBLE;		/* TODO Works on grep -- do i need all escape characters? */
-[0-9]\+\|0x[0-9a-fA-F]\+										yylval.i = strtol(yytext, nullptr, 10); return tINTEGER;	/* TODO Works on grep -- do i need all escape characters? */
+[0]\|[0-9]\+\|0x[0-9a-fA-F]\+									yylval.i = strtol(yytext, nullptr, 10); return tINTEGER;	/* TODO Works on grep -- do i need all escape characters? */
 
 	/**
 	 *	SYMBOLS
