@@ -18,7 +18,7 @@ namespace zu {
   public:
     inline variable_node(int lineno, basic_type *zu_type, const char *s, bool isPublic) :
         zu::lvalue_node(lineno), _zu_type(zu_type), _name(s), _isPublic(isPublic) {
-
+	}
     inline variable_node(int lineno, basic_type *zu_type, const std::string &s, bool isPublic) :
         zu::lvalue_node(lineno), _zu_type(zu_type), _name(s), _isPublic(isPublic) {
     }
