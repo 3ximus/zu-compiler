@@ -77,7 +77,7 @@ stmt : expr									{ $$ = new zu::evaluation_node(LINE, $1); }
 /*   | '{' list '}'							{ $$ = $2; } */ 				/* TODO not needed ?? */
 /*	 | tPRINT expr ';'						{ $$ = new zu::print_node(LINE, $2); } */
 
-expr : lit							{ $$ = new cdk::basic_node(LINE); } /* TODO basic_node ?? */
+expr : lit							{ $$ = new cdk::evaluation_node(LINE, $1); } /* TODO basic_node ?? */
 	 | '@'							{ $$ = new zu::read_node(LINE); }
      | '-' expr %prec tUNARY  		{ $$ = new cdk::neg_node(LINE, $2); }
      | '~' expr %prec tUNARY  		{ $$ = new cdk::neg_node(LINE, $2); } /* TODO FIXME what was this node? */
@@ -103,6 +103,7 @@ func : tTYPE tIDENTIFIER '(' list ')'							{ $$ = new zu::function_declaration_
 	 | '!' tIDENTIFIER '(' list ')'								{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
 	 | tTYPE tIDENTIFIER '(' list ')' '=' lit					{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
 	 | tTYPE tIDENTIFIER '(' list ')' stmt %prec tBDY			{ $$ = new zu::function_body_node(LINE, $2, $4, $6); }
+	 | '!' tIDENTIFIER '(' list ')' stmt %prec tBDY				{ $$ = new zu::function_body_node(LINE, $2, $4, $6); }
 	 | tTYPE tIDENTIFIER '(' list ')' '=' lit stmt %prec tBDY	{ $$ = new zu::function_body_node(LINE, $2, $4, $8); }
 	 ;
 
