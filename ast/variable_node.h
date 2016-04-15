@@ -8,20 +8,20 @@ namespace zu {
 
   class variable_node: public cdk::expression_node {
 	basic_type *_zu_type;
-	std::string _name;
+	std::string _identifier;
 	bool _isPublic;
 	bool _isImported;
 	cdk::expression_node *_value;
 
   public:
     inline variable_node(int lineno, basic_type *zu_type, const char *s, bool isPublic, bool isImported, cdk::expression_node *value) :
-        cdk::expression_node(lineno), _zu_type(zu_type), _name(s), _isPublic(isPublic), _isImported(isImported), _value(value) {
+        cdk::expression_node(lineno), _zu_type(zu_type), _identifier(s), _isPublic(isPublic), _isImported(isImported), _value(value) {
 	}
     inline variable_node(int lineno, basic_type *zu_type, const std::string &s, bool isPublic, bool isImported, cdk::expression_node *value) :
-        cdk::expression_node(lineno), _zu_type(zu_type), _name(s), _isPublic(isPublic), _isImported(isImported), _value(value) {
+        cdk::expression_node(lineno), _zu_type(zu_type), _identifier(s), _isPublic(isPublic), _isImported(isImported), _value(value) {
     }
     inline variable_node(int lineno, basic_type *zu_type, const std::string *s, bool isPublic, bool isImported, cdk::expression_node *value) :
-       cdk::expression_node(lineno), _zu_type(zu_type), _name(*s), _isPublic(isPublic), _isImported(isImported), _value(value) {
+       cdk::expression_node(lineno), _zu_type(zu_type), _identifier(*s), _isPublic(isPublic), _isImported(isImported), _value(value) {
     }
 
   public:
@@ -29,8 +29,8 @@ namespace zu {
 		return _zu_type;
 	}
 
-    inline std::string name() {
-      return _name;
+    inline std::string identifier() {
+      return _identifier;
     }
 
 	inline bool isPublic() {

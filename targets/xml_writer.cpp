@@ -58,13 +58,49 @@ void zu::xml_writer::do_or_node(zu::or_node * const node, int lvl) {
 //---------------------------------------------------------------------------
 
 void zu::xml_writer::do_allocation_node(zu::allocation_node * const node, int lvl)  {
-
+  CHECK_TYPES(_compiler, _symtab, node);
+  openTag(node, lvl);
+  if(node->size() != NULL) {
+    openTag("size", lvl + 2);
+    node->size()->accept(this, lvl + 4);
+    closeTag("size", lvl + 2);
+  }
+  closeTag(node, lvl);
 }
 void zu::xml_writer::do_index_node(zu::index_node * const node, int lvl) {
+  CHECK_TYPES(_compiler, _symtab, node);
+  openTag(node, lvl);
+  if(node->lvalue() != NULL) {
+    openTag("lvalue", lvl + 2);
+    node->lvalue()->accept(this, lvl + 4);
+    closeTag("lvalue", lvl + 2);
+  }
+  if(node->rvalue() != NULL) {
+    openTag("rvalue", lvl + 2);
+    node->rvalue()->accept(this, lvl + 4);
+    closeTag("rvalue", lvl + 2);
+  }
+  closeTag(node, lvl);
 }
 void zu::xml_writer::do_id_node(zu::id_node * const node, int lvl) {
+  CHECK_TYPES(_compiler, _symtab, node);
+  openTag(node, lvl);
+  os() << std::string(lvl + 2, ' ') << "<" << node->name() << ">" << node->identifier() << "</" << node->name() << ">" << std::endl;
+  closeTag(node, lvl);
 }
 void zu::xml_writer::do_variable_node(zu::variable_node * const node, int lvl) {
+  CHECK_TYPES(_compiler, _symtab, node);
+  openTag(node, lvl);
+  os() << std::string(lvl + 2, ' ') << "<" << node->name() << ">" << node->identifier() << "</" << node->name() << ">" << std::endl;
+  processBasicType(node->zu_type(), lvl + 2);
+  os() << std::string(lvl + 2, ' ') << "<isPublic>" << node->isPublic() << "</isPublic>" << std::endl;
+  os() << std::string(lvl + 2, ' ') << "<isImported>" << node->isImported() << "</<isImported>" << std::endl;
+  if(node->value() != NULL) {
+    openTag("value", lvl + 2);
+    node->value()->accept(this, lvl + 4);
+    closeTag("value", lvl + 2);
+  }
+  closeTag(node, lvl);
 }
 
 //---------------------------------------------------------------------------
@@ -123,8 +159,7 @@ void zu::xml_writer::do_rvalue_node(zu::rvalue_node * const node, int lvl) {
 //---------------------------------------------------------------------------
 
 void zu::xml_writer::do_lvalue_node(zu::lvalue_node * const node, int lvl) {
-  //CHECK_TYPES(_compiler, _symtab, node);
-  //processSimple(node, lvl);
+	// ABSTRACT
 }
 
 //---------------------------------------------------------------------------
@@ -184,8 +219,32 @@ void zu::xml_writer::do_function_body_node(zu::function_body_node * const node, 
   os() << std::string(lvl + 2, ' ') << "<isImported>" << node->isImported() << "</<isImported>" << std::endl;
   closeTag(node, lvl);
 }
-void zu::xml_writer::do_function_call_node(zu::function_call_node * const node, int lvl){/*TODO*/}
-void zu::xml_writer::do_block_node(zu::block_node * const node, int lvl){/*TODO*/}
+void zu::xml_writer::do_function_call_node(zu::function_call_node * const node, int lvl){
+  CHECK_TYPES(_compiler, _symtab, node);
+  openTag(node, lvl);
+  os() << std::string(lvl + 2, ' ') << "<" << node->name() << ">" << node->identifier() << "</" << node->name() << ">" << std::endl;
+  if(node->args() != NULL) {
+    openTag("args", lvl + 2);
+    node->args()->accept(this, lvl + 4);
+    closeTag("args", lvl + 2);
+  }
+  closeTag(node, lvl);
+}
+void zu::xml_writer::do_block_node(zu::block_node * const node, int lvl){
+  CHECK_TYPES(_compiler, _symtab, node);
+  openTag(node, lvl);
+  if(node->declarations() != NULL) {
+    openTag("declarations", lvl + 2);
+    node->declarations()->accept(this, lvl + 4);
+    closeTag("declarations", lvl + 2);
+  }
+  if(node->instructions() != NULL) {
+    openTag("instructions", lvl + 2);
+    node->instructions()->accept(this, lvl + 4);
+    closeTag("instructions", lvl + 2);
+  }
+  closeTag(node, lvl);
+}
 
 //---------------------------------------------------------------------------
 
