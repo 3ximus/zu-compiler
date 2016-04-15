@@ -42,10 +42,9 @@
 %nonassoc tUNARY /* not recognized by lexical analizer and is used to specify precedence */
 
 %type <node> stmt
-%type <sequence> list
-%type <expression> expr
+%type <sequence> list vars
+%type <expression> expr func
 %type <lvalue> lval
-/* %type <function> func */
 
 %{
 //-- The rules below will be included in yyparse, the main parsing function.
@@ -57,31 +56,38 @@ program	: tBEGIN list tEND { compiler->ast(new zu::program_node(LINE, $2)); }
         ;
 */
 
-/* TODO -- separar varias isntrucoes por virgula, fazer onde? */
-
 list : stmt	     							{ $$ = new cdk::sequence_node(LINE, $1); }
-	 | list stmt 							{ $$ = new cdk::sequence_node(LINE, $2, $1); }
+	 | func	     							{ $$ = new cdk::sequence_node(LINE, $1); }
+	 | vars	     							{ $$ = new cdk::sequence_node(LINE, $1); }
+	 | list ';' stmt 						{ $$ = new cdk::sequence_node(LINE, $3, $1); }
+	 | list ';' func						{ $$ = new cdk::sequence_node(LINE, $3, $1); }
+	 | list ';' vars						{ $$ = new cdk::sequence_node(LINE, $3, $1); }
 	 ;
 
 stmt : expr									{ $$ = new zu::evaluation_node(LINE, $1); }
+	 | stmt ';' expr						{ $$ = new cdk::evaluation_node(LINE, $3); }
      | '[' list ';' list ';' list ']' stmt	{ $$ = new zu::for_node(LINE, $2, $4, $6, $8); }
      | '[' expr ']' '#' stmt %prec tIFX		{ $$ = new zu::if_node(LINE, $2, $5); }
      | '[' expr ']' '?' stmt ':' stmt		{ $$ = new zu::if_else_node(LINE, $2, $5, $7); }
      | '[' expr ']'							{ $$ = new zu::allocation_node(LINE, $2); }
- 	 | tTYPE tIDENTIFIER '(' list ')'							{ $$ = new zu::function_declaration_node(LINE, $2, $4); } /* shouldn't be list ? */
-	 | '!' tIDENTIFIER '(' list ')'								{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
-	 | tTYPE tIDENTIFIER '(' list ')' '=' expr					{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
-	 | tTYPE tIDENTIFIER '(' list ')' stmt %prec tBDY			{ $$ = new zu::function_body_node(LINE, $2, $4, $6); }
-	 | '!' tIDENTIFIER '(' list ')' stmt %prec tBDY				{ $$ = new zu::function_body_node(LINE, $2, $4, $6); }
-	 | tTYPE tIDENTIFIER '(' list ')' '=' expr stmt %prec tBDY	{ $$ = new zu::function_body_node(LINE, $2, $4, $8); }
      | expr '!'								{ $$ = new zu::print_node(LINE, $1); } /* TODO simple print ? */
      | expr '!!'							{ $$ = new zu::print_node(LINE, $1); } /* TODO new line print ? */
      | tBREAK								{ $$ = new zu::break_node(LINE); }
      | tCONTINUE							{ $$ = new zu::continue_node(LINE); }
      | tRETURN								{ $$ = new zu::return_node(LINE); }
      ;
-/*   | '{' list '}'							{ $$ = $2; } */ 				/* TODO not needed ?? */
-/*	 | tPRINT expr ';'						{ $$ = new zu::print_node(LINE, $2); } */
+
+vars : expr									{ $$ = new cdk::sequence_node(LINE, $1); }
+	 | vars ',' expr						{ $$ = new cdk::sequence_node(LINE, $3, $1); }
+
+func : tTYPE tIDENTIFIER '(' vars ')'							{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
+	 | '!' tIDENTIFIER '(' vars ')'								{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
+	 | tTYPE tIDENTIFIER '(' vars ')' '=' expr					{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
+/* TODO instead of stmt use what ? */
+	 | tTYPE tIDENTIFIER '(' vars ')' '{' stmt '}' %prec tBDY			{ $$ = new zu::function_body_node(LINE, $2, $4, $7); }
+	 | '!' tIDENTIFIER '(' vars ')' '{' stmt '}' %prec tBDY				{ $$ = new zu::function_body_node(LINE, $2, $4, $7); }
+	 | tTYPE tIDENTIFIER '(' vars ')' '=' expr '{' stmt '}' %prec tBDY	{ $$ = new zu::function_body_node(LINE, $2, $4, $9); }
+	 ;
 
 expr : tINTEGER               		{ $$ = new cdk::integer_node(LINE, $1); }
      | tSTRING                		{ $$ = new cdk::string_node(LINE, $1); } /* TODO add concatenation case here ? */
