@@ -283,23 +283,26 @@ void zu::xml_writer::do_read_node(zu::read_node * const node, int lvl) {
 
 void zu::xml_writer::do_for_node(zu::for_node * const node, int lvl) {
   openTag(node, lvl);
-
-  openTag("init", lvl + 2);
-  node->init()->accept(this, lvl + 4);
-  closeTag("init", lvl + 2);
-
-  openTag("test", lvl + 2);
-  node->test()->accept(this, lvl + 4);
-  closeTag("test", lvl + 2);
-
-  openTag("step", lvl + 2);
-  node->step()->accept(this, lvl + 4);
-  closeTag("step", lvl + 2);
-
-  openTag("block", lvl + 2);
-  node->block()->accept(this, lvl + 4);
-  closeTag("block", lvl + 2);
-
+  if(node->init() != NULL) {
+	  openTag("init", lvl + 2);
+	  node->init()->accept(this, lvl + 4);
+	  closeTag("init", lvl + 2);
+  }
+  if(node->test() != NULL) {
+	  openTag("test", lvl + 2);
+	  node->test()->accept(this, lvl + 4);
+	  closeTag("test", lvl + 2);
+  }
+  if(node->step() != NULL) {
+	  openTag("step", lvl + 2);
+	  node->step()->accept(this, lvl + 4);
+	  closeTag("step", lvl + 2);
+  }
+  if(node->block() != NULL) {
+	  openTag("block", lvl + 2);
+	  node->block()->accept(this, lvl + 4);
+	  closeTag("block", lvl + 2);
+  }
   closeTag(node, lvl);
 }
 
@@ -307,26 +310,36 @@ void zu::xml_writer::do_for_node(zu::for_node * const node, int lvl) {
 
 void zu::xml_writer::do_if_node(zu::if_node * const node, int lvl) {
   openTag(node, lvl);
-  openTag("condition", lvl + 2);
-  node->condition()->accept(this, lvl + 4);
-  closeTag("condition", lvl + 2);
-  openTag("then", lvl + 2);
-  node->block()->accept(this, lvl + 4);
-  closeTag("then", lvl + 2);
+  if(node->condition() != NULL) {
+	  openTag("condition", lvl + 2);
+	  node->condition()->accept(this, lvl + 4);
+	  closeTag("condition", lvl + 2);
+  }
+  if(node->then() != NULL) {
+	  openTag("then", lvl + 2);
+	  node->block()->accept(this, lvl + 4);
+	  closeTag("then", lvl + 2);
+  }
   closeTag(node, lvl);
 }
 
 void zu::xml_writer::do_if_else_node(zu::if_else_node * const node, int lvl) {
   openTag(node, lvl);
-  openTag("condition", lvl + 2);
-  node->condition()->accept(this, lvl + 4);
-  closeTag("condition", lvl + 2);
-  openTag("then", lvl + 2);
-  node->thenblock()->accept(this, lvl + 4);
-  closeTag("then", lvl + 2);
-  openTag("else", lvl + 2);
-  node->elseblock()->accept(this, lvl + 4);
-  closeTag("else", lvl + 2);
+  if(node->condition() != NULL) {
+	  openTag("condition", lvl + 2);
+	  node->condition()->accept(this, lvl + 4);
+	  closeTag("condition", lvl + 2);
+  }
+  if(node->thenblock() != NULL) {
+	  openTag("then", lvl + 2);
+	  node->thenblock()->accept(this, lvl + 4);
+	  closeTag("then", lvl + 2);
+  }
+  if(node->elseblock() != NULL) {
+	  openTag("else", lvl + 2);
+	  node->elseblock()->accept(this, lvl + 4);
+	  closeTag("else", lvl + 2);
+  }
   closeTag(node, lvl);
 }
 void zu::xml_writer::do_return_node(zu::return_node * const node, int lvl) {
