@@ -315,7 +315,7 @@ void zu::xml_writer::do_if_node(zu::if_node * const node, int lvl) {
 	  node->condition()->accept(this, lvl + 4);
 	  closeTag("condition", lvl + 2);
   }
-  if(node->then() != NULL) {
+  if(node->block() != NULL) {
 	  openTag("then", lvl + 2);
 	  node->block()->accept(this, lvl + 4);
 	  closeTag("then", lvl + 2);
