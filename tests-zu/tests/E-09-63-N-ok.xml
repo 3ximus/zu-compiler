@@ -33,3 +33,26 @@
               </init>
               <test>
                 <sequence_node size='1'>
+                </sequence_node>
+              </test>
+              <step>
+                <sequence_node size='1'>
+                </sequence_node>
+              </step>
+              <block>
+                <print_node>
+                  <id_node>
+                    <id_node>x</id_node>
+                  </id_node>
+                  <newLine>1</newLine>
+                </print_node>
+              </block>
+            </for_node>
+          </sequence_node>
+        </instructions>
+      </block_node>
+    </block>
+    <isPublic>1</isPublic>
+    <isImported>0</isImported>
+  </function_body_node>
+</sequence_node>

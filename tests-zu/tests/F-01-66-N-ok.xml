@@ -33,3 +33,61 @@
               </init>
               <test>
                 <sequence_node size='1'>
+                </sequence_node>
+              </test>
+              <step>
+                <sequence_node size='1'>
+                </sequence_node>
+              </step>
+              <block>
+                <for_node>
+                  <init>
+                    <sequence_node size='1'>
+                      <variable_node>
+                        <variable_node>x</variable_node>
+                        <int_1>4</int_1>
+                        <isPublic>0</isPublic>
+                        <isImported>0</isImported>
+                        <value>
+                          <integer_node>1</integer_node>
+                        </value>
+                      </variable_node>
+                    </sequence_node>
+                  </init>
+                  <test>
+                    <sequence_node size='1'>
+                    </sequence_node>
+                  </test>
+                  <step>
+                    <sequence_node size='1'>
+                    </sequence_node>
+                  </step>
+                  <block>
+                    <if_else_node>
+                      <condition>
+                      </condition>
+                      <then>
+                        <continue_node>
+                        </continue_node>
+                      </then>
+                      <else>
+                        <print_node>
+                          <id_node>
+                            <id_node>x</id_node>
+                          </id_node>
+                          <newLine>0</newLine>
+                        </print_node>
+                      </else>
+                    </if_else_node>
+                  </block>
+                </for_node>
+              </block>
+            </for_node>
+          </sequence_node>
+        </instructions>
+      </block_node>
+    </block>
+    <isPublic>1</isPublic>
+    <isImported>0</isImported>
+  </function_body_node>
+</sequence_node>
