@@ -1,5 +1,5 @@
 %option c++ yyclass="zu_scanner" outfile="zu_scanner.cpp"
-%option stack noyywrap yylineno 8bit
+%option stack noyywrap yylineno 8bit debug
 %{
 /* $Id: zu_scanner.l,v 1.2 2016/03/16 22:16:34 ist169481 Exp $ */
 // make relevant includes before including the parser's tab file
@@ -21,6 +21,8 @@ DOUBLE		[0-9]+([\.]?([0-9]+e[\-]?[0-9]+)|\.[0-9]+)
 %x X_STRING X_IGNORE_STRING X_COMMENT X_STRING_SPEC
 
 %%
+
+	{ set_debug(1); }
 
 "//".*						; /* ignore comments */
 
