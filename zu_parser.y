@@ -29,7 +29,7 @@
 %token <s> tIDENTIFIER tSTRING
 
 /* ZU TOKENS */
-%token tBREAK tCONTINUE tRETURN tTYPE
+%token tBREAK tCONTINUE tRETURN tTYPE tPRINTLN
 
 /* PRECEDENCES */
 
@@ -173,7 +173,7 @@ expr : lit  							{ $$ = $1; }
      | '~' expr %prec tUNARY  			{ $$ = new zu::not_node(LINE, $2); }
      | '-' expr %prec tUNARY  			{ $$ = new zu::simetry_node(LINE, $2); }
      | '+' expr %prec tUNARY  			{ $$ = new zu::identity_node(LINE, $2); }
-	 | expr '?'	%prec tUNARY			{ $$ = new zu::position_node(LINE, $1); }
+	 | expr '?							{ $$ = new zu::position_node(LINE, $1); }
 	 | '@'								{ $$ = new zu::read_node(LINE); } /* FIXME speacial read and print */
      | '[' expr ']'						{ $$ = new zu::allocation_node(LINE, $2); }
      | '(' expr ')'						{ $$ = $2; }
