@@ -77,7 +77,7 @@ stmt : expr									{ $$ = new zu::evaluation_node(LINE, $1); }
 /*   | '{' list '}'							{ $$ = $2; } */ 				/* TODO not needed ?? */
 /*	 | tPRINT expr ';'						{ $$ = new zu::print_node(LINE, $2); } */
 
-expr : lit							{ $$ = new cdk::evaluation_node(LINE, $1); } /* TODO basic_node ?? */
+expr : lit							{ $$ = new cdk::expression_node(LINE); } /* TODO basic_node ?? */
 	 | '@'							{ $$ = new zu::read_node(LINE); }
      | '-' expr %prec tUNARY  		{ $$ = new cdk::neg_node(LINE, $2); }
      | '~' expr %prec tUNARY  		{ $$ = new cdk::neg_node(LINE, $2); } /* TODO FIXME what was this node? */
@@ -93,7 +93,7 @@ expr : lit							{ $$ = new cdk::evaluation_node(LINE, $1); } /* TODO basic_node
      | expr tNE expr	      		{ $$ = new cdk::ne_node(LINE, $1, $3); }
      | expr tEQ expr	      		{ $$ = new cdk::eq_node(LINE, $1, $3); }
      | '(' expr ')'           		{ $$ = $2; }
-	 | func							{ $$ = new zu::function_declaration(LINE); } /* TODO horrible delete this eventually */
+	 | func							{ $$ = new cdk::expression_node(LINE); } /* TODO horrible delete this eventually */
      | lval                   		{ $$ = new zu::rvalue_node(LINE, $1); }  //FIXME
      | lval '=' expr          		{ $$ = new zu::assignment_node(LINE, $1, $3); }
      ;
