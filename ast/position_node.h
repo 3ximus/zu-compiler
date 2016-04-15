@@ -7,19 +7,13 @@
 namespace zu {
 
   /**
-   * Class for describing assignment nodes.
+   * Class for describing referenece nodes.
    */
-  class position_node: public cdk::expression_node {
-    zu::lvalue_node *_lvalue;
+  class position_node: public cdk::unary_expression_node {
 
   public:
-    inline position_node(int lineno, zu::lvalue_node *lvalue) :
-        cdk::expression_node(lineno), _lvalue(lvalue) {
-    }
-
-  public:
-    inline zu::lvalue_node *lvalue() {
-      return _lvalue;
+    inline position_node(int lineno, cdk::expression_node *arg) :
+        cdk::unary_expression_node(lineno, arg) {
     }
 
     void accept(basic_ast_visitor *sp, int level) {

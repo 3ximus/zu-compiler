@@ -53,8 +53,7 @@
 %type <node> vdec blk cond iter /* variable declaration, block, condtional instruction, iteraion instruction */
 %type <function> fdec
 
-%type <expression> expr fcal lit
-%type <lvalue> lval
+%type <expression> expr fcal lit lval
 %type <ztype> type
 
 %{
@@ -172,7 +171,7 @@ expr : lval 							{ $$ = $1; }
      | '~' expr %prec tUNARY  			{ $$ = new zu::not_node(LINE, $2); }
      | '-' expr %prec tUNARY  			{ $$ = new zu::simetry_node(LINE, $2); }
      | '+' expr %prec tUNARY  			{ $$ = new zu::identity_node(LINE, $2); }
-	 | lval '?'							{ $$ = new zu::position_node(LINE, $1); }
+	 | expr '?'	%prec tUNARY			{ $$ = new zu::position_node(LINE, $1); }
 	 | lval '=' expr					{ $$ = new zu::assignment_node(LINE, $1, $3); }
      | '[' expr ']'						{ $$ = new zu::allocation_node(LINE, $2); }
      | '(' expr ')'						{ $$ = $2; }
