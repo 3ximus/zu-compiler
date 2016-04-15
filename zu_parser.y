@@ -36,6 +36,15 @@
 %nonassoc tIFX
 %nonassoc tELSEX
 
+%right '='
+%left '|'
+%left '&'
+%nonassoc '~'
+%left tGE tLE tEQ tNE '>' '<'
+%left '+' '-'
+%left '*' '/' '%'
+
+/*
 %left tGE tLE tEQ tNE '>' '<'
 %left '+' '-'
 %left '*' '/' '%'
@@ -43,6 +52,8 @@
 %right '('
 %right '='
 %right '['
+*/
+
 %nonassoc tUNARY
 
 /* TYPES OF NON-TERMINAL SYMBOLS */
