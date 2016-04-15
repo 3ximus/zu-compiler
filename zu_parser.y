@@ -41,7 +41,7 @@
 %right '('
 %nonassoc tUNARY /* not recognized by lexical analizer and is used to specify precedence */
 
-%type <node> stmt lit
+%type <node> stmt
 %type <sequence> list
 %type <expression> expr
 %type <lvalue> lval
@@ -77,7 +77,9 @@ stmt : expr									{ $$ = new zu::evaluation_node(LINE, $1); }
 /*   | '{' list '}'							{ $$ = $2; } */ 				/* TODO not needed ?? */
 /*	 | tPRINT expr ';'						{ $$ = new zu::print_node(LINE, $2); } */
 
-expr : lit							{ $$ = new cdk::expression_node(LINE); } /* TODO basic_node ?? */
+expr : tINTEGER               		{ $$ = new cdk::integer_node(LINE, $1); }
+     | tSTRING                		{ $$ = new cdk::string_node(LINE, $1); } /* TODO add concatenation case here ? */
+     | tDOUBLE                		{ $$ = new cdk::double_node(LINE, $1); }
 	 | '@'							{ $$ = new zu::read_node(LINE); }
      | '-' expr %prec tUNARY  		{ $$ = new cdk::neg_node(LINE, $2); }
      | '~' expr %prec tUNARY  		{ $$ = new cdk::neg_node(LINE, $2); } /* TODO FIXME what was this node? */
@@ -93,29 +95,24 @@ expr : lit							{ $$ = new cdk::expression_node(LINE); } /* TODO basic_node ?? 
      | expr tNE expr	      		{ $$ = new cdk::ne_node(LINE, $1, $3); }
      | expr tEQ expr	      		{ $$ = new cdk::eq_node(LINE, $1, $3); }
      | '(' expr ')'           		{ $$ = $2; }
-	 | func							{ $$ = new cdk::expression_node(LINE); } /* TODO horrible delete this eventually */
+	 | func							{ $$ = new zu::rvalue_node(LINE, $1); } /* TODO horrible delete this eventually */
      | lval                   		{ $$ = new zu::rvalue_node(LINE, $1); }  //FIXME
      | lval '=' expr          		{ $$ = new zu::assignment_node(LINE, $1, $3); }
      ;
 
 /* TODO figure out how to apply scope modifiers 	*/
-func : tTYPE tIDENTIFIER '(' list ')'							{ $$ = new zu::function_declaration_node(LINE, $2, $4); } /* shouldn't be list */
+func : tTYPE tIDENTIFIER '(' list ')'							{ $$ = new zu::function_declaration_node(LINE, $2, $4); } /* shouldn't be list ? */
 	 | '!' tIDENTIFIER '(' list ')'								{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
-	 | tTYPE tIDENTIFIER '(' list ')' '=' lit					{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
+	 | tTYPE tIDENTIFIER '(' list ')' '=' expr					{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
 	 | tTYPE tIDENTIFIER '(' list ')' stmt %prec tBDY			{ $$ = new zu::function_body_node(LINE, $2, $4, $6); }
 	 | '!' tIDENTIFIER '(' list ')' stmt %prec tBDY				{ $$ = new zu::function_body_node(LINE, $2, $4, $6); }
-	 | tTYPE tIDENTIFIER '(' list ')' '=' lit stmt %prec tBDY	{ $$ = new zu::function_body_node(LINE, $2, $4, $8); }
+	 | tTYPE tIDENTIFIER '(' list ')' '=' expr stmt %prec tBDY	{ $$ = new zu::function_body_node(LINE, $2, $4, $8); }
 	 ;
 
-lval : tIDENTIFIER ';'             			{ $$ = new zu::variable_node(LINE, $1); }	/* TODO Can devclaraations be here ? */
+lval : tIDENTIFIER ';'             			{ $$ = new zu::variable_node(LINE, $1); }	/* TODO Can declarations be here ? */
 	 | tTYPE tIDENTIFIER					{ $$ = new zu::variable_node(LINE, $2); }	/* TODO vars ? */
 	 | tTYPE tIDENTIFIER '!'				{ $$ = new zu::variable_node(LINE, $2); }	/* TODO global variables ? */
 	 | tTYPE tIDENTIFIER '?'				{ $$ = new zu::variable_node(LINE, $2); }	/* TODO extern variables ? */
 	 | '<' tTYPE '>' tIDENTIFIER			{ $$ = 0; } /* TODO FIXME XXX */
      ;
-
-lit  : tINTEGER               				{ $$ = new cdk::integer_node(LINE, $1); }
-     | tSTRING                				{ $$ = new cdk::string_node(LINE, $1); } /* TODO add concatenation case here ? */
-     | tDOUBLE                				{ $$ = new cdk::double_node(LINE, $1); }
-
 %%
