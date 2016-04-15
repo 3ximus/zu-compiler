@@ -34,7 +34,7 @@
 %left tGE tLE tEQ tNE '>' '<'
 %left '+' '-'
 %left '*' '/' '%'
-%left '!' tNLPRINT
+%left '!' tPRINTLN
 %right '['
 %right '('
 %right '='
@@ -91,7 +91,7 @@ stmt : expr									{ $$ = new zu::evaluation_node(LINE, $1); }
      | '[' expr ']' '?' stmt ':' stmt		{ $$ = new zu::if_else_node(LINE, $2, $5, $7); }
      | '[' expr ']'							{ $$ = new zu::allocation_node(LINE, $2); }
      | expr '!'								{ $$ = new zu::print_node(LINE, $1); } /* TODO simple print ? */
-     | expr tNLPRINT						{ $$ = new zu::print_node(LINE, $1); } /* TODO new line print ? */
+     | expr tPRINTLN						{ $$ = new zu::print_node(LINE, $1); } /* TODO new line print ? */
      | tBREAK								{ $$ = new zu::break_node(LINE); }
      | tCONTINUE							{ $$ = new zu::continue_node(LINE); }
      | tRETURN								{ $$ = new zu::return_node(LINE); }
