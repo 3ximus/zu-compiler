@@ -67,7 +67,7 @@
 	 *	SYMBOLS
 	 */
 
-[-()<>=+*/%;\[\]{}.&|]     	return *yytext; /* TODO i added a few more check if it is okay -- also, do i need to escape & ? */
+[-()<>=+*/%;\[\]{}\.&|]     	return *yytext; /* TODO i added a few more check if it is okay -- also, do i need to escape & ? */
 
 [ \t\n]+						; /* ignore whitespace */
 

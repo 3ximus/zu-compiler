@@ -69,21 +69,21 @@ func : tTYPE tIDENTIFIER '(' vars ')'							{ $$ = new zu::function_declaration_
 	 | '!' tIDENTIFIER '(' vars ')'								{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
 	 | tTYPE tIDENTIFIER '(' vars ')' '=' expr					{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
 /* TODO instead of stmt use what ? */
-	 | tTYPE tIDENTIFIER '(' vars ')' blck %prec tBDY			{ $$ = new zu::function_body_node(LINE, $2, $4, $7); }
-	 | '!' tIDENTIFIER '(' vars ')' blck %prec tBDY				{ $$ = new zu::function_body_node(LINE, $2, $4, $7); }
-	 | tTYPE tIDENTIFIER '(' vars ')' '=' expr blk %prec tBDY	{ $$ = new zu::function_body_node(LINE, $2, $4, $9); }
+	 | tTYPE tIDENTIFIER '(' vars ')' blck %prec tBDY			{ $$ = new zu::function_body_node(LINE, $2, $4, $6); }
+	 | '!' tIDENTIFIER '(' vars ')' blck %prec tBDY				{ $$ = new zu::function_body_node(LINE, $2, $4, $6); }
+	 | tTYPE tIDENTIFIER '(' vars ')' '=' expr blck %prec tBDY	{ $$ = new zu::function_body_node(LINE, $2, $4, $8); }
 	 ;
 
 blck :
-	 | '{' list '}					{ $$ = new cdk::sequence_node(LINE, $2); }
-	 | '{' stmt '}					{ $$ = new cdk::sequence_node(LINE, $2); }
+	 | '{' list '}'					{ $$ = new cdk::sequence_node(LINE, $2); }
+	 | '{' stmt '}'					{ $$ = new cdk::sequence_node(LINE, $2); }
 	 ;
 
-body :								/* EMPTY ?? */
-	 | list							{ $$ = sequence_node(LINE, $1); }
-	 | stmt 						{ $$ = sequence_node(LINE, $1); }
-	 | body list  					{ $$ = sequence_node(LINE, $1); }
-	 | body stmt  					{ $$ = sequence_node(LINE, $1); }
+body :								{ $$ = 0; } /* EMPTY ?? */
+	 | list							{ $$ = new cdk::sequence_node(LINE, $1); }
+	 | stmt 						{ $$ = new cdk::sequence_node(LINE, $1); }
+	 | body list  					{ $$ = new cdk::sequence_node(LINE, $1); }
+	 | body stmt  					{ $$ = new cdk::sequence_node(LINE, $1); }
 	 ;
 
 stmt : expr									{ $$ = new zu::evaluation_node(LINE, $1); }
