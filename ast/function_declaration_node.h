@@ -12,13 +12,13 @@ namespace zu {
     cdk::sequence_node *_args;
 
   public:
-    inline function_declaration_node(int lineno, cdk::sequence_node *args, const char *s) :
+    inline function_declaration_node(int lineno, const char *s, cdk::sequence_node *args) :
         cdk::simple_value_node<std::string>(lineno, s), _args(args) {
     }
-    inline function_declaration_node(int lineno, cdk::sequence_node *args, const std::string &s) :
+    inline function_declaration_node(int lineno, const std::string &s, cdk::sequence_node *args) :
         cdk::simple_value_node<std::string>(lineno, s), _args(args) {
     }
-    inline function_declaration_node(int lineno, cdk::sequence_node *args, const std::string *s) :
+    inline function_declaration_node(int lineno, const std::string *s, cdk::sequence_node *args) :
         cdk::simple_value_node<std::string>(lineno, *s), _args(args) {
     }
 
