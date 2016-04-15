@@ -63,11 +63,11 @@ list : vars	     							{ $$ = new cdk::sequence_node(LINE, $1); }
 
 vars : expr									{ $$ = new cdk::sequence_node(LINE, $1); }
 	 | vars ',' expr						{ $$ = new cdk::sequence_node(LINE, $3, $1); }
+	 ;
 
 func : tTYPE tIDENTIFIER '(' vars ')'							{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
 	 | '!' tIDENTIFIER '(' vars ')'								{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
 	 | tTYPE tIDENTIFIER '(' vars ')' '=' expr					{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
-/* TODO instead of stmt use what ? */
 	 | tTYPE tIDENTIFIER '(' vars ')' blck %prec tBDY			{ $$ = new zu::function_body_node(LINE, $2, $4, $6); }
 	 | '!' tIDENTIFIER '(' vars ')' blck %prec tBDY				{ $$ = new zu::function_body_node(LINE, $2, $4, $6); }
 	 | tTYPE tIDENTIFIER '(' vars ')' '=' expr blck %prec tBDY	{ $$ = new zu::function_body_node(LINE, $2, $4, $8); }
@@ -103,6 +103,7 @@ expr : tINTEGER						{ $$ = new cdk::integer_node(LINE, $1); }
 	 | '@'							{ $$ = new zu::read_node(LINE); }
      | '-' expr %prec tUNARY  		{ $$ = new cdk::neg_node(LINE, $2); }
      | '~' expr %prec tUNARY  		{ $$ = new cdk::neg_node(LINE, $2); } /* TODO FIXME what was this node? */
+     | '+' expr %prec tUNARY  		{ $$ = new zu::identity_node(LINE, $2); } /* TODO certo? */
      | expr '+' expr				{ $$ = new cdk::add_node(LINE, $1, $3); }
      | expr '-' expr				{ $$ = new cdk::sub_node(LINE, $1, $3); }
      | expr '*' expr				{ $$ = new cdk::mul_node(LINE, $1, $3); }

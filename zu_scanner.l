@@ -46,6 +46,7 @@
 	 */
 
 \"							yy_push_state(X_STRING); yylval.s = new std::string("");
+<X_STRING>\"[\t\s]+\"		; /* string concatenation */
 <X_STRING>\"				yy_pop_state(); return tSTRING;
 <X_STRING>\\0				yy_pop_state(); yy_push_state(X_IGNORE_STRING);
 <X_STRING>\\\"				*yylval.s += yytext + 1;
@@ -55,7 +56,6 @@
 <X_IGNORE_STRING>\"			yy_pop_state(); return tSTRING;
 <X_IGNORE_STRING>.			;
 <X_IGNORE_STRING>\n			yyerror("newline in string");
-
 
 	/**
 	 * 	REAIS / INTEIROS
