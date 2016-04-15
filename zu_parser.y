@@ -109,15 +109,15 @@ vdec : type tIDENTIFIER					{ $$ = new zu::variable_node(LINE, $1, $2, false, fa
 	 | type tIDENTIFIER '?' '=' expr	{ $$ = new zu::variable_node(LINE, $1, $2, false, true, $5); }
 	 ;
 
-fdec : type tIDENTIFIER '(' args ')' '=' lit		{ $$ = new zu::function_declaration_node(LINE, $1, $2, false, false, $4, $7); }
-	 | type tIDENTIFIER '(' args ')'				{ $$ = new zu::function_declaration_node(LINE, $1, $2, false, false, $4, NULL); }
-	 | '!'	tIDENTIFIER '(' args ')' 				{ $$ = new zu::function_declaration_node(LINE, new basic_type(0, basic_type::TYPE_VOID), $2, false, false, $4, NULL); }
-	 | type	tIDENTIFIER '!' '(' args ')' '=' lit	{ $$ = new zu::function_declaration_node(LINE, $1, $2, true, false, $5, $8); }
-	 | type	tIDENTIFIER '!' '(' args ')' 			{ $$ = new zu::function_declaration_node(LINE, $1, $2, true, false, $5, NULL); }
-	 | '!'	tIDENTIFIER '!' '(' args ')' 			{ $$ = new zu::function_declaration_node(LINE, new basic_type(0, basic_type::TYPE_VOID), $2, true, false, $5, NULL); }
-	 | type	tIDENTIFIER '?' '(' args ')' '=' lit	{ $$ = new zu::function_declaration_node(LINE, $1, $2, false, true,  $5, $8); }
-	 | type	tIDENTIFIER '?' '(' args ')' 			{ $$ = new zu::function_declaration_node(LINE, $1, $2, false, true,  $5, NULL); }
-	 | '!'	tIDENTIFIER '?' '(' args ')' 			{ $$ = new zu::function_declaration_node(LINE, new basic_type(0, basic_type::TYPE_VOID), $2, false, true, $5, NULL); }
+fdec : type tIDENTIFIER '(' fargs ')' '=' lit		{ $$ = new zu::function_declaration_node(LINE, $1, $2, false, false, $4, $7); }
+	 | type tIDENTIFIER '(' fargs ')'				{ $$ = new zu::function_declaration_node(LINE, $1, $2, false, false, $4, NULL); }
+	 | '!'	tIDENTIFIER '(' fargs ')' 				{ $$ = new zu::function_declaration_node(LINE, new basic_type(0, basic_type::TYPE_VOID), $2, false, false, $4, NULL); }
+	 | type	tIDENTIFIER '!' '(' fargs ')' '=' lit	{ $$ = new zu::function_declaration_node(LINE, $1, $2, true, false, $5, $8); }
+	 | type	tIDENTIFIER '!' '(' fargs ')' 			{ $$ = new zu::function_declaration_node(LINE, $1, $2, true, false, $5, NULL); }
+	 | '!'	tIDENTIFIER '!' '(' fargs ')' 			{ $$ = new zu::function_declaration_node(LINE, new basic_type(0, basic_type::TYPE_VOID), $2, true, false, $5, NULL); }
+	 | type	tIDENTIFIER '?' '(' fargs ')' '=' lit	{ $$ = new zu::function_declaration_node(LINE, $1, $2, false, true,  $5, $8); }
+	 | type	tIDENTIFIER '?' '(' fargs ')' 			{ $$ = new zu::function_declaration_node(LINE, $1, $2, false, true,  $5, NULL); }
+	 | '!'	tIDENTIFIER '?' '(' fargs ')' 			{ $$ = new zu::function_declaration_node(LINE, new basic_type(0, basic_type::TYPE_VOID), $2, false, true, $5, NULL); }
 	 ;
 
 lit  : tINTEGER							{ $$ = new cdk::integer_node(LINE, $1); }
