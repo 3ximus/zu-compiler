@@ -45,7 +45,7 @@
 %type <sequence> list
 %type <expression> expr
 %type <lvalue> lval
-%type <function> func
+/* %type <function> func */
 
 %{
 //-- The rules below will be included in yyparse, the main parsing function.
@@ -68,6 +68,12 @@ stmt : expr									{ $$ = new zu::evaluation_node(LINE, $1); }
      | '[' expr ']' '#' stmt %prec tIFX		{ $$ = new zu::if_node(LINE, $2, $5); }
      | '[' expr ']' '?' stmt ':' stmt		{ $$ = new zu::if_else_node(LINE, $2, $5, $7); }
      | '[' expr ']'							{ $$ = new zu::allocation_node(LINE, $2); }
+ 	 | tTYPE tIDENTIFIER '(' list ')'							{ $$ = new zu::function_declaration_node(LINE, $2, $4); } /* shouldn't be list ? */
+	 | '!' tIDENTIFIER '(' list ')'								{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
+	 | tTYPE tIDENTIFIER '(' list ')' '=' expr					{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
+	 | tTYPE tIDENTIFIER '(' list ')' stmt %prec tBDY			{ $$ = new zu::function_body_node(LINE, $2, $4, $6); }
+	 | '!' tIDENTIFIER '(' list ')' stmt %prec tBDY				{ $$ = new zu::function_body_node(LINE, $2, $4, $6); }
+	 | tTYPE tIDENTIFIER '(' list ')' '=' expr stmt %prec tBDY	{ $$ = new zu::function_body_node(LINE, $2, $4, $8); }
      | expr '!'								{ $$ = new zu::print_node(LINE, $1); } /* TODO simple print ? */
      | expr '!!'							{ $$ = new zu::print_node(LINE, $1); } /* TODO new line print ? */
      | tBREAK								{ $$ = new zu::break_node(LINE); }
@@ -95,19 +101,9 @@ expr : tINTEGER               		{ $$ = new cdk::integer_node(LINE, $1); }
      | expr tNE expr	      		{ $$ = new cdk::ne_node(LINE, $1, $3); }
      | expr tEQ expr	      		{ $$ = new cdk::eq_node(LINE, $1, $3); }
      | '(' expr ')'           		{ $$ = $2; }
-	 | func							{ $$ = new zu::rvalue_node(LINE, $1); } /* TODO horrible delete this eventually */
      | lval                   		{ $$ = new zu::rvalue_node(LINE, $1); }  //FIXME
      | lval '=' expr          		{ $$ = new zu::assignment_node(LINE, $1, $3); }
      ;
-
-/* TODO figure out how to apply scope modifiers 	*/
-func : tTYPE tIDENTIFIER '(' list ')'							{ $$ = new zu::function_declaration_node(LINE, $2, $4); } /* shouldn't be list ? */
-	 | '!' tIDENTIFIER '(' list ')'								{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
-	 | tTYPE tIDENTIFIER '(' list ')' '=' expr					{ $$ = new zu::function_declaration_node(LINE, $2, $4); }
-	 | tTYPE tIDENTIFIER '(' list ')' stmt %prec tBDY			{ $$ = new zu::function_body_node(LINE, $2, $4, $6); }
-	 | '!' tIDENTIFIER '(' list ')' stmt %prec tBDY				{ $$ = new zu::function_body_node(LINE, $2, $4, $6); }
-	 | tTYPE tIDENTIFIER '(' list ')' '=' expr stmt %prec tBDY	{ $$ = new zu::function_body_node(LINE, $2, $4, $8); }
-	 ;
 
 lval : tIDENTIFIER ';'             			{ $$ = new zu::variable_node(LINE, $1); }	/* TODO Can declarations be here ? */
 	 | tTYPE tIDENTIFIER					{ $$ = new zu::variable_node(LINE, $2); }	/* TODO vars ? */
