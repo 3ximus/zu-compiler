@@ -12,9 +12,9 @@ namespace zu {
   class variable_node: public cdk::expression_node {
 	basic_type *_zu_type;
 	std::string _name;
-	cdk::expression_node *_value;
 	bool _isPublic;
 	bool _isImported;
+	cdk::expression_node *_value;
 
   public:
     inline variable_node(int lineno, basic_type *zu_type, const char *s, bool isPublic, bool isImported, cdk::expression_node *value) :
