@@ -58,7 +58,7 @@ void zu::postfix_writer::do_and_node(zu::and_node * const node, int lvl) {/* TOD
 void zu::postfix_writer::do_or_node(zu::or_node * const node, int lvl) {/* TODO */}
 void zu::postfix_writer::do_allocation_node(zu::allocation_node * const node, int lvl)  {/* TODO */}
 void zu::postfix_writer::do_index_node(zu::index_node * const node, int lvl) {/* TODO */}
-void zu::postfix_writer::do_identifier_node(zu::identifier_node * const node, int lvl) {/* TODO */}
+void zu::postfix_writer::do_id_node(zu::id_node * const node, int lvl) {/* TODO */}
 void zu::postfix_writer::do_variable_node(zu::variable_node * const node, int lvl) {/* TODO */}
 
 //---------------------------------------------------------------------------

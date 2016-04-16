@@ -57,7 +57,7 @@ namespace zu {
 	void do_or_node(zu::or_node * const node, int lvl);
 	void do_allocation_node(zu::allocation_node * const node, int lvl);
 	void do_index_node(zu::index_node * const node, int lvl);
-	void do_identifier_node(zu::identifier_node * const node, int lvl);
+	void do_id_node(zu::id_node * const node, int lvl);
 	void do_variable_node(zu::variable_node * const node, int lvl);
 
   protected:
