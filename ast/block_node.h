@@ -32,7 +32,7 @@ namespace zu {
      * @param level syntactic tree level
      */
     virtual void accept(basic_ast_visitor *sp, int level) {
-      sp->do_lvalue_node(this, level);
+      sp->do_block_node(this, level);
     }
 
   };

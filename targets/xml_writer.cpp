@@ -138,6 +138,7 @@ void zu::xml_writer::do_assignment_node(zu::assignment_node * const node, int lv
 void zu::xml_writer::do_function_declaration_node(zu::function_declaration_node * const node, int lvl){/*TODO*/}
 void zu::xml_writer::do_function_body_node(zu::function_body_node * const node, int lvl){/*TODO*/}
 void zu::xml_writer::do_function_call_node(zu::function_call_node * const node, int lvl){/*TODO*/}
+void zu::xml_writer::do_block_node(zu::block_node * const node, int lvl){/*TODO*/}
 
 //---------------------------------------------------------------------------
 

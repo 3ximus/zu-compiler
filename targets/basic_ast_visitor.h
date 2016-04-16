@@ -95,6 +95,7 @@ public:
   virtual void do_function_declaration_node(zu::function_declaration_node * const node, int lvl) = 0;
   virtual void do_function_body_node(zu::function_body_node * const node, int lvl) = 0;
   virtual void do_function_call_node(zu::function_call_node * const node, int lvl) = 0;
+  virtual void do_block_node(zu::block_node * const node, int lvl) = 0;
   virtual void do_evaluation_node(zu::evaluation_node * const node, int lvl) = 0;
   virtual void do_print_node(zu::print_node * const node, int lvl) = 0;
   virtual void do_read_node(zu::read_node * const node, int lvl) = 0;
