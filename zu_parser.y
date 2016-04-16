@@ -47,7 +47,7 @@
 /* TYPES OF NON-TERMINAL SYMBOLS */
 
 %type <node> dec arg var itr /* declarations, arguments, variables, instructions */
-%type <sequence> decs args vars itrs exprs
+%type <sequence> decs args vars itrs exprs fargs
 
 %type <node> vdec blk cond iter /* variable declaration, block, condtional instruction, iteraion instruction */
 %type <function> fdec
@@ -119,6 +119,10 @@ lit  : tINTEGER							{ $$ = new cdk::integer_node(LINE, $1); }
 	 | tDOUBLE							{ $$ = new cdk::double_node(LINE, $1); }
 	 | tSTRING							{ $$ = new cdk::string_node(LINE, $1); }
 	 ;
+
+fargs : args							{ $$ = $1; }
+	  |									{ $$ = NULL; }
+	  ;
 
 args : arg								{ $$ = new cdk::sequence_node(LINE, $1); }
 	 | args ',' arg						{ $$ = new cdk::sequence_node(LINE, $3, $1); }
