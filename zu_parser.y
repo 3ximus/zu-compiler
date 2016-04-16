@@ -128,7 +128,6 @@ fargs : args							{ $$ = $1; }
 
 args : arg								{ $$ = new cdk::sequence_node(LINE, $1); }
 	 | args ',' arg						{ $$ = new cdk::sequence_node(LINE, $3, $1); }
-	 |									{ $$ = NULL; }
 	 ;
 
 arg  : type tIDENTIFIER					{ $$ = new zu::variable_node(LINE, $1, $2, false, false, NULL); }
