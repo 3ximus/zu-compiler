@@ -6,9 +6,6 @@
 
 namespace zu {
 
-  /**
-   * Class for describing syntactic tree leaves for holding lvalues.
-   */
   class variable_node: public cdk::expression_node {
 	basic_type *_zu_type;
 	std::string _name;
