@@ -62,7 +62,7 @@
 %%
 
 file : decs								{ compiler->ast( $1 ); }
-	 | 									{ compiler->ast(new cdk::nil_node(LINE); }
+	 | 									{ compiler->ast(new cdk::nil_node(LINE);) }
 	 ;
 
 decs : dec								{ $$ = new cdk::sequence_node(LINE, $1); }
