@@ -55,6 +55,7 @@ namespace zu {
 	void do_not_node(zu::not_node * const node, int lvl);
 	void do_reference_node(zu::reference_node * const node, int lvl);
 	void do_identity_node(zu::identity_node * const node, int lvl);
+	void do_position_node(zu::position_node * const node, int lvl);
 
   public:
 	void do_and_node(zu::and_node * const node, int lvl);

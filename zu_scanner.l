@@ -85,7 +85,7 @@ DOUBLE		[0-9]+([\.]?([0-9]+e[\-]?[0-9]+)|\.[0-9]+)
 	 */
 
 [,;:()\[\]{}] 				return *yytext;
-[-<>=+*/%&|!]     			return *yytext;
+[-<>=+*/%&|!?]     			return *yytext;
 
 [ \t\n]+					; /* ignore whitespace */
 

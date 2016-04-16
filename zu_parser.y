@@ -170,6 +170,7 @@ expr : lval
      | '+' expr %prec tUNARY  			{ $$ = new zu::identity_node(LINE, $2); }
      | '[' expr ']'						{ $$ = new zu::allocation_node(LINE, $2); }
      | '(' expr ')'						{ $$ = $2; }
+	 | lval '?'							{ $$ = new zu::position_node(LINE, $1); }
 	 | lval '=' expr					{ $$ = new zu::assignment_node(LINE, $1, $3); }
 	 ;
 
