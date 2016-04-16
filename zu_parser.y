@@ -122,10 +122,10 @@ lit  : tINTEGER							{ $$ = new cdk::integer_node(LINE, $1); }
 
 args : arg								{ $$ = new cdk::sequence_node(LINE, $1); }
 	 | args ',' arg						{ $$ = new cdk::sequence_node(LINE, $3, $1); }
-	 |									{ $$ = new cdk::nil_node(LINE); }
+	 |									{ $$ = NULL; }
 	 ;
 
-arg  : type tIDENTIFIER					{ $$ = new zu::variable_node(LINE, $1, $2, false); }
+arg  : type tIDENTIFIER					{ $$ = new zu::variable_node(LINE, $1, $2, false, false, NULL); }
 	 ;
 
 type : '#'								{ $$ = new basic_type(4, basic_type::TYPE_INT); }
@@ -144,8 +144,7 @@ cond :  '[' expr ']' '#' itrs %prec tIFX	{ $$ = new zu::if_node(LINE, $2, $5); }
 	 |  '[' expr ']' '?' itrs ':' itrs		{ $$ = new zu::if_else_node(LINE, $2, $5, $7); }
 	 ;
 
-iter : '[' lval ';' expr ';' expr ']' itrs	{ $$ = new zu::for_node(LINE, $2, $4, $6, $8); }
-	 | '[' expr ';' expr ';' expr ']' itrs	{ $$ = new zu::for_node(LINE, $2, $4, $6, $8); }
+iter : '[' expr ';' expr ';' expr ']' itrs	{ $$ = new zu::for_node(LINE, $2, $4, $6, $8); }
 	 ;
 
 expr : lval
