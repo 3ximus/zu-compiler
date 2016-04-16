@@ -173,11 +173,11 @@ expr : lval
      | '+' expr %prec tUNARY  			{ $$ = new zu::identity_node(LINE, $2); }
      | '[' expr ']'						{ $$ = new zu::allocation_node(LINE, $2); }
      | '(' expr ')'						{ $$ = $2; }
-	 | lval '?'							{ $$ = new zu::position_node(LINE, $1); }
 	 | lval '=' expr					{ $$ = new zu::assignment_node(LINE, $1, $3); }
 	 ;
 
 lval : tIDENTIFIER						{ $$ = new zu::identifier_node(LINE, $1); }
+	 | lavl '?'							{ $$ = new zu::position_node(LINE, $1); }
 	 | lval '[' expr ']'				{ $$ = new zu::index_node(LINE, $1, $3); }
 	 | fcal '[' expr ']'				{ $$ = new zu::index_node(LINE, $1, $3); }
 	 ;
