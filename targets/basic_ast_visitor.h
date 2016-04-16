@@ -54,6 +54,8 @@ public:
   virtual void do_integer_node(cdk::integer_node * const node, int lvl) = 0;
   virtual void do_double_node(cdk::double_node * const node, int lvl) 	= 0;
   virtual void do_string_node(cdk::string_node * const node, int lvl) 	= 0;
+  virtual void do_identity_node(cdk::identifier_node * const node, int lvl) {
+  }
 
 
 public:
