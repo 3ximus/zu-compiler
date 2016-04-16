@@ -12,9 +12,9 @@ namespace zu {
   protected:
 	basic_type *_zu_type;
 	std::string *_name;
-    cdk::sequence_node *_args;
 	bool _isPublic;
 	bool _isImported;
+    cdk::sequence_node *_args;
 	cdk::expression_node *_literal;
 
   public:
