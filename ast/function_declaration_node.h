@@ -11,7 +11,7 @@ namespace zu {
   class function_declaration_node: public cdk::expression_node {
   protected:
 	basic_type *_zu_type;
-	std::string *_name;
+	std::string _name;
 	bool _isPublic;
 	bool _isImported;
     cdk::sequence_node *_args;
