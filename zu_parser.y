@@ -62,7 +62,7 @@
 %%
 
 file : decs								{ compiler->ast( $1 ); }
-	 | 									{ compiler->ast(new cdk::nil_node(LINE);) }
+	 | 									{ compiler->ast(new cdk::nil_node(LINE)); }
 	 ;
 
 decs : dec								{ $$ = new cdk::sequence_node(LINE, $1); }
@@ -71,7 +71,7 @@ decs : dec								{ $$ = new cdk::sequence_node(LINE, $1); }
 
 dec  : vars ';'							{ $$ = $1; }
 	 | fdec								{ $$ = $1; }
-	 | fdec blk							{ $$ = new function_body_node(LINE, $1, $2); }
+	 | fdec blk							{ $$ = new zu::function_body_node(LINE, $1, $2); }
 	 ;
 
 vars : var								{ $$ = new cdk::sequence_node(LINE, $1); }
@@ -116,8 +116,8 @@ fdec : type tIDENTIFIER '(' args ')' '=' lit		{ $$ = new zu::function_declaratio
 	 ;
 
 lit  : tINTEGER							{ $$ = new cdk::integer_node(LINE, $1); }
-	 | tDOUBLE							{ $$ = new cdk::string_node(LINE, $1); }
-	 | tSTRING							{ $$ = new cdk::double_node(LINE, $1); }
+	 | tDOUBLE							{ $$ = new cdk::double_node(LINE, $1); }
+	 | tSTRING							{ $$ = new cdk::string_node(LINE, $1); }
 	 ;
 
 args : arg								{ $$ = new cdk::sequence_node(LINE, $1); }
