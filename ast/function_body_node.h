@@ -31,7 +31,7 @@ namespace zu {
     }
 
   public:
-	inline basic_type zu_type() {
+	inline basic_type *zu_type() {
 		return _zu_type;
 	}
 
