@@ -181,8 +181,8 @@ fcal : tIDENTIFIER '(' exprs ')' 		{ $$ = new zu::function_call_node(LINE, $1, $
 	 | tIDENTIFIER '(' ')'				{ $$ = new zu::function_call_node(LINE, $1, NULL); }
 	 ;
 
-exprs : expr ',' exprs
-	  | expr
+exprs : expr ',' exprs					{ $$ = new cdk::sequence_node(LINE, $1, $3); }
+	  | expr							{ $$ = new cdk::sequence_node(LINE, $1); }
 	  ;
 
 %%

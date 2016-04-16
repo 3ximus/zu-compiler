@@ -36,16 +36,16 @@ namespace zu {
       return _name;
     }
 
-	inline cdk::expression_node value() {
-		return _value;
-	}
-
 	inline bool isPublic() {
 		return _isPublic;
 	}
 
 	inline bool isImported() {
 		return _isImported;
+	}
+
+	inline cdk::expression_node value() {
+		return _value;
 	}
 
     /**
