@@ -12,7 +12,7 @@ namespace zu {
     inline not_node(int lineno, expression_node *arg): cdk::unary_expression_node(lineno, arg) {}
 
     void accept(basic_ast_visitor *sp, int level) {
-      sp->do_simetry_node(this, level);
+      sp->do_not_node(this, level);
     }
 
   };

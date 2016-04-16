@@ -35,7 +35,7 @@ namespace zu {
     }
 
     void accept(basic_ast_visitor *sp, int level) {
-      sp->do_function_declaration_node(this, level);
+      sp->do_function_call_node(this, level);
     }
 
   };
