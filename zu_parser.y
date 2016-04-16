@@ -177,7 +177,7 @@ expr : lval
 	 ;
 
 lval : tIDENTIFIER						{ $$ = new zu::identifier_node(LINE, $1); }
-	 | lavl '?'							{ $$ = new zu::position_node(LINE, $1); }
+	 | lval '?'							{ $$ = new zu::position_node(LINE, $1); }
 	 | lval '[' expr ']'				{ $$ = new zu::index_node(LINE, $1, $3); }
 	 | fcal '[' expr ']'				{ $$ = new zu::index_node(LINE, $1, $3); }
 	 ;
