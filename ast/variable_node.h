@@ -44,7 +44,7 @@ namespace zu {
 		return _isImported;
 	}
 
-	inline cdk::expression_node value() {
+	inline cdk::expression_node *value() {
 		return _value;
 	}
 

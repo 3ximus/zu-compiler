@@ -57,7 +57,7 @@ DOUBLE		[0-9]+([\.]?([0-9]+e[\-]?[0-9]+)|\.[0-9]+)
 <X_STRING>\\ 				yy_push_state(X_STRING_SPEC);
 <X_STRING>\\\"				*yylval.s += yytext + 1;
 <X_STRING>.					*yylval.s += yytext;
-<X_STRING>\0				yyerror("null character in string");
+<X_STRING>\n				yyerror("new line in string");
 
 <X_STRING_SPEC>n	 					{ yy_pop_state(); *yylval.s += std::string(1,10); }
 <X_STRING_SPEC>r	 					{ yy_pop_state(); *yylval.s += std::string(1,13); }
