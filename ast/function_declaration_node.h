@@ -14,16 +14,18 @@ namespace zu {
 	std::string *_name;
     cdk::sequence_node *_args;
 	bool _isPublic;
+	bool _isImported;
+	cdk::expression_node *_literal;
 
   public:
-    inline function_declaration_node(int lineno, basic_type *zu_type, const char *s, bool isPublic, cdk::sequence_node *args) :
-        cdk::expression_node(lineno), _zu_type(zu_type), _name(s), _isPublic(isPublic), _args(args) {
+    inline function_declaration_node(int lineno, basic_type *zu_type, const char *s, bool isPublic, bool isImported, cdk::sequence_node *args, cdk::expression_node *literal) :
+        cdk::expression_node(lineno), _zu_type(zu_type), _name(s), _isPublic(isPublic), _isImported(isImported), _args(args), _literal(literal) {
     }
-    inline function_declaration_node(int lineno, basic_type *zu_type, const std::string &s, bool isPublic, cdk::sequence_node *args) :
-        cdk::expression_node(lineno), _zu_type(zu_type), _name(s), _isPublic(isPublic), _args(args) {
+    inline function_declaration_node(int lineno, basic_type *zu_type, const std::string &s, bool isPublic, bool isImported, cdk::sequence_node *args, cdk::expression_node *literal) :
+        cdk::expression_node(lineno), _zu_type(zu_type), _name(s), _isPublic(isPublic), _isImported(isImported), _args(args), _literal(literal) {
     }
-    inline function_declaration_node(int lineno, basic_type *zu_type, const std::string *s, bool isPublic, cdk::sequence_node *args) :
-        cdk::expression_node(lineno), _zu_type(zu_type), _name(*s), _isPublic(isPublic), _args(args) {
+    inline function_declaration_node(int lineno, basic_type *zu_type, const std::string *s, bool isPublic, bool isImported, cdk::sequence_node *args, cdk::expression_node *literal) :
+        cdk::expression_node(lineno), _zu_type(zu_type), _name(*s), _isPublic(isPublic), _isImported(isImported), _args(args), _literal(literal) {
     }
 
   public:
@@ -35,6 +37,10 @@ namespace zu {
       return _name;
     }
 
+	inline bool isImported() {
+		return _isImported;
+	}
+
 	inline bool isPublic() {
 		return _isPublic;
 	}
@@ -43,6 +49,9 @@ namespace zu {
       return _args;
     }
 
+	inline cdk::expression_node literal() {
+		return _literal;
+	}
 
     void accept(basic_ast_visitor *sp, int level) {
       sp->do_function_declaration_node(this, level);
