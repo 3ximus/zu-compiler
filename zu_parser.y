@@ -121,7 +121,7 @@ lit  : tINTEGER							{ $$ = new cdk::integer_node(LINE, $1); }
 	 ;
 
 args : arg								{ $$ = new cdk::sequence_node(LINE, $1); }
-	 | args ',' arg						{ $$ = new cdk::sequence_node(LINE, $2, $1); }
+	 | args ',' arg						{ $$ = new cdk::sequence_node(LINE, $3, $1); }
 	 |									{ $$ = new cdk::nil_node(LINE); }
 	 ;
 
