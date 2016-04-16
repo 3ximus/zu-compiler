@@ -10,7 +10,7 @@ namespace zu {
    */
   class function_call_node: public cdk::expression_node {
   protected:
-	std::string *_identifier;
+	std::string _identifier;
     cdk::sequence_node *_args;
 
   public:
@@ -26,7 +26,7 @@ namespace zu {
 
   public:
 
-    inline std::string name() {
+    inline std::string identifier() {
       return _identifier;
     }
 
