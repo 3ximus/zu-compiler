@@ -144,7 +144,7 @@ cond :  '[' expr ']' '#' itrs %prec tIFX	{ $$ = new zu::if_node(LINE, $2, $5); }
 	 |  '[' expr ']' '?' itrs ':' itrs		{ $$ = new zu::if_else_node(LINE, $2, $5, $7); }
 	 ;
 
-iter : '[' expr ';' expr ';' expr ']' itrs	{ $$ = new zu::for_node(LINE, $2, $4, $6, $8); }
+iter : '[' exprs ';' exprs ';' exprs ']' itrs	{ $$ = new zu::for_node(LINE, $2, $4, $6, $8); }
 	 ;
 
 expr : lval
@@ -164,8 +164,8 @@ expr : lval
      | expr tNE expr					{ $$ = new cdk::ne_node(LINE, $1, $3); }
      | expr '|' expr					{ $$ = new zu::or_node(LINE, $1, $3); }
      | expr '&' expr					{ $$ = new zu::and_node(LINE, $1, $3); }
-     | '~' expr %prec tUNARY  			{ $$ = new cdk::not_node(LINE, $2); }
-     | '-' expr %prec tUNARY  			{ $$ = new cdk::simetry_node(LINE, $2); }
+     | '~' expr %prec tUNARY  			{ $$ = new zu::not_node(LINE, $2); }
+     | '-' expr %prec tUNARY  			{ $$ = new zu::simetry_node(LINE, $2); }
      | '+' expr %prec tUNARY  			{ $$ = new zu::identity_node(LINE, $2); }
      | '[' expr ']'						{ $$ = new zu::allocation_node(LINE, $2); }
      | '(' expr ')'						{ $$ = $2; }
