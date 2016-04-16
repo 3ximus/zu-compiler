@@ -18,7 +18,6 @@
   cdk::basic_node     				*node;	/* node pointer */
   cdk::sequence_node  				*sequence;
   cdk::expression_node				*expression;
-  zu::lvalue_node  					*lvalue;
   zu::function_declaration_node 	*function;
   basic_type						*ztype;
 };
@@ -54,7 +53,6 @@
 %type <function> fdec
 
 %type <expression> expr fcal lit lval
-%type <lvalue> lval
 %type <ztype> type
 
 %{
@@ -84,7 +82,7 @@ var  : vdec								{ $$ = $1; }
 	 ;
 
 itrs : itr								{ $$ = new cdk::sequence_node(LINE, $1); }
-	 | itrs itr							{ $$ = new cdk::sequence_node(LINE, $3, $1); }
+	 | itrs itr							{ $$ = new cdk::sequence_node(LINE, $2, $1); }
 	 ;
 
 itr  : expr ';'							{ $$ = new zu::evaluation_node(LINE, $1); }
