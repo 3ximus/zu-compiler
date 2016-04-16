@@ -17,7 +17,7 @@ namespace zu {
        zu::function_declaration_node(lineno, zu_type, s, isPublic, isImported, args, literal), _block(block) {
     }
 
-    inline function_body_node(int lineno, basic_type *zu_type, const std::string &s, bool isPublic, bool isImported, cdk::sequence_node cdk::expression_node *literal, cdk::basic_node *block) :
+    inline function_body_node(int lineno, basic_type *zu_type, const std::string &s, bool isPublic, bool isImported, cdk::sequence_node *args, cdk::expression_node *literal, cdk::basic_node *block) :
        zu::function_declaration_node(lineno, zu_type, s, isPublic, isImported, args, literal), _block(block) {
     }
 
@@ -27,16 +27,16 @@ namespace zu {
 
 	/* declaration constructor TODO correct ? */
 	inline function_body_node(int lineno, zu::function_declaration_node *declaration, cdk::basic_node *block) :
-		zu::function_declaration_node(lineno, declaration->zu_type(), new std::string(declaration->name()), declaration->isPublic(), declaration->isImported(), declaration->literal()),  _block(block) {
+		zu::function_declaration_node(lineno, declaration->zu_type(), new std::string(declaration->identifier()), declaration->isPublic(), declaration->isImported(), declaration->args(), declaration->literal()),  _block(block) {
     }
 
   public:
-	inline basic_type zu_type() {
+	inline basic_type *zu_type() {
 		return _zu_type;
 	}
 
-    inline std::string name() {
-      return _name;
+    inline std::string identifier() {
+      return _identifier;
     }
 
 	inline bool isImported() {
@@ -51,7 +51,7 @@ namespace zu {
       return _args;
     }
 
-	inline cdk::expression_node literal() {
+	inline cdk::expression_node *literal() {
 		return _literal;
 	}
 

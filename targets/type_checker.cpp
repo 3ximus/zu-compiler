@@ -42,6 +42,7 @@ void zu::type_checker::do_simetry_node(zu::simetry_node * const node, int lvl) {
 void zu::type_checker::do_not_node(zu::not_node * const node, int lvl) {/* TODO */}
 void zu::type_checker::do_reference_node(zu::reference_node * const node, int lvl) {/* TODO */}
 void zu::type_checker::do_identity_node(zu::identity_node * const node, int lvl) {/* TODO */}
+void zu::type_checker::do_position_node(zu::position_node * const node, int lvl) {/* TODO */}
 
 //---------------------------------------------------------------------------
 
@@ -49,7 +50,7 @@ void zu::type_checker::do_and_node(zu::and_node * const node, int lvl) {/* TODO 
 void zu::type_checker::do_or_node(zu::or_node * const node, int lvl) {/* TODO */}
 void zu::type_checker::do_allocation_node(zu::allocation_node * const node, int lvl)  {/* TODO */}
 void zu::type_checker::do_index_node(zu::index_node * const node, int lvl) {/* TODO */}
-void zu::type_checker::do_identifier_node(zu::identifier_node * const node, int lvl) {/* TODO */}
+void zu::type_checker::do_id_node(zu::id_node * const node, int lvl) {/* TODO */}
 void zu::type_checker::do_variable_node(zu::variable_node * const node, int lvl) {/* TODO */}
 
 //---------------------------------------------------------------------------
@@ -122,6 +123,7 @@ void zu::type_checker::do_lvalue_node(zu::lvalue_node * const node, int lvl) {
 void zu::type_checker::do_function_declaration_node(zu::function_declaration_node * const node, int lvl){/*TODO*/}
 void zu::type_checker::do_function_body_node(zu::function_body_node * const node, int lvl){/*TODO*/}
 void zu::type_checker::do_function_call_node(zu::function_call_node * const node, int lvl){/*TODO*/}
+void zu::type_checker::do_block_node(zu::block_node * const node, int lvl){/*TODO*/}
 //---------------------------------------------------------------------------
 
 void zu::type_checker::do_assignment_node(zu::assignment_node * const node, int lvl) {

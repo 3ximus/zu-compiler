@@ -11,7 +11,7 @@ namespace zu {
    * Class for describing syntactic tree leaves for holding lvalues.
    */
   class block_node: public cdk::basic_node {
-	  cdk::sequence_node *_declarations *_instructions;
+	  cdk::sequence_node *_declarations, *_instructions;
 
   public:
     inline block_node(int lineno, cdk::sequence_node *declarations, cdk::sequence_node *instructions) :
@@ -32,7 +32,7 @@ namespace zu {
      * @param level syntactic tree level
      */
     virtual void accept(basic_ast_visitor *sp, int level) {
-      sp->do_lvalue_node(this, level);
+      sp->do_block_node(this, level);
     }
 
   };

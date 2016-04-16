@@ -19,6 +19,7 @@
   cdk::sequence_node  				*sequence;
   cdk::expression_node				*expression;
   zu::function_declaration_node 	*function;
+  zu::lvalue_node					*lvalue;
   basic_type						*ztype;
 };
 
@@ -47,12 +48,13 @@
 /* TYPES OF NON-TERMINAL SYMBOLS */
 
 %type <node> dec arg var itr /* declarations, arguments, variables, instructions */
-%type <sequence> decs args vars itrs exprs
+%type <sequence> decs args vars itrs exprs fargs
 
 %type <node> vdec blk cond iter /* variable declaration, block, condtional instruction, iteraion instruction */
 %type <function> fdec
 
-%type <expression> expr fcal lit lval
+%type <expression> expr fcal lit
+%type <lvalue> lval
 %type <ztype> type
 
 %{
@@ -62,7 +64,7 @@
 %%
 
 file : decs								{ compiler->ast( $1 ); }
-	 | 									{ compiler->ast(new cdk::nil_node(LINE); }
+	 | 									{ compiler->ast(new cdk::nil_node(LINE)); }
 	 ;
 
 decs : dec								{ $$ = new cdk::sequence_node(LINE, $1); }
@@ -71,7 +73,7 @@ decs : dec								{ $$ = new cdk::sequence_node(LINE, $1); }
 
 dec  : vars ';'							{ $$ = $1; }
 	 | fdec								{ $$ = $1; }
-	 | fdec blk							{ $$ = new function_body_node(LINE, $1, $2); }
+	 | fdec blk							{ $$ = new zu::function_body_node(LINE, $1, $2); }
 	 ;
 
 vars : var								{ $$ = new cdk::sequence_node(LINE, $1); }
@@ -116,16 +118,19 @@ fdec : type tIDENTIFIER '(' args ')' '=' lit		{ $$ = new zu::function_declaratio
 	 ;
 
 lit  : tINTEGER							{ $$ = new cdk::integer_node(LINE, $1); }
-	 | tDOUBLE							{ $$ = new cdk::string_node(LINE, $1); }
-	 | tSTRING							{ $$ = new cdk::double_node(LINE, $1); }
+	 | tDOUBLE							{ $$ = new cdk::double_node(LINE, $1); }
+	 | tSTRING							{ $$ = new cdk::string_node(LINE, $1); }
 	 ;
+
+fargs : args							{ $$ = $1; }
+	  |									{ $$ = NULL; }
+	  ;
 
 args : arg								{ $$ = new cdk::sequence_node(LINE, $1); }
 	 | args ',' arg						{ $$ = new cdk::sequence_node(LINE, $3, $1); }
-	 |									{ $$ = new cdk::nil_node(LINE); }
 	 ;
 
-arg  : type tIDENTIFIER					{ $$ = new zu::variable_node(LINE, $1, $2, false); }
+arg  : type tIDENTIFIER					{ $$ = new zu::variable_node(LINE, $1, $2, false, false, NULL); }
 	 ;
 
 type : '#'								{ $$ = new basic_type(4, basic_type::TYPE_INT); }
@@ -144,13 +149,12 @@ cond :  '[' expr ']' '#' itrs %prec tIFX	{ $$ = new zu::if_node(LINE, $2, $5); }
 	 |  '[' expr ']' '?' itrs ':' itrs		{ $$ = new zu::if_else_node(LINE, $2, $5, $7); }
 	 ;
 
-iter : '[' lval ';' expr ';' expr ']' itrs	{ $$ = new zu::for_node(LINE, $2, $4, $6, $8); }
-	 | '[' expr ';' expr ';' expr ']' itrs	{ $$ = new zu::for_node(LINE, $2, $4, $6, $8); }
+iter : '[' exprs ';' exprs ';' exprs ']' itrs	{ $$ = new zu::for_node(LINE, $2, $4, $6, $8); }
 	 ;
 
-expr : lval
-	 | lit
-	 | fcal
+expr : lval 							{ $$ = $1; }
+	 | lit  							{ $$ = $1; }
+	 | fcal 							{ $$ = $1; }
 	 | '@'								{ $$ = new zu::read_node(LINE); } /* FIXME speacial read and print */
      | expr '+' expr					{ $$ = new cdk::add_node(LINE, $1, $3); }
      | expr '-' expr					{ $$ = new cdk::sub_node(LINE, $1, $3); }
@@ -165,14 +169,16 @@ expr : lval
      | expr tNE expr					{ $$ = new cdk::ne_node(LINE, $1, $3); }
      | expr '|' expr					{ $$ = new zu::or_node(LINE, $1, $3); }
      | expr '&' expr					{ $$ = new zu::and_node(LINE, $1, $3); }
-     | '~' expr %prec tUNARY  			{ $$ = new cdk::not_node(LINE, $2); }
-     | '-' expr %prec tUNARY  			{ $$ = new cdk::simetry_node(LINE, $2); }
+     | '~' expr %prec tUNARY  			{ $$ = new zu::not_node(LINE, $2); }
+     | '-' expr %prec tUNARY  			{ $$ = new zu::simetry_node(LINE, $2); }
      | '+' expr %prec tUNARY  			{ $$ = new zu::identity_node(LINE, $2); }
-     | '(' expr ')'						{ $$ = $2; }
+	 | lval '?'							{ $$ = new zu::position_node(LINE, $1); }
 	 | lval '=' expr					{ $$ = new zu::assignment_node(LINE, $1, $3); }
+     | '[' expr ']'						{ $$ = new zu::allocation_node(LINE, $2); }
+     | '(' expr ')'						{ $$ = $2; }
 	 ;
 
-lval : tIDENTIFIER						{ $$ = new zu::identifier_node(LINE, $1); }
+lval : tIDENTIFIER						{ $$ = new zu::id_node(LINE, $1); }
 	 | lval '[' expr ']'				{ $$ = new zu::index_node(LINE, $1, $3); }
 	 | fcal '[' expr ']'				{ $$ = new zu::index_node(LINE, $1, $3); }
 	 ;

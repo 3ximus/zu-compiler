@@ -55,13 +55,14 @@ namespace zu {
 	void do_not_node(zu::not_node * const node, int lvl);
 	void do_reference_node(zu::reference_node * const node, int lvl);
 	void do_identity_node(zu::identity_node * const node, int lvl);
+	void do_position_node(zu::position_node * const node, int lvl);
 
   public:
 	void do_and_node(zu::and_node * const node, int lvl);
 	void do_or_node(zu::or_node * const node, int lvl);
 	void do_allocation_node(zu::allocation_node * const node, int lvl);
 	void do_index_node(zu::index_node * const node, int lvl);
-	void do_identifier_node(zu::identifier_node * const node, int lvl);
+	void do_id_node(zu::id_node * const node, int lvl);
 	void do_variable_node(zu::variable_node * const node, int lvl);
 
   public:
@@ -85,6 +86,7 @@ namespace zu {
 	void do_function_declaration_node(zu::function_declaration_node * const node, int lvl);
 	void do_function_body_node(zu::function_body_node * const node, int lvl);
 	void do_function_call_node(zu::function_call_node * const node, int lvl);
+	void do_block_node(zu::block_node * const node, int lvl);
     void do_evaluation_node(zu::evaluation_node * const node, int lvl);
     void do_print_node(zu::print_node * const node, int lvl);
     void do_read_node(zu::read_node * const node, int lvl);

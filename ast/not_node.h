@@ -4,7 +4,7 @@
 namespace zu {
 
   /**
-   * Class for describing and nodes.
+   * Class for describing not nodes.
    */
   class not_node: public cdk::unary_expression_node {
 
