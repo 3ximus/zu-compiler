@@ -17,7 +17,7 @@ namespace zu {
        zu::function_declaration_node(lineno, zu_type, s, isPublic, isImported, args, literal), _block(block) {
     }
 
-    inline function_body_node(int lineno, basic_type *zu_type, const std::string &s, bool isPublic, bool isImported, cdk::sequence_node cdk::expression_node *literal, cdk::basic_node *block) :
+    inline function_body_node(int lineno, basic_type *zu_type, const std::string &s, bool isPublic, bool isImported, cdk::sequence_node *args, cdk::expression_node *literal, cdk::basic_node *block) :
        zu::function_declaration_node(lineno, zu_type, s, isPublic, isImported, args, literal), _block(block) {
     }
 
