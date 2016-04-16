@@ -49,7 +49,7 @@ namespace zu {
       return _args;
     }
 
-	inline cdk::expression_node literal() {
+	inline cdk::expression_node *literal() {
 		return _literal;
 	}
 
