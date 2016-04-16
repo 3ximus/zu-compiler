@@ -12,7 +12,14 @@
 // don't change this
 #define yyerror LexerError
 %}
-%x X_STRING X_IGNORE_STRING X_COMMENT
+
+INTEGER		0|([1-9][0-9]*)
+HEX_INT		0x[0-9a-fA-F]+
+
+DOUBLE		[0-9]+([\.]?([0-9]+e[\-]?[0-9]+)|\.[0-9]+)
+
+%x X_STRING X_IGNORE_STRING X_COMMENT X_STRING_SPEC
+
 %%
 
 "//".*						; /* ignore comments */
@@ -20,8 +27,7 @@
 \/\*						yy_push_state(X_COMMENT);
 <X_COMMENT>\*\/				yy_pop_state();
 <X_COMMENT>\/\*				yy_push_state(X_COMMENT);
-<X_COMMENT>.				; /* ignore */
-<X_COMMENT>.|\n
+<X_COMMENT>.|\n				; /* ignore */
 
 ">="						return tGE;
 "<="						return tLE;
@@ -31,8 +37,9 @@
 "><"						return tBREAK;
 "<>"						return tCONTINUE;
 "!!!"						return tRETURN;
+"!!"						return tPRINTLN;
 
-[#%$]						return tTYPE;
+[#%$]						return *yytext; /* zu_types */
 
 	/**
 	 * 	IDENTIFICADORES
@@ -44,34 +51,45 @@
 	 * 	STRINGS
 	 */
 
-\"							yy_push_state(X_STRING); yylval.s = new std::string("");
-<X_STRING>\"				yy_pop_state(); return tSTRING;
-<X_STRING>\\0				yy_pop_state(); yy_push_state(X_IGNORE_STRING);
+\"							{ yy_push_state(X_STRING); yylval.s = new std::string(""); }
+<X_STRING>\"[\t\s]*\"		; /* string concatenation TODO verify if its * or + */
+<X_STRING>\"				{ yy_pop_state(); return tSTRING; }
+<X_STRING>\\ 				yy_push_state(X_STRING_SPEC);
 <X_STRING>\\\"				*yylval.s += yytext + 1;
 <X_STRING>.					*yylval.s += yytext;
-<X_STRING>\n				yyerror("newline in string");
+<X_STRING>\n				yyerror("new line in string");
 
-<X_IGNORE_STRING>\"			yy_pop_state(); return tSTRING;
-<X_IGNORE_STRING>.			;
+<X_STRING_SPEC>n	 					{ yy_pop_state(); *yylval.s += std::string(1,10); }
+<X_STRING_SPEC>r	 					{ yy_pop_state(); *yylval.s += std::string(1,13); }
+<X_STRING_SPEC>t	 					{ yy_pop_state(); *yylval.s += std::string(1,9); }
+<X_STRING_SPEC>[\"\\]					{ yy_pop_state(); *yylval.s += yytext; }
+<X_STRING_SPEC>0[0-9a-fA-F]+			{ yy_pop_state(); *yylval.s += std::string(1,strtol(yytext, nullptr, 16)); }
+<X_STRING_SPEC>[1-9a-fA-F][0-9a-fA-F]*	{ yy_pop_state(); *yylval.s += std::string(1,strtol(yytext, nullptr, 16)); }
+<X_STRING_SPEC>0						{ yy_pop_state(); yy_pop_state(); yy_push_state(X_IGNORE_STRING); }
+<X_STRING_SPEC>.|\n						yyerror("Invalid special character");
+
+<X_IGNORE_STRING>\"			{ yy_pop_state(); return tSTRING; }
+<X_IGNORE_STRING>.			; /* ignore everything else */
 <X_IGNORE_STRING>\n			yyerror("newline in string");
-
 
 	/**
 	 * 	REAIS / INTEIROS
 	 */
 
-[0-9]\+\([\.]\?\([0-9]\+e[\-]\?[0-9]\+\)\|\.[0-9]\+\)			yylval.d = strtol(yytext, nullptr, 10); return tDOUBLE;		/* TODO Works on grep -- do i need all escape characters? */
-[0-9]\+\|0x[0-9a-fA-F]\+										yylval.i = strtol(yytext, nullptr, 10); return tINTEGER;	/* TODO Works on grep -- do i need all escape characters? */
+{DOUBLE}					{ yylval.d = strtol(yytext, nullptr, 10); if(errno == ERANGE) yyerror("Invalid number range, overflow occurred"); return tDOUBLE; }
+{INTEGER}					{ yylval.i = strtol(yytext, nullptr, 10); if(errno == ERANGE) yyerror("Invalid number range, overflow occurred"); return tINTEGER; }
+{HEX_INT}					{ yylval.i = strtol(yytext, nullptr, 16); if(errno == ERANGE) yyerror("Invalid number range, overflow occurred"); return tINTEGER; } /* TODO should i ofset to remove the 0x ? */
 
 	/**
 	 *	SYMBOLS
 	 */
 
-[-()<>=+*/%;\[\]{}.&|]     	return *yytext; /* TODO i added a few more check if it is okay -- also, do i need to escape & ? */
+[,;:()\[\]{}] 				return *yytext;
+[-<>=+*/%&|!]     			return *yytext;
 
-[ \t\n]+						; /* ignore whitespace */
+[ \t\n]+					; /* ignore whitespace */
 
-.                      	yyerror("Unknown character");
+.                      		yyerror("Unknown character");
 
 %%
 // Very, very dirty hack: flex is a mess generating C++ scanners.
