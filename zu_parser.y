@@ -59,6 +59,7 @@
 %type <expression> expr fcal lit /* expression, function call, literal */
 %type <lvalue> lval
 %type <ztype> type
+%type <s> str
 
 %{
 //-- The rules below will be included in yyparse, the main parsing function.
@@ -120,9 +121,13 @@ fdec : type tIDENTIFIER '(' fargs ')' '=' lit		{ $$ = new zu::function_declarati
 	 | '!'	tIDENTIFIER '?' '(' fargs ')' 		{ $$ = new zu::function_declaration_node(LINE, new basic_type(0, basic_type::TYPE_VOID), $2, false, true, $5, NULL); }
 	 ;
 
-lit  : tINTEGER						{ $$ = new cdk::integer_node(LINE, $1); }
-	 | tDOUBLE					{ $$ = new cdk::double_node(LINE, $1); }
-	 | tSTRING					{ $$ = new cdk::string_node(LINE, $1); }
+lit  : tINTEGER							{ $$ = new cdk::integer_node(LINE, $1); }
+	 | tDOUBLE							{ $$ = new cdk::double_node(LINE, $1); }
+	 | str								{ $$ = new cdk::string_node(LINE, $1); }
+	 ;
+
+str  : tSTRING							{ $$ = $1; }
+	 | str tSTRING						{ $$ = new std::string(*$1 + *$2); }
 	 ;
 
 fargs : args						{ $$ = $1; }
@@ -170,18 +175,18 @@ expr : lit  						{ $$ = $1; }
      | expr tNE expr					{ $$ = new cdk::ne_node(LINE, $1, $3); }
      | expr '|' expr					{ $$ = new zu::or_node(LINE, $1, $3); }
      | expr '&' expr					{ $$ = new zu::and_node(LINE, $1, $3); }
-     | '~' expr %prec tUNARY  				{ $$ = new zu::not_node(LINE, $2); }
-     | '-' expr %prec tUNARY  				{ $$ = new zu::simetry_node(LINE, $2); }
-     | '+' expr %prec tUNARY  				{ $$ = new zu::identity_node(LINE, $2); }
-     | expr '?'						{ $$ = new zu::position_node(LINE, $1); }
-     | '@'						{ $$ = new zu::read_node(LINE); } /* FIXME speacial read and print */
-     | '[' expr ']'					{ $$ = new zu::allocation_node(LINE, $2); }
-     | '(' expr ')'					{ $$ = $2; }
-     | lval 						{ $$ = $1; }
-     | lval '=' expr					{ $$ = new zu::assignment_node(LINE, $1, $3); }
-     ;
+     | '~' expr %prec tUNARY  			{ $$ = new zu::not_node(LINE, $2); }
+     | '-' expr %prec tUNARY  			{ $$ = new zu::simetry_node(LINE, $2); }
+     | '+' expr %prec tUNARY  			{ $$ = new zu::identity_node(LINE, $2); }
+	 | expr '?'							{ $$ = new zu::position_node(LINE, $1); }
+	 | '@'								{ $$ = new zu::read_node(LINE); } /* FIXME speacial read and print */
+     | '[' expr ']'						{ $$ = new zu::allocation_node(LINE, $2); }
+     | '(' expr ')'						{ $$ = $2; }
+	 | lval 							{ $$ = $1; }
+	 | lval '=' expr					{ $$ = new zu::assignment_node(LINE, $1, $3); }
+	 ;
 
-lval : tIDENTIFIER					{ $$ = new zu::id_node(LINE, $1); }
+lval : tIDENTIFIER						{ $$ = new zu::id_node(LINE, $1); }
 	 | lval '[' expr ']'				{ $$ = new zu::index_node(LINE, $1, $3); }
 	 | fcal '[' expr ']'				{ $$ = new zu::index_node(LINE, $1, $3); }
 	 ;
