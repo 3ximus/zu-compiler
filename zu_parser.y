@@ -145,9 +145,9 @@ arg  : type tIDENTIFIER					{ $$ = new zu::variable_node(LINE, $1, $2, false, fa
 type : '#'								{ $$ = new basic_type(4, basic_type::TYPE_INT); }
 	 | '%'								{ $$ = new basic_type(8, basic_type::TYPE_DOUBLE); }
 	 | '$'								{ $$ = new basic_type(4, basic_type::TYPE_STRING); }
-	 | tINT_POINTER						{ $$ = $1; }
-	 | tDOUBLE_POINTER					{ $$ = $1; }
-	 | tSTRING_POINTER					{ $$ = $1; }
+	 | tINT_POINTER						{ $$ = new cdk::expression_node(LINE); }
+	 | tDOUBLE_POINTER					{ $$ = new cdk::expression_node(LINE); }
+	 | tSTRING_POINTER					{ $$ = new cdk::expression_node(LINE); }
 	 ;
 
 blk  : '{' decs itrs '}'				{ $$ = new zu::block_node(LINE, $2, $3); }
