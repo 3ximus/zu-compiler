@@ -30,6 +30,7 @@
 
 /* ZU TOKENS */
 %token tBREAK tCONTINUE tRETURN tTYPE tPRINTLN
+%token tINT_POINTER tDOUBLE_POINTER tSTRING_POINTER
 
 /* PRECEDENCES */
 
@@ -144,7 +145,9 @@ arg  : type tIDENTIFIER					{ $$ = new zu::variable_node(LINE, $1, $2, false, fa
 type : '#'								{ $$ = new basic_type(4, basic_type::TYPE_INT); }
 	 | '%'								{ $$ = new basic_type(8, basic_type::TYPE_DOUBLE); }
 	 | '$'								{ $$ = new basic_type(4, basic_type::TYPE_STRING); }
-	 /* TODO ADD POINTER !! */
+	 | tINT_POINTER						{ $$ = $1; }
+	 | tDOUBLE_POINTER					{ $$ = $1; }
+	 | tSTRING_POINTER					{ $$ = $1; }
 	 ;
 
 blk  : '{' decs itrs '}'				{ $$ = new zu::block_node(LINE, $2, $3); }
