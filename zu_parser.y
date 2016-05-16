@@ -23,13 +23,14 @@
   basic_type						*ztype;
 };
 
+
+/* ZU TOKENS */
+%token tBREAK tCONTINUE tRETURN tTYPE tPRINTLN 
+
 /* LITERALS && IDENTIFIERS */
 %token <i> tINTEGER
 %token <d> tDOUBLE
 %token <s> tIDENTIFIER tSTRING
-
-/* ZU TOKENS */
-%token tBREAK tCONTINUE tRETURN tTYPE tPRINTLN
 
 /* PRECEDENCES */
 
@@ -89,7 +90,7 @@ var  : vdec		{ $$ = $1; }
      ;
 
 itrs : itr		{ $$ = new cdk::sequence_node(LINE, $1); }
-     | itrs itr		{ $$ = new cdk::sequence_node(LINE, $2, $1); }
+     | itr itrs		{ $$ = new cdk::sequence_node(LINE, $1, $2); }
      ;
 
 itr  : expr ';'		{ $$ = new zu::evaluation_node(LINE, $1); }
@@ -131,6 +132,8 @@ str  : tSTRING			{ $$ = $1; }
      | str tSTRING		{ $$ = new std::string(*$1 + *$2); }
      ;
 
+// Function arguments
+
 fargs : args			{ $$ = $1; }
       |				{ $$ = NULL; }
       ;
@@ -142,11 +145,14 @@ args : arg			{ $$ = new cdk::sequence_node(LINE, $1); }
 arg  : type tIDENTIFIER		{ $$ = new zu::variable_node(LINE, $1, $2, false, false, NULL); }
      ;
 
+// Zu types
+
 type : '#'						{ $$ = new basic_type(4, basic_type::TYPE_INT); }
      | '%'						{ $$ = new basic_type(8, basic_type::TYPE_DOUBLE); }
      | '$'						{ $$ = new basic_type(4, basic_type::TYPE_STRING); }
 	 /* TODO ADD POINTER !! */
      ;
+
 
 blk  : '{' decs itrs '}'				{ $$ = new zu::block_node(LINE, $2, $3); }
      | '{' decs '}'					{ $$ = new zu::block_node(LINE, $2, NULL); }
