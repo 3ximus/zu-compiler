@@ -16,7 +16,7 @@
 INTEGER		0|([1-9][0-9]*)
 HEX_INT		0x[0-9a-fA-F]+
 
-DOUBLE		[0-9]+([\.]?([0-9]+e[\-]?[0-9]+)|\.[0-9]+)
+DOUBLE		[0-9]+([\.]?([0-9]+[eE][\-]?[0-9]+)|\.[0-9]+)
 
 %x X_STRING X_IGNORE_STRING X_COMMENT X_STRING_SPEC
 
