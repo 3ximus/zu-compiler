@@ -43,10 +43,6 @@ DOUBLE		[0-9]+(({DEC}?{EXPONENT})|{DEC})
 "!!!"						return tRETURN;
 "!!"						return tPRINTLN;
 
-"<#>"						return tINT_POINTER
-"<%>"						return tDOUBLE_POINTER
-"<$>"						return tSTRING_POINTER
-
 [#%$]						return *yytext; /* zu_types */
 
 	/**
