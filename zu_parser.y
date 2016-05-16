@@ -160,6 +160,7 @@ blk  : '{' decs itrs '}'				{ $$ = new zu::block_node(LINE, $2, $3); }
      ;
 
 cond :  '[' expr ']' '#' itrs %prec tIFX		{ $$ = new zu::if_node(LINE, $2, $5); }
+     |  '[' expr ']' '?' itrs				{ $$ = new zu::if_else_node(LINE, $2, $5, NULL); }
      |  '[' expr ']' '?' itrs ':' itrs			{ $$ = new zu::if_else_node(LINE, $2, $5, $7); }
      ;
 
