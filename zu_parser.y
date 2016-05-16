@@ -122,7 +122,11 @@ fdec : type tIDENTIFIER '(' fargs ')' '=' lit		{ $$ = new zu::function_declarati
 
 lit  : tINTEGER							{ $$ = new cdk::integer_node(LINE, $1); }
 	 | tDOUBLE							{ $$ = new cdk::double_node(LINE, $1); }
-	 | tSTRING							{ $$ = new cdk::string_node(LINE, $1); }
+	 | str								{ $$ = new cdk::string_node(LINE, $1); }
+	 ;
+
+str  : tSTRING							{ $$ = $1; }
+	 | str tSTRING						{ $$ = new std::string(*$1 + *$2); }
 	 ;
 
 fargs : args							{ $$ = $1; }
@@ -177,7 +181,7 @@ expr : lit  							{ $$ = $1; }
 	 | '@'								{ $$ = new zu::read_node(LINE); } /* FIXME speacial read and print */
      | '[' expr ']'						{ $$ = new zu::allocation_node(LINE, $2); }
      | '(' expr ')'						{ $$ = $2; }
- 	 | lval 							{ $$ = $1; }
+	 | lval 							{ $$ = $1; }
 	 | lval '=' expr					{ $$ = new zu::assignment_node(LINE, $1, $3); }
 	 ;
 

@@ -54,7 +54,6 @@ DOUBLE		[0-9]+([\.]?([0-9]+e[\-]?[0-9]+)|\.[0-9]+)
 	 */
 
 \"							{ yy_push_state(X_STRING); yylval.s = new std::string(""); }
-<X_STRING>\"[\t\s]*\"		; /* string concatenation TODO verify if its * or + */
 <X_STRING>\"				{ yy_pop_state(); return tSTRING; }
 <X_STRING>\\ 				yy_push_state(X_STRING_SPEC);
 <X_STRING>\\\"				*yylval.s += yytext + 1;
