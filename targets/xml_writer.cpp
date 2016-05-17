@@ -8,8 +8,10 @@
 
 void zu::xml_writer::do_sequence_node(cdk::sequence_node * const node, int lvl) {
   os() << std::string(lvl, ' ') << "<sequence_node size='" << node->size() << "'>" << std::endl;
-  for (size_t i = 0; i < node->size(); i++)
+  for (size_t i = 0; i < node->size(); i++) {
+	if (node->node(i) == NULL) break; /* if null there are no more isnstructions */
     node->node(i)->accept(this, lvl + 2);
+  }
   closeTag(node, lvl);
 }
 
@@ -103,7 +105,7 @@ void zu::xml_writer::do_variable_node(zu::variable_node * const node, int lvl) {
   os() << std::string(lvl + 2, ' ') << "<" << node->name() << ">" << node->identifier() << "</" << node->name() << ">" << std::endl;
   ProcessZuType(node->zu_type(), lvl + 2);
   os() << std::string(lvl + 2, ' ') << "<isPublic>" << node->isPublic() << "</isPublic>" << std::endl;
-  os() << std::string(lvl + 2, ' ') << "<isImported>" << node->isImported() << "</<isImported>" << std::endl;
+  os() << std::string(lvl + 2, ' ') << "<isImported>" << node->isImported() << "</isImported>" << std::endl;
   if(node->value() != NULL) {
     openTag("value", lvl + 2);
     node->value()->accept(this, lvl + 4);
@@ -201,7 +203,7 @@ void zu::xml_writer::do_function_declaration_node(zu::function_declaration_node 
     closeTag("args", lvl + 2);
   }
   os() << std::string(lvl + 2, ' ') << "<isPublic>" << node->isPublic() << "</isPublic>" << std::endl;
-  os() << std::string(lvl + 2, ' ') << "<isImported>" << node->isImported() << "</<isImported>" << std::endl;
+  os() << std::string(lvl + 2, ' ') << "<isImported>" << node->isImported() << "</isImported>" << std::endl;
   closeTag(node, lvl);
 }
 void zu::xml_writer::do_function_body_node(zu::function_body_node * const node, int lvl){
@@ -225,7 +227,7 @@ void zu::xml_writer::do_function_body_node(zu::function_body_node * const node, 
     closeTag("block", lvl + 2);
   }
   os() << std::string(lvl + 2, ' ') << "<isPublic>" << node->isPublic() << "</isPublic>" << std::endl;
-  os() << std::string(lvl + 2, ' ') << "<isImported>" << node->isImported() << "</<isImported>" << std::endl;
+  os() << std::string(lvl + 2, ' ') << "<isImported>" << node->isImported() << "</isImported>" << std::endl;
   closeTag(node, lvl);
 }
 void zu::xml_writer::do_function_call_node(zu::function_call_node * const node, int lvl){
@@ -268,7 +270,7 @@ void zu::xml_writer::do_print_node(zu::print_node * const node, int lvl) {
   CHECK_TYPES(_compiler, _symtab, node);
   openTag(node, lvl);
   node->argument()->accept(this, lvl + 2);
-  os() << std::string(lvl + 2, ' ') << "<newLine>" << node->newLine() << "</<newLine>" << std::endl;
+  os() << std::string(lvl + 2, ' ') << "<newLine>" << node->newLine() << "</newLine>" << std::endl;
   closeTag(node, lvl);
 }
 
