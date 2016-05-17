@@ -130,14 +130,6 @@ void zu::postfix_writer::do_eq_node(cdk::eq_node * const node, int lvl) {
 
 //---------------------------------------------------------------------------
 
-void zu::postfix_writer::do_rvalue_node(zu::rvalue_node * const node, int lvl) {
-  CHECK_TYPES(_compiler, _symtab, node);
-  node->lvalue()->accept(this, lvl);
-  _pf.LOAD(); //FIXME: depends on type size
-}
-
-//---------------------------------------------------------------------------
-
 void zu::postfix_writer::do_lvalue_node(zu::lvalue_node * const node, int lvl) {
   //CHECK_TYPES(_compiler, _symtab, node);
   //// simplified generation: all variables are global

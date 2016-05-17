@@ -156,15 +156,6 @@ void zu::xml_writer::do_eq_node(cdk::eq_node * const node, int lvl) {
 
 //---------------------------------------------------------------------------
 
-void zu::xml_writer::do_rvalue_node(zu::rvalue_node * const node, int lvl) {
-  CHECK_TYPES(_compiler, _symtab, node);
-  openTag(node, lvl);
-  node->lvalue()->accept(this, lvl + 4);
-  closeTag(node, lvl);
-}
-
-//---------------------------------------------------------------------------
-
 void zu::xml_writer::do_lvalue_node(zu::lvalue_node * const node, int lvl) {
 	// ABSTRACT
 }

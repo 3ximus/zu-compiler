@@ -25,7 +25,6 @@ namespace zu {
        zu::function_declaration_node(lineno, zu_type, s, isPublic, isImported, args, literal), _block(block) {
     }
 
-	/* declaration constructor TODO correct ? */
 	inline function_body_node(int lineno, zu::function_declaration_node *declaration, cdk::basic_node *block) :
 		zu::function_declaration_node(lineno, declaration->zu_type(), new std::string(declaration->identifier()), declaration->isPublic(), declaration->isImported(), declaration->args(), declaration->literal()),  _block(block) {
     }
