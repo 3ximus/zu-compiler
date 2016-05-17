@@ -2,6 +2,7 @@
 #include <string>
 #include "targets/type_checker.h"
 #include "ast/all.h"  // automatically generated
+#include <iostream>
 
 #define ASSERT_UNSPEC \
     { if (node->type() != nullptr && \
@@ -67,12 +68,16 @@ void zu::type_checker::do_variable_node(zu::variable_node * const node, int lvl)
 inline void zu::type_checker::processBinaryExpression(cdk::binary_expression_node * const node, int lvl) {
   ASSERT_UNSPEC;
   node->left()->accept(this, lvl + 2);
-  if (node->left()->type()->name() != basic_type::TYPE_INT)
-    throw std::string("wrong type in left argument of binary expression");
+  if (node->left()->type() != NULL)
+	  if (node->left()->type()->name() != basic_type::TYPE_INT)
+		  throw std::string("wrong type in left argument of binary expression");
+  else std::cout << "ERROR in " << node->left()->name() << std::endl;
 
   node->right()->accept(this, lvl + 2);
-  if (node->right()->type()->name() != basic_type::TYPE_INT)
-    throw std::string("wrong type in right argument of binary expression");
+  if (node->left()->type() != NULL)
+	  if (node->right()->type()->name() != basic_type::TYPE_INT)
+		  throw std::string("wrong type in right argument of binary expression");
+  else std::cout << "ERROR in " << node->left()->name() << std::endl;
 
   // in Zu, expressions are always int
   node->type(new basic_type(4, basic_type::TYPE_INT));
