@@ -51,6 +51,23 @@ namespace zu {
     }
 
     void ProcessZuType(basic_type * const node, int lvl) {
+	  std::string name;
+	  switch(node->name()) {
+		  case 1:
+			  name = "int";
+			  break;
+		  case 2:
+			  name = "double";
+			  break;
+		  case 8:
+			  name = "string";
+			  break;
+		  case 16:
+			  name = "pointer";
+			  break;
+		default:
+			  name = "unknown type"
+
       os() << std::string(lvl, ' ') << "<" << node->name() << ">" << node->size() << "</" << node->name() << ">" << std::endl;
 
     }
