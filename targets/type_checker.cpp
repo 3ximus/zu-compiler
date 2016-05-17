@@ -57,29 +57,10 @@ void zu::type_checker::do_position_node(zu::position_node * const node, int lvl)
 
 //---------------------------------------------------------------------------
 
-void zu::type_checker::do_and_node(zu::and_node * const node, int lvl) {
-  processBinaryExpression(node, lvl);
-}
-
-void zu::type_checker::do_or_node(zu::or_node * const node, int lvl) {
-  processBinaryExpression(node, lvl);
-}
-
 void zu::type_checker::do_allocation_node(zu::allocation_node * const node, int lvl)  {
-  processBinaryExpression(node, lvl);
-}
-
 void zu::type_checker::do_index_node(zu::index_node * const node, int lvl) {
-  processBinaryExpression(node, lvl);
-}
-
 void zu::type_checker::do_id_node(zu::id_node * const node, int lvl) {
-  processBinaryExpression(node, lvl);
-}
-
 void zu::type_checker::do_variable_node(zu::variable_node * const node, int lvl) {
-  processBinaryExpression(node, lvl);
-}
 
 //---------------------------------------------------------------------------
 
@@ -128,6 +109,12 @@ void zu::type_checker::do_ne_node(cdk::ne_node * const node, int lvl) {
   processBinaryExpression(node, lvl);
 }
 void zu::type_checker::do_eq_node(cdk::eq_node * const node, int lvl) {
+  processBinaryExpression(node, lvl);
+}
+void zu::type_checker::do_and_node(zu::and_node * const node, int lvl) {
+  processBinaryExpression(node, lvl);
+}
+void zu::type_checker::do_or_node(zu::or_node * const node, int lvl) {
   processBinaryExpression(node, lvl);
 }
 
