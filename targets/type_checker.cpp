@@ -57,10 +57,10 @@ void zu::type_checker::do_position_node(zu::position_node * const node, int lvl)
 
 //---------------------------------------------------------------------------
 
-void zu::type_checker::do_allocation_node(zu::allocation_node * const node, int lvl)  {
-void zu::type_checker::do_index_node(zu::index_node * const node, int lvl) {
-void zu::type_checker::do_id_node(zu::id_node * const node, int lvl) {
-void zu::type_checker::do_variable_node(zu::variable_node * const node, int lvl) {
+void zu::type_checker::do_allocation_node(zu::allocation_node * const node, int lvl)  { /* TODO */ }
+void zu::type_checker::do_index_node(zu::index_node * const node, int lvl) { /* TODO */ }
+void zu::type_checker::do_id_node(zu::id_node * const node, int lvl) { /* TODO */ }
+void zu::type_checker::do_variable_node(zu::variable_node * const node, int lvl) { /* TODO */ }
 
 //---------------------------------------------------------------------------
 
