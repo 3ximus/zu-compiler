@@ -25,7 +25,7 @@
 
 
 /* ZU TOKENS */
-%token tBREAK tCONTINUE tRETURN tTYPE tPRINTLN 
+%token tBREAK tCONTINUE tRETURN tTYPE tPRINTLN
 
 /* LITERALS && IDENTIFIERS */
 %token <i> tINTEGER
@@ -36,6 +36,7 @@
 
 %nonassoc tIFX
 %nonassoc tELSEX
+%nonassoc tFDEC
 %nonassoc ':'
 
 %right '='
@@ -55,7 +56,7 @@
 /* TYPES OF NON-TERMINAL SYMBOLS */
 
 %type <node> dec arg var itr 	 		 /* declaration, argument, variable, instruction */
-%type <sequence> decs args vars itrs exprs fargs /* declarations,arguments,variables,instructions,expressions,function arguments*/  
+%type <sequence> decs args vars itrs exprs fargs /* declarations,arguments,variables,instructions,expressions,function arguments*/
 
 %type <node> vdec blk cond iter  /* variable declaration, block, condtional instruction, iteraion instruction */
 %type <function> fdec 		 /* function declaration */
@@ -71,7 +72,7 @@
 
 %%
 
-file : decs		{ compiler->ast( $1 ); }	
+file : decs		{ compiler->ast( $1 ); }
      |			{ compiler->ast(new cdk::nil_node(LINE)); }
      ;
 
@@ -79,13 +80,13 @@ decs : dec		{ $$ = new cdk::sequence_node(LINE, $1); }
      | dec decs		{ $$ = new cdk::sequence_node(LINE, $1, $2); }
      ;
 
-dec  : vars ';' 	{ $$ = $1; }
-     | fdec     	{ $$ = $1; }
-     | fdec blk		{ $$ = new zu::function_body_node(LINE, $1, $2); }
+dec  : vars ';' 			{ $$ = $1; }
+     | fdec %prec tFDEC    	{ $$ = $1; }
+     | fdec blk				{ $$ = new zu::function_body_node(LINE, $1, $2); }
      ;
 
 vars : var		{ $$ = new cdk::sequence_node(LINE, $1); }
-     | var ',' vars	{ $$ = new cdk::sequence_node(LINE, $1, $3); } 
+     | var ',' vars	{ $$ = new cdk::sequence_node(LINE, $1, $3); }
      ;
 
 var  : vdec		{ $$ = $1; }
