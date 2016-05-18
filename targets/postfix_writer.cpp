@@ -173,32 +173,25 @@ void zu::postfix_writer::do_add_node(cdk::add_node * const node, int lvl) {
 	// Visit left child
 	node->left()->accept(this, lvl);
 	
-	// TODO:
-        // If the left child is a left value, it only places its address
-        // onto the top of the stack
-        // if(isLeftValue(node->left())) {
-        //     loadNodeValue(node->left());
-        //}
+        // if lval, places address on the top of the stack
+        if(node->left()->type()->name() == basic_type::TYPE_POINTER)
+             	_pf.LOAD();
 
         // If the ADD has type double but left child is of type INT, we must convert
-        if((node->left()->type()->name() == basic_type::TYPE_INT) && (node->type()->name() == basic_type::TYPE_DOUBLE)) {
+        if((node->left()->type()->name() == basic_type::TYPE_INT) && (node->type()->name() == basic_type::TYPE_DOUBLE))
                 _pf.I2D();
-        }
 
         // Visit right child
         node->right()->accept(this, lvl+1);
 	
-	// TODO:
-        // If the right child is a left value, it only places its address
-        // onto the top of the stack
-        // if(isLeftValue(node->right())) {
-        //        loadNodeValue(node->right());
-        //}
+        // if lval, places address on the top of the stack
+        if(node->left()->type()->name() == basic_type::TYPE_POINTER)
+             	_pf.LOAD();
 
         // If the ADD has type double but right child is of type INT, we must convert
-        if((node->right()->type()->name() == basic_type::TYPE_INT) && (node->type()->name() == basic_type::TYPE_DOUBLE)) {
-                _pf.I2D();
-        }
+        if((node->right()->type()->name() == basic_type::TYPE_INT) && (node->type()->name() == basic_type::TYPE_DOUBLE))
+        	_pf.I2D();
+        
 
         // ADD result is a double? 
         if(node->type()->name() == basic_type::TYPE_DOUBLE) {
