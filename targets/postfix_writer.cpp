@@ -49,7 +49,7 @@ void zu::postfix_writer::do_double_node(cdk::double_node * const node, int lvl) 
 
 	_pf.TEXT();
 	_pf.ADDR(mklbl(lbl1));
-	_pf.DLOAD();
+	_pf.DLOAD(); /* Replaces address at the top of the stack with the contents of the position it points to. This applies to any LoadFunction. */
 }
 
 void zu::postfix_writer::do_string_node(cdk::string_node * const node, int lvl) {
@@ -88,7 +88,7 @@ void zu::postfix_writer::do_identity_node(zu::identity_node * const node, int lv
 void zu::postfix_writer::do_not_node(zu::not_node * const node, int lvl) {
 	CHECK_TYPES(_compiler, _symtab, node);
 	node->argument()->accept(this, lvl+1); // determine the value
-
+	_pf.NOT(); // logical negation
 }
 
 void zu::postfix_writer::do_position_node(zu::position_node * const node, int lvl) {
@@ -102,7 +102,21 @@ void zu::postfix_writer::do_position_node(zu::position_node * const node, int lv
 
 void zu::postfix_writer::do_and_node(zu::and_node * const node, int lvl) {
 	CHECK_TYPES(_compiler, _symtab, node);
+	debug(node, lvl);
+	int lbl = _lbl++;
 
+	node->left->accept(this,lvl+1); // visit left child
+
+	// if left child is false, then and operation is false. no need to evaluate right child.
+	// duplicate the value on top of he stack.
+	
+	node->right->accept(this,lvl+1);
+	
+	_pf.AND();
+	
+
+	// _pf.ALIGN(); // align symbols
+	// _pf.LABEL(mklbl(lbl)); //optimization??
 }
 
 void zu::postfix_writer::do_or_node(zu::or_node * const node, int lvl) {
