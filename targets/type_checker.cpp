@@ -99,7 +99,7 @@ void zu::type_checker::do_id_node(zu::id_node * const node, int lvl) {
 void zu::type_checker::do_variable_node(zu::variable_node * const node, int lvl) {
 	ASSERT_UNSPEC;
 	const std::string &id = node->identifier();
-	if (!_symtab.insert(id, std::make_shared<zu::symbol>(node->type(), id, 0)))
+	if (!_symtab.insert(id, std::make_shared<zu::symbol>(node->zu_type(), id, 0)))
 		throw id + " redeclared";
 
 	if (node->value()) {
@@ -282,7 +282,7 @@ void zu::type_checker::do_lvalue_node(zu::lvalue_node * const node, int lvl) {
 void zu::type_checker::do_function_declaration_node(zu::function_declaration_node * const node, int lvl){
 	ASSERT_UNSPEC;
 	const std::string &id = node->identifier();
-	if (!_symtab.insert(id, std::make_shared<zu::symbol>(node->type(), id, 0)))
+	if (!_symtab.insert(id, std::make_shared<zu::symbol>(node->zu_type(), id, 0)))
 		throw id + " redeclared";
 
 	if (node->literal()) {
@@ -297,7 +297,7 @@ void zu::type_checker::do_function_declaration_node(zu::function_declaration_nod
 void zu::type_checker::do_function_body_node(zu::function_body_node * const node, int lvl){
 	ASSERT_UNSPEC;
 	const std::string &id = node->identifier();
-	if (!_symtab.insert(id, std::make_shared<zu::symbol>(node->type(), id, 0)))
+	if (!_symtab.insert(id, std::make_shared<zu::symbol>(node->zu_type(), id, 0)))
 		throw id + " redeclared";
 
 	if (node->literal()) {
