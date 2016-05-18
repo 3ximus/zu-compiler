@@ -5,59 +5,130 @@
 #include "targets/postfix_writer.h"
 #include "ast/all.h"  // all.h is automatically generated
 
+// Uncomment for extra spam
+#define __PFWRITER_DEBUG__
+
+void cpt::semantics::PFwriter::debug(cdk::node::Node * const node, int lvl) {
+#ifdef __PFWRITER_DEBUG__
+	os() << ";" << std::string(10, '~');
+	for(int i=0; i<lvl; i++) {
+		os() << "  |";
+	}
+	os() << "--" << node->name() << std::endl;
+#endif
+}
+
 //---------------------------------------------------------------------------
 //     THIS IS THE VISITOR'S DEFINITION
 //---------------------------------------------------------------------------
 
 void zu::postfix_writer::do_sequence_node(cdk::sequence_node * const node, int lvl) {
   for (size_t i = 0; i < node->size(); i++) {
-    node->node(i)->accept(this, lvl);
+    node->node(i)->accept(this, lvl+1);
   }
 }
 
 //---------------------------------------------------------------------------
 
 void zu::postfix_writer::do_integer_node(cdk::integer_node * const node, int lvl) {
-  _pf.INT(node->value()); // push an integer
+	CHECK_TYPES(_compiler, _symtab, node);
+	debug(node, lvl);
+
+	_pf.INT(node->value()); // push an integer
 }
 
 void zu::postfix_writer::do_double_node(cdk::double_node * const node, int lvl) {
-	/* TODO */
+	int lbl1;
+	CHECK_TYPES(_compiler, _symtab, node);
+	debug(node, lvl);
+
+	_pf.RODATA();
+	_pf.ALLIGN();
+	_pf.LABEL(mklbl(lbl1 = ++_lbl));
+	_pf.DOUBLE(node->value());
+
+	_pf.TEXT();
+	_pf.ADDR(mklbl(lbl1));
+	_pf.DLOAD();
 }
 
 void zu::postfix_writer::do_string_node(cdk::string_node * const node, int lvl) {
-  int lbl1;
+	int lbl1;
+	CHECK_TYPES(_compiler, _symtab, node);
+	debug(node, lvl);
 
-  /* generate the string */
-  _pf.RODATA(); // strings are DATA readonly
-  _pf.ALIGN(); // make sure we are aligned
-  _pf.LABEL(mklbl(lbl1 = ++_lbl)); // give the string a name
-  _pf.STR(node->value()); // output string characters
+	/* generate the string */
+	_pf.RODATA(); // strings are DATA readonly
+	_pf.ALIGN(); // make sure we are aligned
+	_pf.LABEL(mklbl(lbl1 = ++_lbl)); // give the string a name
+	_pf.STR(node->value()); // output string characters
 
-  /* leave the address on the stack */
-  _pf.TEXT(); // return to the TEXT segment
-  _pf.ADDR(mklbl(lbl1)); // the string to be printed
+	/* leave the address on the stack */
+	_pf.TEXT(); // return to the TEXT segment
+	_pf.ADDR(mklbl(lbl1)); // the string to be printed
 }
 
 //---------------------------------------------------------------------------
 
 void zu::postfix_writer::do_neg_node(cdk::neg_node * const node, int lvl) {
-  CHECK_TYPES(_compiler, _symtab, node);
-  node->argument()->accept(this, lvl); // determine the value
-  _pf.NEG(); // 2-complement
+	CHECK_TYPES(_compiler, _symtab, node);
+	node->argument()->accept(this, lvl+1); // determine the value
+	if (node->argument()->type()->name() != basic_type::TYPE_INT)
+		_pf.NEG(); // 2-complement
+	else
+		_pf.DNEG(); // symmetric for floats
 }
-void zu::postfix_writer::do_not_node(zu::not_node * const node, int lvl) {/* TODO */}
-void zu::postfix_writer::do_identity_node(zu::identity_node * const node, int lvl) {/* TODO */}
-void zu::postfix_writer::do_position_node(zu::position_node * const node, int lvl) {/* TODO */}
+
+void zu::postfix_writer::do_identity_node(zu::identity_node * const node, int lvl) {
+	CHECK_TYPES(_compiler, _symtab, node);
+	node->argument()->accept(this, lvl+1); // determine the value
+	/* FIXME DO NOTHING? */
+}
+
+void zu::postfix_writer::do_not_node(zu::not_node * const node, int lvl) {
+	CHECK_TYPES(_compiler, _symtab, node);
+	node->argument()->accept(this, lvl+1); // determine the value
+
+}
+
+void zu::postfix_writer::do_position_node(zu::position_node * const node, int lvl) {
+	CHECK_TYPES(_compiler, _symtab, node);
+	node->argument()->accept(this, lvl); // determine the value
+	/* FIXME DO NOTHING */
+}
+
 
 //---------------------------------------------------------------------------
 
-void zu::postfix_writer::do_and_node(zu::and_node * const node, int lvl) {/* TODO */}
-void zu::postfix_writer::do_or_node(zu::or_node * const node, int lvl) {/* TODO */}
-void zu::postfix_writer::do_allocation_node(zu::allocation_node * const node, int lvl)  {/* TODO */}
-void zu::postfix_writer::do_index_node(zu::index_node * const node, int lvl) {/* TODO */}
-void zu::postfix_writer::do_id_node(zu::id_node * const node, int lvl) {/* TODO */}
-void zu::postfix_writer::do_variable_node(zu::variable_node * const node, int lvl) {/* TODO */}
+void zu::postfix_writer::do_and_node(zu::and_node * const node, int lvl) {
+	CHECK_TYPES(_compiler, _symtab, node);
+
+}
+
+void zu::postfix_writer::do_or_node(zu::or_node * const node, int lvl) {
+	CHECK_TYPES(_compiler, _symtab, node);
+
+}
+
+void zu::postfix_writer::do_allocation_node(zu::allocation_node * const node, int lvl)  {
+	CHECK_TYPES(_compiler, _symtab, node);
+
+}
+
+void zu::postfix_writer::do_index_node(zu::index_node * const node, int lvl) {
+	CHECK_TYPES(_compiler, _symtab, node);
+
+}
+
+void zu::postfix_writer::do_id_node(zu::id_node * const node, int lvl) {
+	CHECK_TYPES(_compiler, _symtab, node);
+
+}
+
+void zu::postfix_writer::do_variable_node(zu::variable_node * const node, int lvl) {
+	CHECK_TYPES(_compiler, _symtab, node);
+
+}
 
 //---------------------------------------------------------------------------
 
@@ -190,10 +261,22 @@ void zu::postfix_writer::do_assignment_node(zu::assignment_node * const node, in
 //  _pf.EXTERN("println");
 //}
 
-void zu::postfix_writer::do_function_declaration_node(zu::function_declaration_node * const node, int lvl){/*TODO*/}
-void zu::postfix_writer::do_function_body_node(zu::function_body_node * const node, int lvl){/*TODO*/}
-void zu::postfix_writer::do_function_call_node(zu::function_call_node * const node, int lvl){/*TODO*/}
-void zu::postfix_writer::do_block_node(zu::block_node * const node, int lvl){/*TODO*/}
+void zu::postfix_writer::do_function_declaration_node(zu::function_declaration_node * const node, int lvl){
+
+}
+
+void zu::postfix_writer::do_function_body_node(zu::function_body_node * const node, int lvl){
+
+}
+
+void zu::postfix_writer::do_function_call_node(zu::function_call_node * const node, int lvl){
+
+}
+
+void zu::postfix_writer::do_block_node(zu::block_node * const node, int lvl){
+
+}
+
 
 //---------------------------------------------------------------------------
 
@@ -274,8 +357,17 @@ void zu::postfix_writer::do_if_else_node(zu::if_else_node * const node, int lvl)
   node->elseblock()->accept(this, lvl + 2);
   _pf.LABEL(mklbl(lbl1 = lbl2));
 }
-void zu::postfix_writer::do_return_node(zu::return_node * const node, int lvl) {/*TODO*/}
-void zu::postfix_writer::do_continue_node(zu::continue_node * const node, int lvl) {/*TODO*/}
-void zu::postfix_writer::do_break_node(zu::break_node * const node, int lvl) {/*TODO*/}
+void zu::postfix_writer::do_return_node(zu::return_node * const node, int lvl) {
+
+}
+
+void zu::postfix_writer::do_continue_node(zu::continue_node * const node, int lvl) {
+
+}
+
+void zu::postfix_writer::do_break_node(zu::break_node * const node, int lvl) {
+
+}
+
 
 
