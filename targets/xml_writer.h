@@ -65,6 +65,9 @@ namespace zu {
 		  case 16:
 			  name = "pointer";
 			  break;
+		  case 0:
+			  name = "void";
+			  break;
 		  default:
 			  name = "unknown_type";
 			  break;

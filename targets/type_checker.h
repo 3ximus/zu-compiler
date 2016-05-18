@@ -28,30 +28,11 @@ namespace zu {
     }
 
   public:
-    void do_sequence_node(cdk::sequence_node * const node, int lvl) {
-    }
+    void do_sequence_node(cdk::sequence_node * const node, int lvl) { }
 
   protected:
     template<typename T>
-    void processSimple(cdk::simple_value_node<T> * const node, int lvl) {
-    }
-
-  private:
-	inline std::string zuFunctionName(std::string identifier) {
-		// postix must have _main function
-		if(identifier == "zu") return "_main";
-		if(identifier == "_main") return "zu";
-		return identifier;
-	}
-	inline std::string zuFunctionName(zu::function_call_node * const node) {
-		return zuFunctionName(node->identifier());
-	}
-	inline std::string zuFunctionName(zu::function_declaration_node * const node) {
-		return zuFunctionName(node->identifier());
-	}
-	inline std::string zuFunctionName(zu::function_body_node * const node) {
-		return zuFunctionName(node->identifier());
-	}
+    void processSimple(cdk::simple_value_node<T> * const node, int lvl) { }
 
   public:
     void do_integer_node(cdk::integer_node * const node, int lvl);

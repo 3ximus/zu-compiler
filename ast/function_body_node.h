@@ -58,6 +58,9 @@ namespace zu {
       return _block;
     }
 
+	inline zu::function_declaration_node *function_declaration() {
+			return new zu::function_declaration_node(lineno(), zu_type(), new std::string(identifier()), isPublic(), isPublic(), args(), literal());
+
     void accept(basic_ast_visitor *sp, int level) {
       sp->do_function_body_node(this, level);
     }

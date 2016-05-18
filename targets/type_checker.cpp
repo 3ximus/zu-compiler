@@ -309,7 +309,14 @@ void zu::type_checker::do_lvalue_node(zu::lvalue_node * const node, int lvl) {
 
 void zu::type_checker::do_function_declaration_node(zu::function_declaration_node * const node, int lvl){
 	ASSERT_UNSPEC;
-	const std::string &id = zuFunctionName(node->identifier());
+
+	if(node->args() != NULL) {
+		for (size_t i = 0; i < node->args()->size(); i++) {
+			node->node(i)->accept(this, lvl+2);
+		}
+	}
+
+	const std::string &id = node->identifier();
 	if (!_symtab.insert(id, std::make_shared<zu::symbol>(node->zu_type(), id, 0)))
 		throw id + " redeclared";
 
@@ -324,7 +331,15 @@ void zu::type_checker::do_function_declaration_node(zu::function_declaration_nod
 
 void zu::type_checker::do_function_body_node(zu::function_body_node * const node, int lvl){
 	ASSERT_UNSPEC;
-	const std::string &id = zuFunctionName(node->identifier());
+
+	if(node->args() != NULL) {
+		for (size_t i = 0; i < node->args()->size(); i++) {
+			node->node(i)->accept(this, lvl+2);
+		}
+	}
+
+	/* TODO CHECK IF DECLARATION EXISTS */
+	const std::string &id = node->identifier();
 	if (!_symtab.insert(id, std::make_shared<zu::symbol>(node->zu_type(), id, 0)))
 		throw id + " redeclared";
 
@@ -339,7 +354,14 @@ void zu::type_checker::do_function_body_node(zu::function_body_node * const node
 
 void zu::type_checker::do_function_call_node(zu::function_call_node * const node, int lvl){
 	ASSERT_UNSPEC;
-	const std::string &id = zuFunctionName(node->identifier());
+
+	if(node->args() != NULL) {
+		for (size_t i = 0; i < node->args()->size(); i++) {
+			node->node(i)->accept(this, lvl+2);
+		}
+	}
+
+	const std::string &id = node->identifier();
 	std::shared_ptr<zu::symbol> symbol = _symtab.find(id);
 	if (!symbol)
 		throw id + " undeclared";
