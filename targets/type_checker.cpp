@@ -295,39 +295,44 @@ void zu::type_checker::do_function_declaration_node(zu::function_declaration_nod
 }
 
 void zu::type_checker::do_function_body_node(zu::function_body_node * const node, int lvl){
-	/* EMPTY */
+	ASSERT_UNSPEC;
+	const std::string &id = node->identifier();
+	if (!_symtab.insert(id, std::make_shared<zu::symbol>(node->type(), id, 0)))
+		throw id + " redeclared";
+
+	if (node->literal()) {
+		node->literal()->accept(this, lvl + 2);
+		/* throw error if types dont match or it isnt a conversion from int to double */
+		if ((node->type()->name() != basic_type::TYPE_DOUBLE && node->literal()->type()->name() != basic_type::TYPE_INT) || node->type()->name() != node->literal()->type()->name())
+			throw std::string("wrong type for initializer");
+	}
+	node->type(node->zu_type());
 }
 
 void zu::type_checker::do_function_call_node(zu::function_call_node * const node, int lvl){
-
+	ASSERT_UNSPEC;
+	const std::string &id = node->identifier();
+	std::shared_ptr<zu::symbol> symbol = _symtab.find(id);
+	if (!symbol)
+		throw id + " undeclared";
+	node->type(symbol->type());
 }
 
 void zu::type_checker::do_block_node(zu::block_node * const node, int lvl){
-
+	/* EMPTY */
 }
 
 //---------------------------------------------------------------------------
 
 void zu::type_checker::do_assignment_node(zu::assignment_node * const node, int lvl) {
-	//ASSERT_UNSPEC;
+	ASSERT_UNSPEC;
 
-	//// DAVID: horrible hack!
-	//// (this is caused by Zu not having explicit variable declarations)
-	//const std::string &id = node->lvalue()->value();
-	//if (!_symtab.find(id)) {
-	//  _symtab.insert(id, std::make_shared<zu::symbol>(new basic_type(4, basic_type::TYPE_INT), id, -1)); // put in the symbol table
-	//}
+	node->lvalue()->accept(this, lvl + 2);
+	node->rvalue()->accept(this, lvl + 2);
+	if ((node->lvalue()->type()->name() != basic_type::TYPE_DOUBLE && node->rvalue()->type()->name() != basic_type::TYPE_INT) || node->lvalue()->type()->name() != node->rvalue()->type()->name())
+	  throw std::string("wrong type in left argument of assignment expression");
 
-	//node->lvalue()->accept(this, lvl + 2);
-	//if (node->lvalue()->type()->name() != basic_type::TYPE_INT)
-	//  throw std::string("wrong type in left argument of assignment expression");
-
-	//node->rvalue()->accept(this, lvl + 2);
-	//if (node->rvalue()->type()->name() != basic_type::TYPE_INT)
-	//  throw std::string("wrong type in right argument of assignment expression");
-
-	//// in Zu, expressions are always int
-	//node->type(new basic_type(4, basic_type::TYPE_INT));
+	node->type(node->lvalue()->type());
 }
 
 //---------------------------------------------------------------------------
@@ -337,19 +342,23 @@ void zu::type_checker::do_evaluation_node(zu::evaluation_node * const node, int 
 }
 
 void zu::type_checker::do_print_node(zu::print_node * const node, int lvl) {
+	ASSERT_UNSPEC;
 	node->argument()->accept(this, lvl + 2);
+	if (node->argument()->type()->name() != basic_type::TYPE_INT && node->argument()->type()->name() != basic_type::TYPE_DOUBLE && node->argument()->type()->name() != basic_type::TYPE_STRING)
+		throw std::string("wrong type in argument of print expression");
 }
 
 //---------------------------------------------------------------------------
 
 void zu::type_checker::do_read_node(zu::read_node * const node, int lvl) {
+	/* TODO */
 	//node->argument()->accept(this, lvl + 2);
 }
 
 //---------------------------------------------------------------------------
 
 void zu::type_checker::do_for_node(zu::for_node * const node, int lvl) {
-	//node->condition()->accept(this, lvl + 4);
+	/* EMPTY */
 }
 
 //---------------------------------------------------------------------------
@@ -361,6 +370,18 @@ void zu::type_checker::do_if_node(zu::if_node * const node, int lvl) {
 void zu::type_checker::do_if_else_node(zu::if_else_node * const node, int lvl) {
 	node->condition()->accept(this, lvl + 4);
 }
-void zu::type_checker::do_return_node(zu::return_node * const node, int lvl) {/*TODO*/}
-void zu::type_checker::do_continue_node(zu::continue_node * const node, int lvl) {/*TODO*/}
-void zu::type_checker::do_break_node(zu::break_node * const node, int lvl) {/*TODO*/}
+
+//---------------------------------------------------------------------------
+
+void zu::type_checker::do_return_node(zu::return_node * const node, int lvl) {
+	/* EMPTY */
+}
+
+void zu::type_checker::do_continue_node(zu::continue_node * const node, int lvl) {
+	/* EMPTY */
+}
+
+void zu::type_checker::do_break_node(zu::break_node * const node, int lvl) {
+	/* EMPTY */
+}
+
