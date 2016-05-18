@@ -105,7 +105,7 @@ void zu::type_checker::do_variable_node(zu::variable_node * const node, int lvl)
 	if (node->value()) {
 		node->value()->accept(this, lvl + 2);
 		/* throw error if types dont match or it isnt a conversion from int to double */
-		if ((node->type()->name() != basic_type::TYPE_DOUBLE && node->value()->type()->name() != basic_type::TYPE_INT) || node->type()->name() != node->value()->type()->name())
+		if ((node->zu_type()->name() != basic_type::TYPE_DOUBLE && node->value()->type()->name() != basic_type::TYPE_INT) || node->zu_type()->name() != node->value()->type()->name())
 			throw std::string("wrong type for initializer");
 	}
 
@@ -288,7 +288,7 @@ void zu::type_checker::do_function_declaration_node(zu::function_declaration_nod
 	if (node->literal()) {
 		node->literal()->accept(this, lvl + 2);
 		/* throw error if types dont match or it isnt a conversion from int to double */
-		if ((node->type()->name() != basic_type::TYPE_DOUBLE && node->literal()->type()->name() != basic_type::TYPE_INT) || node->type()->name() != node->literal()->type()->name())
+		if ((node->zu_type()->name() != basic_type::TYPE_DOUBLE && node->literal()->type()->name() != basic_type::TYPE_INT) || node->zu_type()->name() != node->literal()->type()->name())
 			throw std::string("wrong type for initializer");
 	}
 	node->type(node->zu_type());
@@ -303,7 +303,7 @@ void zu::type_checker::do_function_body_node(zu::function_body_node * const node
 	if (node->literal()) {
 		node->literal()->accept(this, lvl + 2);
 		/* throw error if types dont match or it isnt a conversion from int to double */
-		if ((node->type()->name() != basic_type::TYPE_DOUBLE && node->literal()->type()->name() != basic_type::TYPE_INT) || node->type()->name() != node->literal()->type()->name())
+		if ((node->zu_type()->name() != basic_type::TYPE_DOUBLE && node->literal()->type()->name() != basic_type::TYPE_INT) || node->zu_type()->name() != node->literal()->type()->name())
 			throw std::string("wrong type for initializer");
 	}
 	node->type(node->zu_type());
