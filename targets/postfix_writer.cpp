@@ -93,10 +93,9 @@ void zu::postfix_writer::do_not_node(zu::not_node * const node, int lvl) {
 
 void zu::postfix_writer::do_position_node(zu::position_node * const node, int lvl) {
 	CHECK_TYPES(_compiler, _symtab, node);
-	node->argument()->accept(this, lvl); // determine the value
+	node->argument()->accept(this, lvl+1); // determine the value
 	/* FIXME DO NOTHING */
 }
-
 
 //---------------------------------------------------------------------------
 
@@ -107,21 +106,43 @@ void zu::postfix_writer::do_and_node(zu::and_node * const node, int lvl) {
 
 	node->left->accept(this,lvl+1); // visit left child
 
-	// if left child is false, then and operation is false. no need to evaluate right child.
-	// duplicate the value on top of he stack.
-	
-	node->right->accept(this,lvl+1);
-	
-	_pf.AND();
-	
+	_pf.DUP(); // duplicate to get the value for jmp, if its zero jump is taken
+	_pf.JZ(mklbl(lbl1)); // jump over right node
 
-	// _pf.ALIGN(); // align symbols
-	// _pf.LABEL(mklbl(lbl)); //optimization??
+	if (node->left()->name() == "index_node" || node->left()->name() == "id_node")
+		_pf.LOAD(); // load
+
+	node->right->accept(this,lvl+1);
+
+	if (node->left()->name() == "index_node" || node->left()->name() == "id_node")
+		_pf.LOAD(); // load
+
+	_pf.AND();
+	_pf.ALIGN(); // align symbols
+	_pf.LABEL(mklbl(lbl)); // TODO optimization??
 }
 
 void zu::postfix_writer::do_or_node(zu::or_node * const node, int lvl) {
 	CHECK_TYPES(_compiler, _symtab, node);
+	debug(node, lvl);
+	int lbl = _lbl++;
 
+	node->left->accept(this,lvl+1); // visit left child
+
+	_pf.DUP(); // duplicate to get the value for jmp, if its non zero jump is taken
+	_pf.JNZ(mklbl(lbl1)); // jump over right node
+
+	if (node->left()->name() == "index_node" || node->left()->name() == "id_node")
+		_pf.LOAD(); // load
+
+	node->right->accept(this,lvl+1);
+
+	if (node->left()->name() == "index_node" || node->left()->name() == "id_node")
+		_pf.LOAD(); // load
+
+	_pf.AND();
+	_pf.ALIGN(); // align symbols
+	_pf.LABEL(mklbl(lbl)); // TODO optimization??
 }
 
 void zu::postfix_writer::do_allocation_node(zu::allocation_node * const node, int lvl)  {
@@ -147,70 +168,80 @@ void zu::postfix_writer::do_variable_node(zu::variable_node * const node, int lv
 //---------------------------------------------------------------------------
 
 void zu::postfix_writer::do_add_node(cdk::add_node * const node, int lvl) {
-  CHECK_TYPES(_compiler, _symtab, node);
-  node->left()->accept(this, lvl);
-  node->right()->accept(this, lvl);
-  _pf.ADD();
+	CHECK_TYPES(_compiler, _symtab, node);
+	node->left()->accept(this, lvl);
+	node->right()->accept(this, lvl);
+	_pf.ADD();
 }
+
 void zu::postfix_writer::do_sub_node(cdk::sub_node * const node, int lvl) {
-  CHECK_TYPES(_compiler, _symtab, node);
-  node->left()->accept(this, lvl);
-  node->right()->accept(this, lvl);
-  _pf.SUB();
+	CHECK_TYPES(_compiler, _symtab, node);
+	node->left()->accept(this, lvl);
+	node->right()->accept(this, lvl);
+	_pf.SUB();
 }
+
 void zu::postfix_writer::do_mul_node(cdk::mul_node * const node, int lvl) {
-  CHECK_TYPES(_compiler, _symtab, node);
-  node->left()->accept(this, lvl);
-  node->right()->accept(this, lvl);
-  _pf.MUL();
+	CHECK_TYPES(_compiler, _symtab, node);
+	node->left()->accept(this, lvl);
+	node->right()->accept(this, lvl);
+	_pf.MUL();
 }
+
 void zu::postfix_writer::do_div_node(cdk::div_node * const node, int lvl) {
-  CHECK_TYPES(_compiler, _symtab, node);
-  node->left()->accept(this, lvl);
-  node->right()->accept(this, lvl);
-  _pf.DIV();
+	CHECK_TYPES(_compiler, _symtab, node);
+	node->left()->accept(this, lvl);
+	node->right()->accept(this, lvl);
+	_pf.DIV();
 }
+
 void zu::postfix_writer::do_mod_node(cdk::mod_node * const node, int lvl) {
-  CHECK_TYPES(_compiler, _symtab, node);
-  node->left()->accept(this, lvl);
-  node->right()->accept(this, lvl);
-  _pf.MOD();
+	CHECK_TYPES(_compiler, _symtab, node);
+	node->left()->accept(this, lvl);
+	node->right()->accept(this, lvl);
+	_pf.MOD();
 }
+
 void zu::postfix_writer::do_lt_node(cdk::lt_node * const node, int lvl) {
-  CHECK_TYPES(_compiler, _symtab, node);
-  node->left()->accept(this, lvl);
-  node->right()->accept(this, lvl);
-  _pf.LT();
+	CHECK_TYPES(_compiler, _symtab, node);
+	node->left()->accept(this, lvl);
+	node->right()->accept(this, lvl);
+	_pf.LT();
 }
+
 void zu::postfix_writer::do_le_node(cdk::le_node * const node, int lvl) {
-  CHECK_TYPES(_compiler, _symtab, node);
-  node->left()->accept(this, lvl);
-  node->right()->accept(this, lvl);
-  _pf.LE();
+	CHECK_TYPES(_compiler, _symtab, node);
+	node->left()->accept(this, lvl);
+	node->right()->accept(this, lvl);
+	_pf.LE();
 }
+
 void zu::postfix_writer::do_ge_node(cdk::ge_node * const node, int lvl) {
-  CHECK_TYPES(_compiler, _symtab, node);
-  node->left()->accept(this, lvl);
-  node->right()->accept(this, lvl);
-  _pf.GE();
+	CHECK_TYPES(_compiler, _symtab, node);
+	node->left()->accept(this, lvl);
+	node->right()->accept(this, lvl);
+	_pf.GE();
 }
+
 void zu::postfix_writer::do_gt_node(cdk::gt_node * const node, int lvl) {
-  CHECK_TYPES(_compiler, _symtab, node);
-  node->left()->accept(this, lvl);
-  node->right()->accept(this, lvl);
-  _pf.GT();
+	CHECK_TYPES(_compiler, _symtab, node);
+	node->left()->accept(this, lvl);
+	node->right()->accept(this, lvl);
+	_pf.GT();
 }
+
 void zu::postfix_writer::do_ne_node(cdk::ne_node * const node, int lvl) {
-  CHECK_TYPES(_compiler, _symtab, node);
-  node->left()->accept(this, lvl);
-  node->right()->accept(this, lvl);
-  _pf.NE();
+	CHECK_TYPES(_compiler, _symtab, node);
+	node->left()->accept(this, lvl);
+	node->right()->accept(this, lvl);
+	_pf.NE();
 }
+
 void zu::postfix_writer::do_eq_node(cdk::eq_node * const node, int lvl) {
-  CHECK_TYPES(_compiler, _symtab, node);
-  node->left()->accept(this, lvl);
-  node->right()->accept(this, lvl);
-  _pf.EQ();
+	CHECK_TYPES(_compiler, _symtab, node);
+	node->left()->accept(this, lvl);
+	node->right()->accept(this, lvl);
+	_pf.EQ();
 }
 
 //---------------------------------------------------------------------------
@@ -276,10 +307,12 @@ void zu::postfix_writer::do_assignment_node(zu::assignment_node * const node, in
 //}
 
 void zu::postfix_writer::do_function_declaration_node(zu::function_declaration_node * const node, int lvl){
-
+	CHECK_TYPES(_compiler, _symtab, node);
+	debug(node, lvl);
 }
 
 void zu::postfix_writer::do_function_body_node(zu::function_body_node * const node, int lvl){
+	CHECK_TYPES(_compiler, _symtab, node);
 
 }
 
