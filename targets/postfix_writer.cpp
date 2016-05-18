@@ -169,9 +169,45 @@ void zu::postfix_writer::do_variable_node(zu::variable_node * const node, int lv
 
 void zu::postfix_writer::do_add_node(cdk::add_node * const node, int lvl) {
 	CHECK_TYPES(_compiler, _symtab, node);
+	
+	// Visit left child
 	node->left()->accept(this, lvl);
-	node->right()->accept(this, lvl);
-	_pf.ADD();
+	
+	// TODO:
+        // If the left child is a left value, it only places its address
+        // onto the top of the stack
+        // if(isLeftValue(node->left())) {
+        //     loadNodeValue(node->left());
+        //}
+
+        // If the ADD has type double but left child is of type INT, we must convert
+        if((node->left()->type()->name() == basic_type::TYPE_INT) && (node->type()->name() == basic_type::TYPE_DOUBLE)) {
+                _pf.I2D();
+        }
+
+        // Visit right child
+        node->right()->accept(this, lvl+1);
+	
+	// TODO:
+        // If the right child is a left value, it only places its address
+        // onto the top of the stack
+        // if(isLeftValue(node->right())) {
+        //        loadNodeValue(node->right());
+        //}
+
+        // If the ADD has type double but right child is of type INT, we must convert
+        if((node->right()->type()->name() == basic_type::TYPE_INT) && (node->type()->name() == basic_type::TYPE_DOUBLE)) {
+                _pf.I2D();
+        }
+
+        // ADD result is a double? 
+        if(node->type()->name() == basic_type::TYPE_DOUBLE) {
+                _pf.DADD(); // yup.
+        }
+        else {
+                // No. regular integer ADD
+                _pf.ADD();
+        }
 }
 
 void zu::postfix_writer::do_sub_node(cdk::sub_node * const node, int lvl) {
