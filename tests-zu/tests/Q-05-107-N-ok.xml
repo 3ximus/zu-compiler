@@ -57,10 +57,6 @@
     <literal>
       <integer_node>0</integer_node>
     </literal>
-    <args>
-      <sequence_node size='1'>
-      </sequence_node>
-    </args>
     <block>
       <block_node>
         <instructions>

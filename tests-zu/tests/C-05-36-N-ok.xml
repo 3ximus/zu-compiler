@@ -17,10 +17,6 @@
     <literal>
       <integer_node>0</integer_node>
     </literal>
-    <args>
-      <sequence_node size='1'>
-      </sequence_node>
-    </args>
     <block>
       <block_node>
         <instructions>
@@ -31,6 +27,26 @@
               </id_node>
               <newLine>0</newLine>
             </print_node>
+            <evaluation_node>
+              <assignment_node>
+                <id_node>
+                  <id_node>y</id_node>
+                </id_node>
+                <rvalue>
+                  <add_node>
+                    <integer_node>2</integer_node>
+                    <assignment_node>
+                      <id_node>
+                        <id_node>x</id_node>
+                      </id_node>
+                      <rvalue>
+                        <integer_node>4</integer_node>
+                      </rvalue>
+                    </assignment_node>
+                  </add_node>
+                </rvalue>
+              </assignment_node>
+            </evaluation_node>
           </sequence_node>
         </instructions>
       </block_node>

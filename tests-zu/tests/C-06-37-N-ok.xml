@@ -11,14 +11,22 @@
     <literal>
       <integer_node>0</integer_node>
     </literal>
-    <args>
-      <sequence_node size='1'>
-      </sequence_node>
-    </args>
     <block>
       <block_node>
         <instructions>
           <sequence_node size='2'>
+            <print_node>
+              <add_node>
+                <integer_node>1</integer_node>
+                <mul_node>
+                  <id_node>
+                    <id_node>x</id_node>
+                  </id_node>
+                  <integer_node>3</integer_node>
+                </mul_node>
+              </add_node>
+              <newLine>0</newLine>
+            </print_node>
             <evaluation_node>
               <assignment_node>
                 <id_node>

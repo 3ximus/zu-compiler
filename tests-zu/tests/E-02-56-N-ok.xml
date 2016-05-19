@@ -11,10 +11,6 @@
     <literal>
       <integer_node>0</integer_node>
     </literal>
-    <args>
-      <sequence_node size='1'>
-      </sequence_node>
-    </args>
     <block>
       <block_node>
         <instructions>
@@ -34,10 +30,31 @@
               </init>
               <test>
                 <sequence_node size='1'>
+                  <ge_node>
+                    <id_node>
+                      <id_node>x</id_node>
+                    </id_node>
+                    <neg_node>
+                      <integer_node>3</integer_node>
+                    </neg_node>
+                  </ge_node>
                 </sequence_node>
               </test>
               <step>
                 <sequence_node size='1'>
+                  <assignment_node>
+                    <id_node>
+                      <id_node>x</id_node>
+                    </id_node>
+                    <rvalue>
+                      <sub_node>
+                        <id_node>
+                          <id_node>x</id_node>
+                        </id_node>
+                        <integer_node>1</integer_node>
+                      </sub_node>
+                    </rvalue>
+                  </assignment_node>
                 </sequence_node>
               </step>
               <block>

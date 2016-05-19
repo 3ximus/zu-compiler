@@ -471,7 +471,7 @@ void zu::postfix_writer::do_print_node(zu::print_node * const node, int lvl) {
 		_pf.CALL("printi");
 		_pf.TRASH(4); // delete the printed value
 	}
-	if (node->argument()->type()->name() == basic_type::TYPE_DOUBLE) {
+	else if (node->argument()->type()->name() == basic_type::TYPE_DOUBLE) {
 		_pf.CALL("printd");
 		_pf.TRASH(4); // delete the printed value
 	}
@@ -480,7 +480,7 @@ void zu::postfix_writer::do_print_node(zu::print_node * const node, int lvl) {
 		_pf.TRASH(4); // delete the printed value's address
 	}
 	else {
-		std::cerr << "ERROR: CANNOT HAPPEN!" << std::endl;
+		std::cerr << "trying to print unprintable value!" << std::endl;
 		exit(1);
 	}
 

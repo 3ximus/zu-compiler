@@ -22,6 +22,17 @@
       <block_node>
         <instructions>
           <sequence_node size='1'>
+            <print_node>
+              <add_node>
+                <id_node>
+                  <id_node>x</id_node>
+                </id_node>
+                <id_node>
+                  <id_node>y</id_node>
+                </id_node>
+              </add_node>
+              <newLine>0</newLine>
+            </print_node>
           </sequence_node>
         </instructions>
       </block_node>
@@ -35,10 +46,6 @@
     <literal>
       <integer_node>0</integer_node>
     </literal>
-    <args>
-      <sequence_node size='1'>
-      </sequence_node>
-    </args>
     <block>
       <block_node>
         <instructions>

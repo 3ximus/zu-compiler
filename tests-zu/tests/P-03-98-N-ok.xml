@@ -11,10 +11,6 @@
     <literal>
       <integer_node>0</integer_node>
     </literal>
-    <args>
-      <sequence_node size='1'>
-      </sequence_node>
-    </args>
     <block>
       <block_node>
         <declarations>
@@ -48,10 +44,31 @@
               </init>
               <test>
                 <sequence_node size='1'>
+                  <lt_node>
+                    <id_node>
+                      <id_node>l</id_node>
+                    </id_node>
+                    <id_node>
+                      <id_node>n</id_node>
+                    </id_node>
+                  </lt_node>
                 </sequence_node>
               </test>
               <step>
                 <sequence_node size='1'>
+                  <assignment_node>
+                    <id_node>
+                      <id_node>l</id_node>
+                    </id_node>
+                    <rvalue>
+                      <add_node>
+                        <id_node>
+                          <id_node>l</id_node>
+                        </id_node>
+                        <integer_node>1</integer_node>
+                      </add_node>
+                    </rvalue>
+                  </assignment_node>
                 </sequence_node>
               </step>
               <block>
@@ -88,13 +105,67 @@
               </init>
               <test>
                 <sequence_node size='1'>
+                  <lt_node>
+                    <id_node>
+                      <id_node>k</id_node>
+                    </id_node>
+                    <id_node>
+                      <id_node>n</id_node>
+                    </id_node>
+                  </lt_node>
                 </sequence_node>
               </test>
               <step>
                 <sequence_node size='1'>
+                  <assignment_node>
+                    <id_node>
+                      <id_node>k</id_node>
+                    </id_node>
+                    <rvalue>
+                      <add_node>
+                        <id_node>
+                          <id_node>k</id_node>
+                        </id_node>
+                        <integer_node>1</integer_node>
+                      </add_node>
+                    </rvalue>
+                  </assignment_node>
                 </sequence_node>
               </step>
               <block>
+                <evaluation_node>
+                  <assignment_node>
+                    <index_node>
+                      <lvalue>
+                        <id_node>
+                          <id_node>f</id_node>
+                        </id_node>
+                      </lvalue>
+                      <rvalue>
+                        <id_node>
+                          <id_node>k</id_node>
+                        </id_node>
+                      </rvalue>
+                    </index_node>
+                    <rvalue>
+                      <div_node>
+                        <integer_node>6</integer_node>
+                        <index_node>
+                          <lvalue>
+                            <id_node>
+                              <id_node>f</id_node>
+                            </id_node>
+                          </lvalue>
+                          <rvalue>
+                            <id_node>
+                              <id_node>k</id_node>
+                            </id_node>
+                          </rvalue>
+                        </index_node>
+                      </div_node>
+                    </rvalue>
+                  </assignment_node>
+                </evaluation_node>
               </block>
             </for_node>
             <print_node>
@@ -118,10 +189,31 @@
               </init>
               <test>
                 <sequence_node size='1'>
+                  <lt_node>
+                    <id_node>
+                      <id_node>j</id_node>
+                    </id_node>
+                    <id_node>
+                      <id_node>n</id_node>
+                    </id_node>
+                  </lt_node>
                 </sequence_node>
               </test>
               <step>
                 <sequence_node size='1'>
+                  <assignment_node>
+                    <id_node>
+                      <id_node>j</id_node>
+                    </id_node>
+                    <rvalue>
+                      <add_node>
+                        <id_node>
+                          <id_node>j</id_node>
+                        </id_node>
+                        <integer_node>1</integer_node>
+                      </add_node>
+                    </rvalue>
+                  </assignment_node>
                 </sequence_node>
               </step>
               <block>
@@ -158,10 +250,31 @@
               </init>
               <test>
                 <sequence_node size='1'>
+                  <lt_node>
+                    <id_node>
+                      <id_node>i</id_node>
+                    </id_node>
+                    <id_node>
+                      <id_node>n</id_node>
+                    </id_node>
+                  </lt_node>
                 </sequence_node>
               </test>
               <step>
                 <sequence_node size='1'>
+                  <assignment_node>
+                    <id_node>
+                      <id_node>i</id_node>
+                    </id_node>
+                    <rvalue>
+                      <add_node>
+                        <id_node>
+                          <id_node>i</id_node>
+                        </id_node>
+                        <integer_node>1</integer_node>
+                      </add_node>
+                    </rvalue>
+                  </assignment_node>
                 </sequence_node>
               </step>
               <block>

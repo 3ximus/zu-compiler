@@ -142,7 +142,7 @@ str  : tSTRING			{ $$ = $1; }
 
 fargs : smp_vdec			{ $$ = new cdk::sequence_node(LINE, $1); }
       |	fargs ',' smp_vdec	{ $$ = new cdk::sequence_node(LINE, $3, $1); }
-      |						{ $$ = new cdk::sequence_node(LINE, new cdk::nil_node(LINE)); }
+      |						{ $$ = NULL; }
       ;
 
 blk_var : smp_vdec ';'			{ $$ = new cdk::sequence_node(LINE, $1); }

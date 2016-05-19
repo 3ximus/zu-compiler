@@ -5,10 +5,6 @@
     <literal>
       <integer_node>0</integer_node>
     </literal>
-    <args>
-      <sequence_node size='1'>
-      </sequence_node>
-    </args>
     <block>
       <block_node>
         <instructions>
@@ -29,10 +25,29 @@
               </init>
               <test>
                 <sequence_node size='1'>
+                  <le_node>
+                    <id_node>
+                      <id_node>y</id_node>
+                    </id_node>
+                    <integer_node>3</integer_node>
+                  </le_node>
                 </sequence_node>
               </test>
               <step>
                 <sequence_node size='1'>
+                  <assignment_node>
+                    <id_node>
+                      <id_node>y</id_node>
+                    </id_node>
+                    <rvalue>
+                      <add_node>
+                        <id_node>
+                          <id_node>y</id_node>
+                        </id_node>
+                        <integer_node>1</integer_node>
+                      </add_node>
+                    </rvalue>
+                  </assignment_node>
                 </sequence_node>
               </step>
               <block>
@@ -52,15 +67,43 @@
                   </init>
                   <test>
                     <sequence_node size='1'>
+                      <le_node>
+                        <id_node>
+                          <id_node>x</id_node>
+                        </id_node>
+                        <integer_node>6</integer_node>
+                      </le_node>
                     </sequence_node>
                   </test>
                   <step>
                     <sequence_node size='1'>
+                      <assignment_node>
+                        <id_node>
+                          <id_node>x</id_node>
+                        </id_node>
+                        <rvalue>
+                          <add_node>
+                            <id_node>
+                              <id_node>x</id_node>
+                            </id_node>
+                            <integer_node>1</integer_node>
+                          </add_node>
+                        </rvalue>
+                      </assignment_node>
                     </sequence_node>
                   </step>
                   <block>
                     <if_else_node>
                       <condition>
+                        <eq_node>
+                          <mod_node>
+                            <id_node>
+                              <id_node>y</id_node>
+                            </id_node>
+                            <integer_node>2</integer_node>
+                          </mod_node>
+                          <integer_node>0</integer_node>
+                        </eq_node>
                       </condition>
                       <then>
                         <break_node>

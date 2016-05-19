@@ -28,6 +28,12 @@
             </evaluation_node>
             <if_else_node>
               <condition>
+                <eq_node>
+                  <id_node>
+                    <id_node>i</id_node>
+                  </id_node>
+                  <integer_node>0</integer_node>
+                </eq_node>
               </condition>
               <then>
                 <evaluation_node>
@@ -47,6 +53,33 @@
                     <sequence_node size='2'>
                       <return_node>
                       </return_node>
+                      <evaluation_node>
+                        <assignment_node>
+                          <id_node>
+                            <id_node>f</id_node>
+                          </id_node>
+                          <rvalue>
+                            <add_node>
+                              <function_call_node>
+                                <function_call_node>f</function_call_node>
+                                <args>
+                                  <sequence_node size='1'>
+                                    <sub_node>
+                                      <id_node>
+                                        <id_node>i</id_node>
+                                      </id_node>
+                                      <integer_node>1</integer_node>
+                                    </sub_node>
+                                  </sequence_node>
+                                </args>
+                              </function_call_node>
+                              <id_node>
+                                <id_node>i</id_node>
+                              </id_node>
+                            </add_node>
+                          </rvalue>
+                        </assignment_node>
+                      </evaluation_node>
                     </sequence_node>
                   </instructions>
                 </block_node>
@@ -65,10 +98,6 @@
     <literal>
       <integer_node>0</integer_node>
     </literal>
-    <args>
-      <sequence_node size='1'>
-      </sequence_node>
-    </args>
     <block>
       <block_node>
         <instructions>

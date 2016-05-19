@@ -22,6 +22,23 @@
       <block_node>
         <instructions>
           <sequence_node size='1'>
+            <evaluation_node>
+              <assignment_node>
+                <id_node>
+                  <id_node>f</id_node>
+                </id_node>
+                <rvalue>
+                  <add_node>
+                    <id_node>
+                      <id_node>y</id_node>
+                    </id_node>
+                    <id_node>
+                      <id_node>x</id_node>
+                    </id_node>
+                  </add_node>
+                </rvalue>
+              </assignment_node>
+            </evaluation_node>
           </sequence_node>
         </instructions>
       </block_node>
@@ -35,10 +52,6 @@
     <literal>
       <integer_node>0</integer_node>
     </literal>
-    <args>
-      <sequence_node size='1'>
-      </sequence_node>
-    </args>
     <block>
       <block_node>
         <instructions>
