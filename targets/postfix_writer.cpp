@@ -74,7 +74,7 @@ void zu::postfix_writer::do_neg_node(cdk::neg_node * const node, int lvl) {
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
 	node->argument()->accept(this, lvl+2); // determine the value
-	if (node->argument()->type()->name() != basic_type::TYPE_INT)
+	if (node->argument()->type()->name() == basic_type::TYPE_INT)
 		_pf.NEG(); // 2-complement
 	else
 		_pf.DNEG(); // symmetric for floats
