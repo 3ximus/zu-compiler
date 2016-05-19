@@ -317,25 +317,38 @@ void zu::postfix_writer::do_lvalue_node(zu::lvalue_node * const node, int lvl) {
 void zu::postfix_writer::do_assignment_node(zu::assignment_node * const node, int lvl) {
 	/* TODO */
 	debug(node, lvl);
-  //CHECK_TYPES(_compiler, _symtab, node);
+  	CHECK_TYPES(_compiler, _symtab, node);
 
-  //// DAVID: horrible hack!
-  //// (this is caused by Zu not having explicit variable declarations)
-  //const std::string &id = node->lvalue()->value();
-  //std::shared_ptr<zu::symbol> symbol = _symtab.find(id);
-  //if (symbol->value() == -1) {
-  //  _pf.DATA(); // variables are all global and live in DATA
-  //  _pf.ALIGN(); // make sure we are aligned
-  //  _pf.LABEL(id); // name variable location
-  //  _pf.CONST(0); // initialize it to 0 (zero)
-  //  _pf.TEXT(); // return to the TEXT segment
-  //  symbol->value(0);
-  //}
+	node->rvalue()->accept(this, lvl+1);
 
-  //node->rvalue()->accept(this, lvl); // determine the new value
-  //_pf.DUP();
-  //node->lvalue()->accept(this, lvl); // where to store the value
-  //_pf.STORE(); // store the value at address
+        // If the right value is a left value, it only places
+        // its address on top of the stack
+        if(node->rvalue()->name() == "lvalue_node") {
+                if(node->rvalue()->type()->name() == basic_type::TYPE_DOUBLE)
+			_pf.DLOAD();
+		else
+			_pf.LOAD();
+        }
+
+        // If assigning an integer to a double... we must convert!
+        if(node->type()->name() == basic_type::TYPE_DOUBLE && node->rvalue()->type()->name() == basic_type::TYPE_INT) {
+                // convert top of stack to double if node has type double
+                _pf.I2D();
+        }
+
+        // Duplicate right child value (based on size of left value)
+	if(node->type()->name() == basic_type::TYPE_DOUBLE)
+		_pf.DDUP();
+	else
+		_pf.DUP();
+
+        node->lvalue()->accept(this, lvl+1);
+
+        // Store the value!
+	if(node->lvalue()->type()->name() == basic_type::TYPE_DOUBLE)
+		_pf.DSTORE();
+	else
+		_pf.STORE();
 }
 
 //---------------------------------------------------------------------------
