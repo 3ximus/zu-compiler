@@ -168,30 +168,8 @@ void zu::postfix_writer::do_variable_node(zu::variable_node * const node, int lv
 //---------------------------------------------------------------------------
 
 void zu::postfix_writer::do_add_node(cdk::add_node * const node, int lvl) {
-	CHECK_TYPES(_compiler, _symtab, node);
-	
-	// Visit left child
-	node->left()->accept(this, lvl);
-	
-        // if lval, places address on the top of the stack
-        if(node->left()->type()->name() == basic_type::TYPE_POINTER)
-             	_pf.LOAD();
-
-        // If the ADD has type double but left child is of type INT, we must convert
-        if((node->left()->type()->name() == basic_type::TYPE_INT) && (node->type()->name() == basic_type::TYPE_DOUBLE))
-                _pf.I2D();
-
-        // Visit right child
-        node->right()->accept(this, lvl+1);
-	
-        // if lval, places address on the top of the stack
-        if(node->left()->type()->name() == basic_type::TYPE_POINTER)
-             	_pf.LOAD();
-
-        // If the ADD has type double but right child is of type INT, we must convert
-        if((node->right()->type()->name() == basic_type::TYPE_INT) && (node->type()->name() == basic_type::TYPE_DOUBLE))
-        	_pf.I2D();
-        
+	CHECK_TYPES(_compiler, _symtab, node);	
+        checkExpressionsForArithmeticOperation(node,lvl); 
 
         // ADD result is a double? 
         if(node->type()->name() == basic_type::TYPE_DOUBLE) {
@@ -205,29 +183,7 @@ void zu::postfix_writer::do_add_node(cdk::add_node * const node, int lvl) {
 
 void zu::postfix_writer::do_sub_node(cdk::sub_node * const node, int lvl) {
 	CHECK_TYPES(_compiler, _symtab, node);
-	
-	// Visit left child
-	node->left()->accept(this, lvl);
-	
-        // if lval, places address on the top of the stack
-        if(node->left()->type()->name() == basic_type::TYPE_POINTER)
-             	_pf.LOAD();
-
-        // If the SUB has type double but left child is of type INT, we must convert
-        if((node->left()->type()->name() == basic_type::TYPE_INT) && (node->type()->name() == basic_type::TYPE_DOUBLE))
-                _pf.I2D();
-
-        // Visit right child
-        node->right()->accept(this, lvl+1);
-	
-        // if lval, places address on the top of the stack
-        if(node->left()->type()->name() == basic_type::TYPE_POINTER)
-             	_pf.LOAD();
-
-        // If the SUB has type double but right child is of type INT, we must convert
-        if((node->right()->type()->name() == basic_type::TYPE_INT) && (node->type()->name() == basic_type::TYPE_DOUBLE))
-        	_pf.I2D();
-        
+        checkExpressionsForArithmeticOperation(node,lvl); 
 
         // SUB result is a double? 
         if(node->type()->name() == basic_type::TYPE_DOUBLE) {
@@ -241,16 +197,30 @@ void zu::postfix_writer::do_sub_node(cdk::sub_node * const node, int lvl) {
 
 void zu::postfix_writer::do_mul_node(cdk::mul_node * const node, int lvl) {
 	CHECK_TYPES(_compiler, _symtab, node);
-	node->left()->accept(this, lvl);
-	node->right()->accept(this, lvl);
-	_pf.MUL();
+        checkExpressionsForArithmeticOperation(node,lvl); 
+
+        // MUL result is a double? 
+        if(node->type()->name() == basic_type::TYPE_DOUBLE) {
+                _pf.DMUL(); // yup.
+        }
+        else {
+                // No. regular integer MUL
+                _pf.MUL();
+        }
 }
 
 void zu::postfix_writer::do_div_node(cdk::div_node * const node, int lvl) {
 	CHECK_TYPES(_compiler, _symtab, node);
-	node->left()->accept(this, lvl);
-	node->right()->accept(this, lvl);
-	_pf.DIV();
+        checkExpressionsForArithmeticOperation(node,lvl); 
+
+        // MUL result is a double? 
+        if(node->type()->name() == basic_type::TYPE_DOUBLE) {
+                _pf.DDIV(); // yup.
+        }
+        else {
+                // No. regular integer MUL
+                _pf.DIV();
+        }
 }
 
 void zu::postfix_writer::do_mod_node(cdk::mod_node * const node, int lvl) {
