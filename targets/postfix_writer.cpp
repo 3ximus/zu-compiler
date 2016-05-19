@@ -369,6 +369,7 @@ void zu::postfix_writer::do_assignment_node(zu::assignment_node * const node, in
 //}
 
 void zu::postfix_writer::do_function_declaration_node(zu::function_declaration_node * const node, int lvl){
+	/* TODO: */
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
 }
@@ -542,6 +543,4 @@ void zu::postfix_writer::do_continue_node(zu::continue_node * const node, int lv
 void zu::postfix_writer::do_break_node(zu::break_node * const node, int lvl) {
 	/* TODO */
 }
-
-
 
