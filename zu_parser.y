@@ -200,6 +200,7 @@ expr : lit  						{ $$ = $1; }
 
 lval : tIDENTIFIER					{ $$ = new zu::id_node(LINE, $1); }
      | lval '[' expr ']'				{ $$ = new zu::index_node(LINE, $1, $3); }
+	 | '(' expr ')' '[' expr ']'		{ $$ = new zu::index_node(LINE, $2, $5); }
      | fcal '[' expr ']'				{ $$ = new zu::index_node(LINE, $1, $3); }
      ;
 
@@ -209,5 +210,5 @@ fcal : tIDENTIFIER '(' exprs ')' 			{ $$ = new zu::function_call_node(LINE, $1, 
 exprs : exprs ',' expr					{ $$ = new cdk::sequence_node(LINE, $3, $1); }
       | expr						{ $$ = new cdk::sequence_node(LINE, $1); }
       | 						{ $$ = new cdk::sequence_node(LINE, new cdk::nil_node(LINE)); }
-      ;	
+      ;
 %%

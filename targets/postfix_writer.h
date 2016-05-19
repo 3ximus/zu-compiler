@@ -132,9 +132,6 @@ namespace zu {
 	void do_eq_node(cdk::eq_node * const node, int lvl);
 
   public:
-	void do_lvalue_node(zu::lvalue_node * const node, int lvl);
-
-  public:
 	void do_function_declaration_node(zu::function_declaration_node * const node, int lvl);
 	void do_function_body_node(zu::function_body_node * const node, int lvl);
 	void do_function_call_node(zu::function_call_node * const node, int lvl);

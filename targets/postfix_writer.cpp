@@ -164,7 +164,8 @@ void zu::postfix_writer::do_index_node(zu::index_node * const node, int lvl) {
 void zu::postfix_writer::do_id_node(zu::id_node * const node, int lvl) {
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-	/* TODO */
+
+	std::shared_ptr<zu::symbol> s = _symtab.find(node->identifier());
 }
 
 void zu::postfix_writer::do_variable_node(zu::variable_node * const node, int lvl) {
@@ -304,37 +305,26 @@ void zu::postfix_writer::do_eq_node(cdk::eq_node * const node, int lvl) {
 
 //---------------------------------------------------------------------------
 
-void zu::postfix_writer::do_lvalue_node(zu::lvalue_node * const node, int lvl) {
-	/* TODO */
-	debug(node, lvl);
-  //CHECK_TYPES(_compiler, _symtab, node);
-  //// simplified generation: all variables are global
-  //_pf.ADDR(node->value());
-}
-
-//---------------------------------------------------------------------------
-
 void zu::postfix_writer::do_assignment_node(zu::assignment_node * const node, int lvl) {
-	/* TODO */
 	debug(node, lvl);
-  	CHECK_TYPES(_compiler, _symtab, node);
+	CHECK_TYPES(_compiler, _symtab, node);
 
 	node->rvalue()->accept(this, lvl+1);
 
-        // If the right value is a left value, it only places
-        // its address on top of the stack
-        if(node->rvalue()->name() == "lvalue_node") {
-                if(node->rvalue()->type()->name() == basic_type::TYPE_DOUBLE)
+	// If the right value is a left value, it only places
+	// its address on top of the stack
+	if(node->rvalue()->name() == "lvalue_node") {
+		if(node->rvalue()->type()->name() == basic_type::TYPE_DOUBLE)
 			_pf.DLOAD();
 		else
 			_pf.LOAD();
-        }
+	}
 
-        // If assigning an integer to a double... we must convert!
-        if(node->type()->name() == basic_type::TYPE_DOUBLE && node->rvalue()->type()->name() == basic_type::TYPE_INT) {
-                // convert top of stack to double if node has type double
-                _pf.I2D();
-        }
+	// If assigning an integer to a double... we must convert!
+	if(node->type()->name() == basic_type::TYPE_DOUBLE && node->rvalue()->type()->name() == basic_type::TYPE_INT) {
+		// convert top of stack to double if node has type double
+		_pf.I2D();
+	}
 
         // Duplicate right child value (based on size of left value)
 	if(node->type()->name() == basic_type::TYPE_DOUBLE)
@@ -342,7 +332,7 @@ void zu::postfix_writer::do_assignment_node(zu::assignment_node * const node, in
 	else
 		_pf.DUP();
 
-        node->lvalue()->accept(this, lvl+1);
+	node->lvalue()->accept(this, lvl+1);
 
         // Store the value!
 	if(node->lvalue()->type()->name() == basic_type::TYPE_DOUBLE)
