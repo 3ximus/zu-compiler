@@ -19,6 +19,7 @@ namespace zu {
     cdk::symbol_table<zu::symbol> &_symtab;
     cdk::basic_postfix_emitter &_pf;
     int _lbl;
+    int _function_return_lbl;
 
   public:
     postfix_writer(std::shared_ptr<cdk::compiler> compiler, cdk::symbol_table<zu::symbol> &symtab,

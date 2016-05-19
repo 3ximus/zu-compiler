@@ -400,6 +400,8 @@ void zu::postfix_writer::do_function_body_node(zu::function_body_node * const no
 	_pf.ENTER(dec_size);
 
 	node->block()->accept(this, lvl+2);
+	
+	_pf.LABEL(mklbl(_function_return_lbl = ++_lbl));	
 
 	if(node->type()->name() != basic_type::TYPE_VOID) {
 		int return_offset = 0 - node->type()->size();
@@ -515,7 +517,7 @@ void zu::postfix_writer::do_for_node(zu::for_node * const node, int lvl) {
 //---------------------------------------------------------------------------
 
 void zu::postfix_writer::do_if_node(zu::if_node * const node, int lvl) {
-	/* TODO */
+	/* Igual no mayflay e simple. Acho que deve estar bem */
 	debug(node, lvl);
 
 	int lbl1;
@@ -532,7 +534,7 @@ void zu::postfix_writer::do_if_node(zu::if_node * const node, int lvl) {
 //---------------------------------------------------------------------------
 
 void zu::postfix_writer::do_if_else_node(zu::if_else_node * const node, int lvl) {
-	/* TODO */
+	/* Igual no mayflay e simple. Acho que deve estar bem */
 	debug(node, lvl);
 	int lbl1, lbl2;
 
@@ -552,6 +554,10 @@ void zu::postfix_writer::do_if_else_node(zu::if_else_node * const node, int lvl)
 
 void zu::postfix_writer::do_return_node(zu::return_node * const node, int lvl) {
 	/* TODO */
+	debug(node, lvl);
+
+        // jump to the end of the function body
+	_pf.JMP(mklbl(_function_return_lbl));
 }
 
 void zu::postfix_writer::do_continue_node(zu::continue_node * const node, int lvl) {
