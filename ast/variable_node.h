@@ -52,7 +52,7 @@ namespace zu {
 	}
 
 	inline zu::assignment_node assignment_handler() {
-		return new zu::assignment_node(lineno(), this, value());
+		return new zu::assignment_node(lineno(), new zu::id_node(lineno(), identifier()), value());
 	}
 
     /**
