@@ -147,22 +147,22 @@ void zu::postfix_writer::do_or_node(zu::or_node * const node, int lvl) {
 
 void zu::postfix_writer::do_allocation_node(zu::allocation_node * const node, int lvl)  {
 	CHECK_TYPES(_compiler, _symtab, node);
-
+	/* TODO */
 }
 
 void zu::postfix_writer::do_index_node(zu::index_node * const node, int lvl) {
 	CHECK_TYPES(_compiler, _symtab, node);
-
+	/* TODO */
 }
 
 void zu::postfix_writer::do_id_node(zu::id_node * const node, int lvl) {
 	CHECK_TYPES(_compiler, _symtab, node);
-
+	/* TODO */
 }
 
 void zu::postfix_writer::do_variable_node(zu::variable_node * const node, int lvl) {
 	CHECK_TYPES(_compiler, _symtab, node);
-
+	/* TODO */
 }
 
 //---------------------------------------------------------------------------
@@ -217,12 +217,12 @@ void zu::postfix_writer::do_div_node(cdk::div_node * const node, int lvl) {
 	CHECK_TYPES(_compiler, _symtab, node);
         checkExpressionsForBinaryInstruction(node,lvl); 
 
-        // MUL result is a double? 
+        // DIV result is a double? 
         if(node->type()->name() == basic_type::TYPE_DOUBLE) {
                 _pf.DDIV(); // yup.
         }
         else {
-                // No. regular integer MUL
+                // No. regular integer DIV
                 _pf.DIV();
         }
 }
@@ -233,13 +233,13 @@ void zu::postfix_writer::do_mod_node(cdk::mod_node * const node, int lvl) {
 
 	node->left()->accept(this, lvl);
 	
-	// Replace address with value -- left --
+	// --left-- Replace address with value
 	if(node->left()->type()->name() == basic_type::TYPE_POINTER)
 		_pf.LOAD();
 
 	node->right()->accept(this, lvl);
 	
-	// Replace address with value -- right --
+	// --right--  Replace address with value 
 	if(node->right()->type()->name() == basic_type::TYPE_POINTER)
 		_pf.LOAD();
 
