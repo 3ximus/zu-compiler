@@ -134,11 +134,11 @@ inline void zu::type_checker::processBinaryExpression(cdk::binary_expression_nod
 	ASSERT_UNSPEC;
 	/* operation cannot be performed on a string */
 	node->left()->accept(this, lvl + 2);
-	if (node->left()->type()->name() != basic_type::TYPE_INT || node->left()->type()->name() != basic_type::TYPE_DOUBLE || node->left()->type()->name() != basic_type::TYPE_POINTER)
-		throw std::string("string not supported on");
+	if (node->left()->type()->name() != basic_type::TYPE_INT && node->left()->type()->name() != basic_type::TYPE_DOUBLE && node->left()->type()->name() != basic_type::TYPE_POINTER)
+		throw std::string("string not supported on binary expression");
 	node->right()->accept(this, lvl + 2);
-	if (node->right()->type()->name() != basic_type::TYPE_INT || node->right()->type()->name() != basic_type::TYPE_DOUBLE || node->right()->type()->name() != basic_type::TYPE_POINTER)
-		throw std::string("string not supported on");
+	if (node->right()->type()->name() != basic_type::TYPE_INT && node->right()->type()->name() != basic_type::TYPE_DOUBLE && node->right()->type()->name() != basic_type::TYPE_POINTER)
+		throw std::string("string not supported on binary expression");
 }
 
 inline void zu::type_checker::processSameTypes(cdk::binary_expression_node * const node) {
