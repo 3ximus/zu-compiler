@@ -28,6 +28,9 @@ namespace zu {
     int _lbl;
     int _function_return_lbl;
 	std::vector<struct labels> _labels;
+	int _local_arg_offset = 0;
+	int _local_dec_offset = 0;
+	bool _function_context = false;
 
   public:
     postfix_writer(std::shared_ptr<cdk::compiler> compiler, cdk::symbol_table<zu::symbol> &symtab,

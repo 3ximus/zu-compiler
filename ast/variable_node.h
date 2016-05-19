@@ -3,6 +3,7 @@
 #define __ZU_VARIABLE_NODE_H__
 
 #include <string>
+#include "assignment_node.h"
 
 namespace zu {
 
@@ -48,6 +49,10 @@ namespace zu {
 
 	inline bool isFunctionArgument() {
 		return _isFarg;
+	}
+
+	inline zu::assignment_node assignment_handler() {
+		return new zu::assignment_node(lineno(), this, value());
 	}
 
     /**

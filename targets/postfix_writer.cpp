@@ -25,7 +25,7 @@ void zu::postfix_writer::debug(cdk::basic_node* const node, int lvl) {
 void zu::postfix_writer::do_sequence_node(cdk::sequence_node * const node, int lvl) {
 	for (size_t i = 0; i < node->size(); i++)
 		if (node->node(i))
-		  node->node(i)->accept(this, lvl+2);
+		  node->node(i)->accept(this, lvl+1);
 }
 
 //---------------------------------------------------------------------------
@@ -73,7 +73,7 @@ void zu::postfix_writer::do_string_node(cdk::string_node * const node, int lvl) 
 void zu::postfix_writer::do_neg_node(cdk::neg_node * const node, int lvl) {
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-	node->argument()->accept(this, lvl+2); // determine the value
+	node->argument()->accept(this, lvl+1); // determine the value
 	if (node->argument()->type()->name() == basic_type::TYPE_INT)
 		_pf.NEG(); // 2-complement
 	else
@@ -83,21 +83,21 @@ void zu::postfix_writer::do_neg_node(cdk::neg_node * const node, int lvl) {
 void zu::postfix_writer::do_identity_node(zu::identity_node * const node, int lvl) {
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-	node->argument()->accept(this, lvl+2); // determine the value
+	node->argument()->accept(this, lvl+1); // determine the value
 	/* FIXME DO NOTHING? */
 }
 
 void zu::postfix_writer::do_not_node(zu::not_node * const node, int lvl) {
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-	node->argument()->accept(this, lvl+2); // determine the value
+	node->argument()->accept(this, lvl+1); // determine the value
 	_pf.NOT(); // logical negation
 }
 
 void zu::postfix_writer::do_position_node(zu::position_node * const node, int lvl) {
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-	node->argument()->accept(this, lvl+2); // determine the value
+	node->argument()->accept(this, lvl+1); // determine the value
 	/* FIXME DO NOTHING */
 }
 
@@ -108,7 +108,7 @@ void zu::postfix_writer::do_and_node(zu::and_node * const node, int lvl) {
 	CHECK_TYPES(_compiler, _symtab, node);
 	int lbl1 = _lbl++;
 
-	node->left()->accept(this,lvl+2); // visit left child
+	node->left()->accept(this,lvl+1); // visit left child
 
 	_pf.DUP(); // duplicate to get the value for jmp, if its zero jump is taken
 	_pf.JZ(mklbl(lbl1)); // jump over right node
@@ -116,7 +116,7 @@ void zu::postfix_writer::do_and_node(zu::and_node * const node, int lvl) {
 	if (node->left()->name().compare("index_node") == 0 || node->left()->name().compare("id_node") == 0)
 		_pf.LOAD(); // load
 
-	node->right()->accept(this,lvl+2);
+	node->right()->accept(this,lvl+1);
 
 	if (node->left()->name().compare("index_node") == 0 || node->left()->name().compare("id_node") == 0)
 		_pf.LOAD(); // load
@@ -131,7 +131,7 @@ void zu::postfix_writer::do_or_node(zu::or_node * const node, int lvl) {
 	CHECK_TYPES(_compiler, _symtab, node);
 	int lbl1 = _lbl++;
 
-	node->left()->accept(this,lvl+2); // visit left child
+	node->left()->accept(this,lvl+1); // visit left child
 
 	_pf.DUP(); // duplicate to get the value for jmp, if its non zero jump is taken
 	_pf.JNZ(mklbl(lbl1)); // jump over right node
@@ -139,7 +139,7 @@ void zu::postfix_writer::do_or_node(zu::or_node * const node, int lvl) {
 	if (node->left()->name().compare("index_node") == 0 || node->left()->name().compare("id_node") == 0)
 		_pf.LOAD(); // load
 
-	node->right()->accept(this,lvl+2);
+	node->right()->accept(this,lvl+1);
 
 	if (node->left()->name().compare("index_node") == 0 || node->left()->name().compare("id_node") == 0)
 		_pf.LOAD(); // load
@@ -166,12 +166,54 @@ void zu::postfix_writer::do_id_node(zu::id_node * const node, int lvl) {
 	CHECK_TYPES(_compiler, _symtab, node);
 
 	std::shared_ptr<zu::symbol> s = _symtab.find(node->identifier());
+
+	if (s->local_offset() != -1) // variable is local
+		_pf.LOCAL(s->local_offset());
+	else 						// variable is global
+		_pf.ADDR(s->global_label());
+
 }
 
 void zu::postfix_writer::do_variable_node(zu::variable_node * const node, int lvl) {
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-	/* TODO */
+
+	std::shared_ptr<zu::symbol> s = _symtab.find(node->identifier());
+
+	if (node->isFunctionArgument()) {
+		s->local_offset(_local_arg_offset);
+		_local_arg_offset += node->type()->size();
+		return;
+	}
+
+	if (_function_context) {
+		_local_dec_offset -= node->type()->size();
+		s->local_offset(_local_dec_offset);
+		if (node->value())
+			node->assignment_handler()->accept(this, lvl+1);
+	}
+
+	else {
+		std::string label = (node->isPublic()) ? node->identifier() : mklbl(++_lbl);
+
+		if (node->value() == NULL) {
+			_pf->BSS();
+			_pf.ALIGN();
+			_pf.LABEL(label);
+			_pf.BYTE(node->type()->size());
+		}
+		else {
+			_pf->DATA();
+			_pf.ALIGN();
+			_pf.LABEL(label);
+
+			if ((node->type()->name() == basic_type::TYPE_DOUBLE) && (node->value()->type()->name() == basic_type::TYPE_INT))
+				_pf.DOUBLE(node->value()->value());
+			else
+				node->value()->accept(this, lvl+1);
+		}
+		s->global_label(label);
+	}
 }
 
 void zu::postfix_writer::do_lvalue_node(zu::lvalue_node * const node, int lvl) {}
@@ -374,7 +416,7 @@ void zu::postfix_writer::do_assignment_node(zu::assignment_node * const node, in
 //}
 
 void zu::postfix_writer::do_function_declaration_node(zu::function_declaration_node * const node, int lvl){
-	/* TODO: */
+	/* TODO */
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
 }
@@ -383,9 +425,12 @@ void zu::postfix_writer::do_function_body_node(zu::function_body_node * const no
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
 	int dec_size = 0;
-	//node->function_declaration()->accept(this, lvl+2);
+	//node->function_declaration()->accept(this, lvl+1);
 
 	_symtab.push();
+	_function_context = true;
+	_local_arg_offset = 8;
+	_local_dec_offset = 0;
 
 	_pf.TEXT();
 
@@ -401,7 +446,7 @@ void zu::postfix_writer::do_function_body_node(zu::function_body_node * const no
 
 	_pf.ENTER(dec_size);
 
-	node->block()->accept(this, lvl+2);
+	node->block()->accept(this, lvl+1);
 
 	_pf.LABEL(mklbl(_function_return_lbl = ++_lbl));
 
@@ -423,6 +468,7 @@ void zu::postfix_writer::do_function_body_node(zu::function_body_node * const no
 		_pf.EXTERN("prints");
 		_pf.EXTERN("println");
 	}
+	_function_context = false;
 }
 
 void zu::postfix_writer::do_function_call_node(zu::function_call_node * const node, int lvl){
@@ -435,7 +481,7 @@ void zu::postfix_writer::do_function_call_node(zu::function_call_node * const no
 		for (size_t i=0; i < node->args()->size(); i++)
 			arg_size += ((zu::variable_node*)node->args()->node(i))->zu_type()->size();
 
-	node->args()->accept(this, lvl+2);
+	node->args()->accept(this, lvl+1);
 
 	_pf.CALL(zuFunctionName(node->identifier())); // call function
 	_pf.TRASH(arg_size); // remove arguments from the stack
@@ -543,8 +589,7 @@ void zu::postfix_writer::do_for_node(zu::for_node * const node, int lvl) {
 
 	_pf.JZ(L_end); // end for loop if condition is false
 
-
-	node->block()->accept(this, lvl+2);
+	node->block()->accept(this, lvl+1);
 
 	_pf.ALIGN();
 	_pf.LABEL(L_step);
@@ -566,7 +611,7 @@ void zu::postfix_writer::do_if_node(zu::if_node * const node, int lvl) {
 	node->condition()->accept(this, lvl);
 	_pf.JZ(mklbl(lbl1 = ++_lbl));
 
-	node->block()->accept(this, lvl+2);
+	node->block()->accept(this, lvl+1);
 	_pf.LABEL(mklbl(lbl1));
 }
 
@@ -580,11 +625,11 @@ void zu::postfix_writer::do_if_else_node(zu::if_else_node * const node, int lvl)
 	node->condition()->accept(this, lvl);
 	_pf.JZ(mklbl(lbl1 = ++_lbl));
 
-	node->thenblock()->accept(this, lvl+2);
+	node->thenblock()->accept(this, lvl+1);
 	_pf.JMP(mklbl(lbl2 = ++_lbl));
 	_pf.LABEL(mklbl(lbl1));
 
-	node->elseblock()->accept(this, lvl+2);
+	node->elseblock()->accept(this, lvl+1);
 	_pf.LABEL(mklbl(lbl1 = lbl2));
 }
 
