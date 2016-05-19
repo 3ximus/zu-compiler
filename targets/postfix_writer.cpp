@@ -435,7 +435,7 @@ void zu::postfix_writer::do_function_call_node(zu::function_call_node * const no
 	_pf.CALL(zuFunctionName(node->identifier())); // call function
 	_pf.TRASH(arg_size); // remove arguments from the stack
 
-	symbol s = _symtab.find(node->identifier());
+	std::shared_ptr<zu::symbol> s = _symtab.find(node->identifier());
 	if (s->type()->name() == basic_type::TYPE_INT || s->type()->name() == basic_type::TYPE_DOUBLE || s->type()->name() == basic_type::TYPE_STRING)
 		_pf.PUSH(); // allocate ret val
 	else if (s->type()->name() == basic_type::TYPE_DOUBLE)
@@ -527,11 +527,12 @@ void zu::postfix_writer::do_for_node(zu::for_node * const node, int lvl) {
 	std::string L_end = mklbl(++_lbl);
 	std::string L_step = mklbl(++_lbl);
 
-	_labels.push_back(struct labels(L_step, L_end));
+	struct zu::labels l = zu::labels(L_step, L_end);
+	_labels.push_back(l);
 
 	node->init()->accept(this, lvl); // initial declaration
 
-	_pf.ALLIGN();
+	_pf.ALIGN();
 	_pf.LABEL(L_cond);
 	node->test()->accept(this, lvl); // evaluate condition
 
@@ -540,12 +541,12 @@ void zu::postfix_writer::do_for_node(zu::for_node * const node, int lvl) {
 
 	node->block()->accept(this, lvl+2);
 
-	_pf.ALLIGN();
+	_pf.ALIGN();
 	_pf.LABEL(L_step);
 	node->step()->accept(this, lvl); // step
 	_pf.JMP(L_cond); // loop
 
-	_pf.ALLIGN();
+	_pf.ALIGN();
 	_pf.LABEL(L_end);
 	_labels.pop_back();
 }
@@ -589,13 +590,13 @@ void zu::postfix_writer::do_return_node(zu::return_node * const node, int lvl) {
 
 void zu::postfix_writer::do_continue_node(zu::continue_node * const node, int lvl) {
 	debug(node, lvl);
-	struct label l = _labels.back();
+	struct zu::labels l = _labels.back();
 	_pf.JMP(l.continue_label); // loop
 }
 
 void zu::postfix_writer::do_break_node(zu::break_node * const node, int lvl) {
 	debug(node, lvl);
-	struct label l = _labels.back();
+	struct zu::labels l = _labels.back();
 	_pf.JMP(l.end_label); // loop
 }
 

@@ -4,7 +4,6 @@
 
 #include <string>
 #include <vector>
-#include <cdk/semantics/SymbolTable.h>
 #include <iostream>
 #include <cdk/symbol_table.h>
 #include <cdk/ast/binary_expression_node.h>
@@ -16,7 +15,7 @@ namespace zu {
 
 	struct labels {
 		std::string continue_label;
-		std::string _end_label;
+		std::string end_label;
 		labels(std::string cl, std::string el) : continue_label(cl), end_label(el) {}
 	};
 
