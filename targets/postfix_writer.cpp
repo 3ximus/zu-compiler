@@ -168,8 +168,9 @@ void zu::postfix_writer::do_variable_node(zu::variable_node * const node, int lv
 //---------------------------------------------------------------------------
 
 void zu::postfix_writer::do_add_node(cdk::add_node * const node, int lvl) {
+	debug(node,lvl);
 	CHECK_TYPES(_compiler, _symtab, node);	
-        checkExpressionsForArithmeticOperation(node,lvl); 
+        checkExpressionsForBinaryInstruction(node,lvl); 
 
         // ADD result is a double? 
         if(node->type()->name() == basic_type::TYPE_DOUBLE) {
@@ -182,8 +183,9 @@ void zu::postfix_writer::do_add_node(cdk::add_node * const node, int lvl) {
 }
 
 void zu::postfix_writer::do_sub_node(cdk::sub_node * const node, int lvl) {
+	debug(node,lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-        checkExpressionsForArithmeticOperation(node,lvl); 
+        checkExpressionsForBinaryInstruction(node,lvl); 
 
         // SUB result is a double? 
         if(node->type()->name() == basic_type::TYPE_DOUBLE) {
@@ -196,8 +198,9 @@ void zu::postfix_writer::do_sub_node(cdk::sub_node * const node, int lvl) {
 }
 
 void zu::postfix_writer::do_mul_node(cdk::mul_node * const node, int lvl) {
+	debug(node,lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-        checkExpressionsForArithmeticOperation(node,lvl); 
+        checkExpressionsForBinaryInstruction(node,lvl); 
 
         // MUL result is a double? 
         if(node->type()->name() == basic_type::TYPE_DOUBLE) {
@@ -210,8 +213,9 @@ void zu::postfix_writer::do_mul_node(cdk::mul_node * const node, int lvl) {
 }
 
 void zu::postfix_writer::do_div_node(cdk::div_node * const node, int lvl) {
+	debug(node,lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-        checkExpressionsForArithmeticOperation(node,lvl); 
+        checkExpressionsForBinaryInstruction(node,lvl); 
 
         // MUL result is a double? 
         if(node->type()->name() == basic_type::TYPE_DOUBLE) {
@@ -224,6 +228,7 @@ void zu::postfix_writer::do_div_node(cdk::div_node * const node, int lvl) {
 }
 
 void zu::postfix_writer::do_mod_node(cdk::mod_node * const node, int lvl) {
+	debug(node,lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
 
 	node->left()->accept(this, lvl);
@@ -242,44 +247,55 @@ void zu::postfix_writer::do_mod_node(cdk::mod_node * const node, int lvl) {
 }
 
 void zu::postfix_writer::do_lt_node(cdk::lt_node * const node, int lvl) {
+	debug(node,lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-	node->left()->accept(this, lvl);
-	node->right()->accept(this, lvl);
+        checkExpressionsForLogicalBinaryInstruction(node,lvl); 
+
+	if(node->type()->name() == basic_type::TYPE_DOUBLE) {
+                _pf.DCMP();
+                _pf.INT(0);
+        }
+
 	_pf.LT();
 }
 
 void zu::postfix_writer::do_le_node(cdk::le_node * const node, int lvl) {
+	debug(node,lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-	node->left()->accept(this, lvl);
-	node->right()->accept(this, lvl);
+        checkExpressionsForLogicalBinaryInstruction(node,lvl); 
+
 	_pf.LE();
 }
 
 void zu::postfix_writer::do_ge_node(cdk::ge_node * const node, int lvl) {
+	debug(node,lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-	node->left()->accept(this, lvl);
-	node->right()->accept(this, lvl);
+        checkExpressionsForLogicalBinaryInstruction(node,lvl); 
+
 	_pf.GE();
 }
 
 void zu::postfix_writer::do_gt_node(cdk::gt_node * const node, int lvl) {
+	debug(node,lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-	node->left()->accept(this, lvl);
-	node->right()->accept(this, lvl);
+        checkExpressionsForLogicalBinaryInstruction(node,lvl); 
+
 	_pf.GT();
 }
 
 void zu::postfix_writer::do_ne_node(cdk::ne_node * const node, int lvl) {
+	debug(node,lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-	node->left()->accept(this, lvl);
-	node->right()->accept(this, lvl);
+        checkExpressionsForLogicalBinaryInstruction(node,lvl); 
+
 	_pf.NE();
 }
 
 void zu::postfix_writer::do_eq_node(cdk::eq_node * const node, int lvl) {
+	debug(node,lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-	node->left()->accept(this, lvl);
-	node->right()->accept(this, lvl);
+        checkExpressionsForLogicalBinaryInstruction(node,lvl); 
+
 	_pf.EQ();
 }
 

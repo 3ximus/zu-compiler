@@ -61,7 +61,7 @@ namespace zu {
 //		return zuFunctionName(node->identifier());
 //	}
 
-	void checkExpressionsForArithmeticOperation(cdk::binary_expression_node * const node, int lvl) {
+	void checkExpressionsForBinaryInstruction(cdk::binary_expression_node * const node, int lvl) {
 		// Visit left child
 		node->left()->accept(this, lvl);
 
@@ -83,6 +83,14 @@ namespace zu {
 		// If the ADD has type double but right child is of type INT, we must convert
 		if((node->right()->type()->name() == basic_type::TYPE_INT) && (node->type()->name() == basic_type::TYPE_DOUBLE))
 			_pf.I2D();
+	}
+
+	void checkExpressionsForLogicalBinaryInstruction(cdk::binary_expression_node * const node, int lvl) {
+		checkExpressionsForBinaryInstruction(node,lvl);
+		if(node->type()->name() == basic_type::TYPE_DOUBLE) {
+                	_pf.DCMP();
+                	_pf.INT(0); 
+		}
 	}
 
   public:
