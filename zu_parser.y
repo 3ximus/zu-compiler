@@ -114,8 +114,8 @@ vdec : type tIDENTIFIER '!'					{ $$ = new zu::variable_node(LINE, $1, $2, true,
 	 | smp_vdec								{ $$ = $1; }
      ;
 
-smp_vdec : type tIDENTIFIER					{ $$ = new zu::variable_node(LINE, $1, $2, false, false, NULL); }
-         | type tIDENTIFIER '=' expr		{ $$ = new zu::variable_node(LINE, $1, $2, false, false, $4); }
+smp_vdec : type tIDENTIFIER					{ $$ = new zu::variable_node(LINE, $1, $2, false, false, NULL, false); }
+         | type tIDENTIFIER '=' expr		{ $$ = new zu::variable_node(LINE, $1, $2, false, false, $4, false); }
 		 ;
 
 fdec : type tIDENTIFIER '(' fargs ')' '=' lit	{ $$ = new zu::function_declaration_node(LINE, $1, $2, false, false, $4, $7); }
@@ -144,6 +144,10 @@ fargs : smp_vdec			{ $$ = new cdk::sequence_node(LINE, $1); }
       |	fargs ',' smp_vdec	{ $$ = new cdk::sequence_node(LINE, $3, $1); }
       |						{ $$ = NULL; }
       ;
+
+farg : type tIDENTIFIER					{ $$ = new zu::variable_node(LINE, $1, $2, false, false, NULL, true); }
+     | type tIDENTIFIER '=' expr		{ $$ = new zu::variable_node(LINE, $1, $2, false, false, $4, true); }
+	 ;
 
 blk_var : smp_vdec ';'			{ $$ = new cdk::sequence_node(LINE, $1); }
 	| blk_var smp_vdec ';'	{ $$ = new cdk::sequence_node(LINE, $2, $1); }

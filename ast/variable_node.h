@@ -11,17 +11,18 @@ namespace zu {
 	std::string _identifier;
 	bool _isPublic;
 	bool _isImported;
+	bool _isFarg;
 	cdk::expression_node *_value;
 
   public:
-    inline variable_node(int lineno, basic_type *zu_type, const char *s, bool isPublic, bool isImported, cdk::expression_node *value) :
-        cdk::expression_node(lineno), _zu_type(zu_type), _identifier(s), _isPublic(isPublic), _isImported(isImported), _value(value) {
+    inline variable_node(int lineno, basic_type *zu_type, const char *s, bool isPublic, bool isImported, cdk::expression_node *value, bool isFarg) :
+        cdk::expression_node(lineno), _zu_type(zu_type), _identifier(s), _isPublic(isPublic), _isImported(isImported), _value(value), _isFarg(isFarg) {
 	}
-    inline variable_node(int lineno, basic_type *zu_type, const std::string &s, bool isPublic, bool isImported, cdk::expression_node *value) :
-        cdk::expression_node(lineno), _zu_type(zu_type), _identifier(s), _isPublic(isPublic), _isImported(isImported), _value(value) {
+    inline variable_node(int lineno, basic_type *zu_type, const std::string &s, bool isPublic, bool isImported, cdk::expression_node *value, bool isFarg) :
+        cdk::expression_node(lineno), _zu_type(zu_type), _identifier(s), _isPublic(isPublic), _isImported(isImported), _value(value) , _isFarg(isFarg) {
     }
-    inline variable_node(int lineno, basic_type *zu_type, const std::string *s, bool isPublic, bool isImported, cdk::expression_node *value) :
-       cdk::expression_node(lineno), _zu_type(zu_type), _identifier(*s), _isPublic(isPublic), _isImported(isImported), _value(value) {
+    inline variable_node(int lineno, basic_type *zu_type, const std::string *s, bool isPublic, bool isImported, cdk::expression_node *value, bool isFarg) :
+       cdk::expression_node(lineno), _zu_type(zu_type), _identifier(*s), _isPublic(isPublic), _isImported(isImported), _value(value) , _isFarg(isFarg) {
     }
 
   public:
@@ -43,6 +44,10 @@ namespace zu {
 
 	inline cdk::expression_node *value() {
 		return _value;
+	}
+
+	inline bool isFunctionArgument() {
+		return _isFarg;
 	}
 
     /**

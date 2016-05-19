@@ -11,6 +11,8 @@ namespace zu {
 		basic_type *_type;
 		std::string _name;
 		long _value; // hack!
+		int local_offset;
+		int global_label;
 
 		public:
 		inline symbol(basic_type *type, const std::string &name, long value) :
@@ -33,6 +35,7 @@ namespace zu {
 		inline long value(long v) {
 			return _value = v;
 		}
+
 	};
 
 } // zu
