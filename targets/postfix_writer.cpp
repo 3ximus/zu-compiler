@@ -225,8 +225,19 @@ void zu::postfix_writer::do_div_node(cdk::div_node * const node, int lvl) {
 
 void zu::postfix_writer::do_mod_node(cdk::mod_node * const node, int lvl) {
 	CHECK_TYPES(_compiler, _symtab, node);
+
 	node->left()->accept(this, lvl);
+	
+	// Replace address with value -- left --
+	if(node->left()->type()->name() == basic_type::TYPE_POINTER)
+		_pf.LOAD();
+
 	node->right()->accept(this, lvl);
+	
+	// Replace address with value -- right --
+	if(node->right()->type()->name() == basic_type::TYPE_POINTER)
+		_pf.LOAD();
+
 	_pf.MOD();
 }
 

@@ -65,7 +65,7 @@ namespace zu {
 		// Visit left child
 		node->left()->accept(this, lvl);
 
-		// if lval, places address on the top of the stack
+		// if lval, replaces address on the top of the stack
 		if(node->left()->type()->name() == basic_type::TYPE_POINTER)
 			_pf.LOAD();
 
@@ -76,7 +76,7 @@ namespace zu {
 		// Visit right child
 		node->right()->accept(this, lvl+1);
 
-		// if lval, places address on the top of the stack
+		// if lval, replaces address on the top of the stack
 		if(node->left()->type()->name() == basic_type::TYPE_POINTER)
 			_pf.LOAD();
 
