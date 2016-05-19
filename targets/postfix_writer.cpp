@@ -23,9 +23,9 @@ void zu::postfix_writer::debug(cdk::basic_node* const node, int lvl) {
 //---------------------------------------------------------------------------
 
 void zu::postfix_writer::do_sequence_node(cdk::sequence_node * const node, int lvl) {
-  for (size_t i = 0; i < node->size(); i++) {
-    node->node(i)->accept(this, lvl+2);
-  }
+	for (size_t i = 0; i < node->size(); i++)
+		if (node->node(i))
+		  node->node(i)->accept(this, lvl+2);
 }
 
 //---------------------------------------------------------------------------
@@ -378,7 +378,7 @@ void zu::postfix_writer::do_function_body_node(zu::function_body_node * const no
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
 	int dec_size = 0;
-	node->function_declaration()->accept(this, lvl+2);
+	//node->function_declaration()->accept(this, lvl+2);
 
 	_symtab.push();
 

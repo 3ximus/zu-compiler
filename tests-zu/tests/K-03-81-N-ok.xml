@@ -20,10 +20,6 @@
     </args>
     <block>
       <block_node>
-        <declarations>
-          <sequence_node size='1'>
-          </sequence_node>
-        </declarations>
         <instructions>
           <sequence_node size='1'>
           </sequence_node>
@@ -45,10 +41,6 @@
     </args>
     <block>
       <block_node>
-        <declarations>
-          <sequence_node size='1'>
-          </sequence_node>
-        </declarations>
         <instructions>
           <sequence_node size='1'>
             <evaluation_node>
@@ -56,8 +48,8 @@
                 <function_call_node>f</function_call_node>
                 <args>
                   <sequence_node size='2'>
-                    <integer_node>4</integer_node>
                     <integer_node>3</integer_node>
+                    <integer_node>4</integer_node>
                   </sequence_node>
                 </args>
               </function_call_node>

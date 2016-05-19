@@ -50,10 +50,6 @@
               </step>
               <block>
                 <block_node>
-                  <declarations>
-                    <sequence_node size='1'>
-                    </sequence_node>
-                  </declarations>
                   <instructions>
                     <sequence_node size='2'>
                       <for_node>
@@ -71,10 +67,6 @@
                         </step>
                         <block>
                           <block_node>
-                            <declarations>
-                              <sequence_node size='1'>
-                              </sequence_node>
-                            </declarations>
                             <instructions>
                               <sequence_node size='2'>
                                 <if_else_node>
@@ -82,10 +74,6 @@
                                   </condition>
                                   <then>
                                     <block_node>
-                                      <declarations>
-                                        <sequence_node size='1'>
-                                        </sequence_node>
-                                      </declarations>
                                       <instructions>
                                         <sequence_node size='2'>
                                           <continue_node>

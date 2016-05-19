@@ -310,11 +310,9 @@ void zu::type_checker::do_lvalue_node(zu::lvalue_node * const node, int lvl) {
 void zu::type_checker::do_function_declaration_node(zu::function_declaration_node * const node, int lvl){
 	ASSERT_UNSPEC;
 
-	if(node->args() != NULL) {
-		for (size_t i = 0; i < node->args()->size(); i++) {
+	if(node->args() != NULL)
+		for (size_t i = 0; i < node->args()->size(); i++)
 			node->args()->node(i)->accept(this, lvl+2);
-		}
-	}
 
 	const std::string &id = node->identifier();
 	if (!_symtab.insert(id, std::make_shared<zu::symbol>(node->zu_type(), id, 0)))
@@ -331,25 +329,9 @@ void zu::type_checker::do_function_declaration_node(zu::function_declaration_nod
 
 void zu::type_checker::do_function_body_node(zu::function_body_node * const node, int lvl){
 	ASSERT_UNSPEC;
-
-	if(node->args() != NULL) {
-		for (size_t i = 0; i < node->args()->size(); i++) {
-			node->args()->node(i)->accept(this, lvl+2);
-		}
-	}
-
-	/* TODO CHECK IF DECLARATION EXISTS */
-	const std::string &id = node->identifier();
-	if (!_symtab.insert(id, std::make_shared<zu::symbol>(node->zu_type(), id, 0)))
-		throw id + " redeclared";
-
-	if (node->literal()) {
-		node->literal()->accept(this, lvl + 2);
-		/* throw error if types dont match or it isnt a conversion from int to double */
-		if ((node->zu_type()->name() != basic_type::TYPE_DOUBLE && node->literal()->type()->name() != basic_type::TYPE_INT) || node->zu_type()->name() != node->literal()->type()->name())
-			throw std::string("wrong type for initializer");
-	}
-	node->type(node->zu_type());
+	zu::function_declaration_node *f = node->function_declaration();
+	f->accept(this, lvl + 2);
+	node->type(f->zu_type());
 }
 
 void zu::type_checker::do_function_call_node(zu::function_call_node * const node, int lvl){

@@ -33,10 +33,6 @@
     </args>
     <block>
       <block_node>
-        <declarations>
-          <sequence_node size='1'>
-          </sequence_node>
-        </declarations>
         <instructions>
           <sequence_node size='1'>
             <evaluation_node>
@@ -70,10 +66,6 @@
     </args>
     <block>
       <block_node>
-        <declarations>
-          <sequence_node size='1'>
-          </sequence_node>
-        </declarations>
         <instructions>
           <sequence_node size='1'>
             <print_node>

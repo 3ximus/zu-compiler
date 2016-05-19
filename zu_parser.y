@@ -158,9 +158,9 @@ type : '#'						{ $$ = new basic_type(4, basic_type::TYPE_INT); }
      ;
 
 blk  : '{' blk_var itrs '}'				{ $$ = new zu::block_node(LINE, $2, $3); }
-     | '{' blk_var '}'					{ $$ = new zu::block_node(LINE, $2, new cdk::sequence_node(LINE, new cdk::nil_node(LINE))); }
-     | '{' itrs '}'					{ $$ = new zu::block_node(LINE, new cdk::sequence_node(LINE, new cdk::nil_node(LINE)), $2); }
-     | '{' '}'						{ $$ = new zu::block_node(LINE, new cdk::sequence_node(LINE, new cdk::nil_node(LINE)), new cdk::sequence_node(LINE, new cdk::nil_node(LINE))); }
+     | '{' blk_var '}'					{ $$ = new zu::block_node(LINE, $2, NULL); }
+     | '{' itrs '}'					{ $$ = new zu::block_node(LINE, NULL, $2); }
+     | '{' '}'						{ $$ = new zu::block_node(LINE, NULL, NULL); }
      ;
 
 cond :  '[' expr ']' '#' itr %prec tIFX		{ $$ = new zu::if_node(LINE, $2, $5); }
@@ -204,10 +204,10 @@ lval : tIDENTIFIER					{ $$ = new zu::id_node(LINE, $1); }
      ;
 
 fcal : tIDENTIFIER '(' exprs ')' 			{ $$ = new zu::function_call_node(LINE, $1, $3); }
-     | tIDENTIFIER '(' ')'				{ $$ = new zu::function_call_node(LINE, $1, new cdk::sequence_node(LINE, new cdk::nil_node(LINE))); }
      ;
 
 exprs : exprs ',' expr					{ $$ = new cdk::sequence_node(LINE, $3, $1); }
       | expr						{ $$ = new cdk::sequence_node(LINE, $1); }
+      | 						{ $$ = new cdk::sequence_node(LINE, new cdk::nil_node(LINE)); }
       ;	
 %%
