@@ -251,11 +251,6 @@ void zu::postfix_writer::do_lt_node(cdk::lt_node * const node, int lvl) {
 	CHECK_TYPES(_compiler, _symtab, node);
         checkExpressionsForLogicalBinaryInstruction(node,lvl); 
 
-	if(node->type()->name() == basic_type::TYPE_DOUBLE) {
-                _pf.DCMP();
-                _pf.INT(0);
-        }
-
 	_pf.LT();
 }
 
