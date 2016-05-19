@@ -113,12 +113,12 @@ void zu::postfix_writer::do_and_node(zu::and_node * const node, int lvl) {
 	_pf.DUP(); // duplicate to get the value for jmp, if its zero jump is taken
 	_pf.JZ(mklbl(lbl1)); // jump over right node
 
-	if (node->left()->name() == "index_node" || node->left()->name() == "id_node")
-		_pf.LOAD(); // load
-
-	node->right()->accept(this,lvl+2);
-
-	if (node->left()->name() == "index_node" || node->left()->name() == "id_node")
+	if (node->left()->name().compare("index_node") == 0 || node->left()->name().compare("id_node") == 0)
+		_pf.LOAD(); // load                  
+                                                     
+	node->right()->accept(this,lvl+2);           
+                                                     
+	if (node->left()->name().compare("index_node") == 0 || node->left()->name().compare("id_node") == 0)
 		_pf.LOAD(); // load
 
 	_pf.AND();
@@ -136,12 +136,12 @@ void zu::postfix_writer::do_or_node(zu::or_node * const node, int lvl) {
 	_pf.DUP(); // duplicate to get the value for jmp, if its non zero jump is taken
 	_pf.JNZ(mklbl(lbl1)); // jump over right node
 
-	if (node->left()->name() == "index_node" || node->left()->name() == "id_node")
+	if (node->left()->name().compare("index_node") == 0 || node->left()->name().compare("id_node") == 0)
 		_pf.LOAD(); // load
 
 	node->right()->accept(this,lvl+2);
 
-	if (node->left()->name() == "index_node" || node->left()->name() == "id_node")
+	if (node->left()->name().compare("index_node") == 0 || node->left()->name().compare("id_node") == 0)
 		_pf.LOAD(); // load
 
 	_pf.AND();
@@ -388,10 +388,11 @@ void zu::postfix_writer::do_function_body_node(zu::function_body_node * const no
 		_pf.GLOBAL(zuFunctionName(node->identifier()), _pf.FUNC());
 
 	_pf.ALIGN();
-	_pf.LABEL(node->identifier());
+	_pf.LABEL(zuFunctionName(node->identifier()));
 
 	if (node->block()->declarations())
 		for (size_t i=0; i < node->block()->declarations()->size(); i++)
+/* TODO ALLOCATE MEMORY FOR ARGUMENTS  */
 			dec_size += ((zu::variable_node*)node->block()->declarations()->node(i))->zu_type()->size();
 
 	_pf.ENTER(dec_size);
@@ -407,6 +408,13 @@ void zu::postfix_writer::do_function_body_node(zu::function_body_node * const no
 	_pf.LEAVE();
 	_pf.RET();
 	_symtab.pop();
+
+	if (node->identifier() == "zu") {
+		_pf.EXTERN("readi");
+		_pf.EXTERN("printi");
+		_pf.EXTERN("prints");
+		_pf.EXTERN("println");
+}
 }
 
 void zu::postfix_writer::do_function_call_node(zu::function_call_node * const node, int lvl){
