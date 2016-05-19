@@ -390,9 +390,6 @@ void zu::postfix_writer::do_function_body_node(zu::function_body_node * const no
 	_pf.ALIGN();
 	_pf.LABEL(zuFunctionName(node->identifier()));
 
-	if (node->args())
-		for (size_t i=0; i < node->args()->size(); i++)
-			dec_size += ((zu::variable_node*)node->args()->node(i))->zu_type()->size();
 	if (node->block()->declarations())
 		for (size_t i=0; i < node->block()->declarations()->size(); i++)
 			dec_size += ((zu::variable_node*)node->block()->declarations()->node(i))->zu_type()->size();
@@ -400,8 +397,8 @@ void zu::postfix_writer::do_function_body_node(zu::function_body_node * const no
 	_pf.ENTER(dec_size);
 
 	node->block()->accept(this, lvl+2);
-	
-	_pf.LABEL(mklbl(_function_return_lbl = ++_lbl));	
+
+	_pf.LABEL(mklbl(_function_return_lbl = ++_lbl));
 
 	if(node->type()->name() != basic_type::TYPE_VOID) {
 		int return_offset = 0 - node->type()->size();
@@ -424,7 +421,26 @@ void zu::postfix_writer::do_function_body_node(zu::function_body_node * const no
 }
 
 void zu::postfix_writer::do_function_call_node(zu::function_call_node * const node, int lvl){
-	/* TODO */
+	debug(node, lvl);
+	CHECK_TYPES(_compiler, _symtab, node);
+	int arg_size = 0;
+
+	if (node->args())
+		/* TODO THIS ACCEPT SHOULD ALLOCATE ARGUMENTS ON THE STACK */
+		for (size_t i=0; i < node->args()->size(); i++)
+			arg_size += ((zu::variable_node*)node->args()->node(i))->zu_type()->size();
+
+	node->args->accept(this, lvl+2);
+
+	_pf.CALL(zuFunctionName(node->identifier())); // call function
+	_pf.TRASH(arg_size); // remove arguments from the stack
+
+	Symbol s = _symtab.find(node->identifier());
+	if (s->type()->name() == basic_type::TYPE_INT || s->type()->name() == basic_type::TYPE_DOUBLE || s->type()->name() == basic_type::TYPE_STRING)
+		_pf.PUSH(); // allocate ret val
+	else if (s->type()->name() == basic_type::TYPE_DOUBLE)
+		_pf.DPUSH(); // allocate double val
+	// else it must be void
 }
 
 void zu::postfix_writer::do_block_node(zu::block_node * const node, int lvl){
@@ -438,7 +454,6 @@ void zu::postfix_writer::do_block_node(zu::block_node * const node, int lvl){
 
 	_symtab.pop();
 }
-
 
 //---------------------------------------------------------------------------
 
@@ -482,7 +497,7 @@ void zu::postfix_writer::do_print_node(zu::print_node * const node, int lvl) {
 		_pf.TRASH(4); // delete the printed value's address
 	}
 	else {
-		std::cerr << "trying to print unprintable value!" << std::endl;
+		std::cerr << "ERROR: trying to print unprintable value!" << std::endl; // invalid types, should be handled by CHECK_TYPES
 		exit(1);
 	}
 
@@ -517,7 +532,6 @@ void zu::postfix_writer::do_for_node(zu::for_node * const node, int lvl) {
 //---------------------------------------------------------------------------
 
 void zu::postfix_writer::do_if_node(zu::if_node * const node, int lvl) {
-	/* Igual no mayflay e simple. Acho que deve estar bem */
 	debug(node, lvl);
 
 	int lbl1;
@@ -534,7 +548,6 @@ void zu::postfix_writer::do_if_node(zu::if_node * const node, int lvl) {
 //---------------------------------------------------------------------------
 
 void zu::postfix_writer::do_if_else_node(zu::if_else_node * const node, int lvl) {
-	/* Igual no mayflay e simple. Acho que deve estar bem */
 	debug(node, lvl);
 	int lbl1, lbl2;
 
@@ -553,11 +566,8 @@ void zu::postfix_writer::do_if_else_node(zu::if_else_node * const node, int lvl)
 }
 
 void zu::postfix_writer::do_return_node(zu::return_node * const node, int lvl) {
-	/* TODO */
 	debug(node, lvl);
-
-        // jump to the end of the function body
-	_pf.JMP(mklbl(_function_return_lbl));
+	_pf.JMP(mklbl(_function_return_lbl));  // jump to the end of the function body
 }
 
 void zu::postfix_writer::do_continue_node(zu::continue_node * const node, int lvl) {
