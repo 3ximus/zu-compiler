@@ -430,12 +430,12 @@ void zu::postfix_writer::do_function_call_node(zu::function_call_node * const no
 		for (size_t i=0; i < node->args()->size(); i++)
 			arg_size += ((zu::variable_node*)node->args()->node(i))->zu_type()->size();
 
-	node->args->accept(this, lvl+2);
+	node->args()->accept(this, lvl+2);
 
 	_pf.CALL(zuFunctionName(node->identifier())); // call function
 	_pf.TRASH(arg_size); // remove arguments from the stack
 
-	Symbol s = _symtab.find(node->identifier());
+	symbol s = _symtab.find(node->identifier());
 	if (s->type()->name() == basic_type::TYPE_INT || s->type()->name() == basic_type::TYPE_DOUBLE || s->type()->name() == basic_type::TYPE_STRING)
 		_pf.PUSH(); // allocate ret val
 	else if (s->type()->name() == basic_type::TYPE_DOUBLE)
@@ -520,28 +520,47 @@ void zu::postfix_writer::do_read_node(zu::read_node * const node, int lvl) {
 
 void zu::postfix_writer::do_for_node(zu::for_node * const node, int lvl) {
 	debug(node, lvl);
-	int lbl_end;
-	int lbl_continue;
-	int lbl_condition;
+	CHECK_TYPES(_compiler, _symtab, node);
 
-	_pf.LABEL(mklbl(lbl1 = ++_lbl));
-	node->condition()->accept(this, lvl);
-	_pf.JZ(mklbl(lbl2 = ++_lbl));
-	node->block()->accept(this, lvl + 2);
-	_pf.JMP(mklbl(lbl1));
-	_pf.LABEL(mklbl(lbl2));
+	// Labels
+	std::string L_cond = mklbl(++_lbl);
+	std::string L_end = mklbl(++_lbl);
+	std::string L_step = mklbl(++_lbl);
+
+	_labels.push_back(struct labels(L_step, L_end));
+
+	node->init()->accept(this, lvl); // initial declaration
+
+	_pf.ALLIGN();
+	_pf.LABEL(L_cond);
+	node->test()->accept(this, lvl); // evaluate condition
+
+	_pf.JZ(L_end); // end for loop if condition is false
+
+
+	node->block()->accept(this, lvl+2);
+
+	_pf.ALLIGN();
+	_pf.LABEL(L_step);
+	node->step()->accept(this, lvl); // step
+	_pf.JMP(L_cond); // loop
+
+	_pf.ALLIGN();
+	_pf.LABEL(L_end);
+	_labels.pop_back();
 }
 
 //---------------------------------------------------------------------------
 
 void zu::postfix_writer::do_if_node(zu::if_node * const node, int lvl) {
-	debug(node, lvl); 
-	int lbl1; 
+	debug(node, lvl);
+	CHECK_TYPES(_compiler, _symtab, node);
+	int lbl1;
 
-	node->condition()->accept(this, lvl); 
+	node->condition()->accept(this, lvl);
 	_pf.JZ(mklbl(lbl1 = ++_lbl));
 
-	node->block()->accept(this, lvl + 2); 
+	node->block()->accept(this, lvl+2);
 	_pf.LABEL(mklbl(lbl1));
 }
 
@@ -549,16 +568,17 @@ void zu::postfix_writer::do_if_node(zu::if_node * const node, int lvl) {
 
 void zu::postfix_writer::do_if_else_node(zu::if_else_node * const node, int lvl) {
 	debug(node, lvl);
+	CHECK_TYPES(_compiler, _symtab, node);
 	int lbl1, lbl2;
 
-	node->condition()->accept(this, lvl); 
-	_pf.JZ(mklbl(lbl1 = ++_lbl)); 
+	node->condition()->accept(this, lvl);
+	_pf.JZ(mklbl(lbl1 = ++_lbl));
 
-	node->thenblock()->accept(this, lvl + 2); 
+	node->thenblock()->accept(this, lvl+2);
 	_pf.JMP(mklbl(lbl2 = ++_lbl));
 	_pf.LABEL(mklbl(lbl1));
 
-	node->elseblock()->accept(this, lvl + 2); 
+	node->elseblock()->accept(this, lvl+2);
 	_pf.LABEL(mklbl(lbl1 = lbl2));
 }
 
@@ -568,10 +588,14 @@ void zu::postfix_writer::do_return_node(zu::return_node * const node, int lvl) {
 }
 
 void zu::postfix_writer::do_continue_node(zu::continue_node * const node, int lvl) {
-	/* TODO */
+	debug(node, lvl);
+	struct label l = _labels.back();
+	_pf.JMP(l.continue_label); // loop
 }
 
 void zu::postfix_writer::do_break_node(zu::break_node * const node, int lvl) {
-	/* TODO */
+	debug(node, lvl);
+	struct label l = _labels.back();
+	_pf.JMP(l.end_label); // loop
 }
 

@@ -3,6 +3,8 @@
 #define __ZU_SEMANTICS_PF_WRITER_H__
 
 #include <string>
+#include <vector>
+#include <cdk/semantics/SymbolTable.h>
 #include <iostream>
 #include <cdk/symbol_table.h>
 #include <cdk/ast/binary_expression_node.h>
@@ -12,6 +14,12 @@
 
 namespace zu {
 
+	struct labels {
+		std::string continue_label;
+		std::string _end_label;
+		labels(std::string cl, std::string el) : continue_label(cl), end_label(el) {}
+	};
+
   //!
   //! Traverse syntax tree and generate the corresponding assembly code.
   //!
@@ -20,6 +28,7 @@ namespace zu {
     cdk::basic_postfix_emitter &_pf;
     int _lbl;
     int _function_return_lbl;
+	std::vector<struct labels> _labels;
 
   public:
     postfix_writer(std::shared_ptr<cdk::compiler> compiler, cdk::symbol_table<zu::symbol> &symtab,
