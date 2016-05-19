@@ -57,7 +57,7 @@ zu::block_node				*block;
 
 /* TYPES OF NON-TERMINAL SYMBOLS */
 
-%type <node> dec itr smp_vdec 	/* declaration, argument, variable, instruction */
+%type <node> dec itr smp_vdec farg 	/* declaration, argument, variable, instruction */
 %type <sequence> decs vars itrs blk_var exprs fargs /* declarations,arguments,variables,instructions,expressions,function arguments*/
 
 %type <node> vdec cond iter  			/* variable declaration, block, condtional instruction, iteraion instruction */
@@ -107,10 +107,10 @@ itr  : expr ';'		{ $$ = new zu::evaluation_node(LINE, $1); }
      | blk 		{ $$ = $1; }
      ;
 
-vdec : type tIDENTIFIER '!'					{ $$ = new zu::variable_node(LINE, $1, $2, true, false, NULL); }
-     | type tIDENTIFIER '!' '=' expr		{ $$ = new zu::variable_node(LINE, $1, $2, true, false, $5); }
-     | type tIDENTIFIER '?'					{ $$ = new zu::variable_node(LINE, $1, $2, false, true, NULL); }
-     | type tIDENTIFIER '?' '=' expr		{ $$ = new zu::variable_node(LINE, $1, $2, false, true, $5); }
+vdec : type tIDENTIFIER '!'					{ $$ = new zu::variable_node(LINE, $1, $2, true, false, NULL, false); }
+     | type tIDENTIFIER '!' '=' expr		{ $$ = new zu::variable_node(LINE, $1, $2, true, false, $5, false); }
+     | type tIDENTIFIER '?'					{ $$ = new zu::variable_node(LINE, $1, $2, false, true, NULL, false); }
+     | type tIDENTIFIER '?' '=' expr		{ $$ = new zu::variable_node(LINE, $1, $2, false, true, $5, false); }
 	 | smp_vdec								{ $$ = $1; }
      ;
 
@@ -140,8 +140,8 @@ str  : tSTRING			{ $$ = $1; }
 
 // Function arguments
 
-fargs : smp_vdec			{ $$ = new cdk::sequence_node(LINE, $1); }
-      |	fargs ',' smp_vdec	{ $$ = new cdk::sequence_node(LINE, $3, $1); }
+fargs : farg			{ $$ = new cdk::sequence_node(LINE, $1); }
+      |	fargs ',' farg	{ $$ = new cdk::sequence_node(LINE, $3, $1); }
       |						{ $$ = NULL; }
       ;
 

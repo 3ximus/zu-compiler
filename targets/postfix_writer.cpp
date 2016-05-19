@@ -174,6 +174,8 @@ void zu::postfix_writer::do_variable_node(zu::variable_node * const node, int lv
 	/* TODO */
 }
 
+void zu::postfix_writer::do_lvalue_node(zu::lvalue_node * const node, int lvl) {}
+
 //---------------------------------------------------------------------------
 
 void zu::postfix_writer::do_add_node(cdk::add_node * const node, int lvl) {

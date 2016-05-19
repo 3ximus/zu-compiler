@@ -11,8 +11,8 @@ namespace zu {
 	std::string _identifier;
 	bool _isPublic;
 	bool _isImported;
-	bool _isFarg;
 	cdk::expression_node *_value;
+	bool _isFarg;
 
   public:
     inline variable_node(int lineno, basic_type *zu_type, const char *s, bool isPublic, bool isImported, cdk::expression_node *value, bool isFarg) :
