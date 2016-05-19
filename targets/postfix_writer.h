@@ -43,7 +43,7 @@ namespace zu {
     }
 
   private:
-    	inline void debug(cdk::basic_node* const node, int lvl);
+	inline void debug(cdk::basic_node* const node, int lvl);
 
 	inline std::string zuFunctionName(std::string identifier) {
 		// postix must have _main function
@@ -81,8 +81,8 @@ namespace zu {
 	void checkExpressionsForLogicalBinaryInstruction(cdk::binary_expression_node * const node, int lvl) {
 		checkExpressionsForBinaryInstruction(node,lvl);
 		if(node->type()->name() == basic_type::TYPE_DOUBLE) {
-                	_pf.DCMP();
-                	_pf.INT(0); 
+			_pf.DCMP();
+			_pf.INT(0);
 		}
 	}
 

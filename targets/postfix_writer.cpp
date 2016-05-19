@@ -114,10 +114,10 @@ void zu::postfix_writer::do_and_node(zu::and_node * const node, int lvl) {
 	_pf.JZ(mklbl(lbl1)); // jump over right node
 
 	if (node->left()->name().compare("index_node") == 0 || node->left()->name().compare("id_node") == 0)
-		_pf.LOAD(); // load                  
-                                                     
-	node->right()->accept(this,lvl+2);           
-                                                     
+		_pf.LOAD(); // load
+
+	node->right()->accept(this,lvl+2);
+
 	if (node->left()->name().compare("index_node") == 0 || node->left()->name().compare("id_node") == 0)
 		_pf.LOAD(); // load
 
@@ -177,62 +177,62 @@ void zu::postfix_writer::do_variable_node(zu::variable_node * const node, int lv
 
 void zu::postfix_writer::do_add_node(cdk::add_node * const node, int lvl) {
 	debug(node,lvl);
-	CHECK_TYPES(_compiler, _symtab, node);	
-        checkExpressionsForBinaryInstruction(node,lvl); 
+	CHECK_TYPES(_compiler, _symtab, node);
+	checkExpressionsForBinaryInstruction(node,lvl);
 
-        // ADD result is a double? 
-        if(node->type()->name() == basic_type::TYPE_DOUBLE) {
-                _pf.DADD(); // yup.
-        }
-        else {
-                // No. regular integer ADD
-                _pf.ADD();
-        }
+	// ADD result is a double?
+	if(node->type()->name() == basic_type::TYPE_DOUBLE) {
+		_pf.DADD(); // yup.
+	}
+	else {
+		// No. regular integer ADD
+		_pf.ADD();
+	}
 }
 
 void zu::postfix_writer::do_sub_node(cdk::sub_node * const node, int lvl) {
 	debug(node,lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-        checkExpressionsForBinaryInstruction(node,lvl); 
+	checkExpressionsForBinaryInstruction(node,lvl);
 
-        // SUB result is a double? 
-        if(node->type()->name() == basic_type::TYPE_DOUBLE) {
-                _pf.DSUB(); // yup.
-        }
-        else {
-                // No. regular integer SUB
-                _pf.SUB();
-        }
+	// SUB result is a double?
+	if(node->type()->name() == basic_type::TYPE_DOUBLE) {
+		_pf.DSUB(); // yup.
+	}
+	else {
+		// No. regular integer SUB
+		_pf.SUB();
+	}
 }
 
 void zu::postfix_writer::do_mul_node(cdk::mul_node * const node, int lvl) {
 	debug(node,lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-        checkExpressionsForBinaryInstruction(node,lvl); 
+	checkExpressionsForBinaryInstruction(node,lvl);
 
-        // MUL result is a double? 
-        if(node->type()->name() == basic_type::TYPE_DOUBLE) {
-                _pf.DMUL(); // yup.
-        }
-        else {
-                // No. regular integer MUL
-                _pf.MUL();
-        }
+	// MUL result is a double?
+	if(node->type()->name() == basic_type::TYPE_DOUBLE) {
+		_pf.DMUL(); // yup.
+	}
+	else {
+		// No. regular integer MUL
+		_pf.MUL();
+	}
 }
 
 void zu::postfix_writer::do_div_node(cdk::div_node * const node, int lvl) {
 	debug(node,lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-        checkExpressionsForBinaryInstruction(node,lvl); 
+	checkExpressionsForBinaryInstruction(node,lvl);
 
-        // DIV result is a double? 
-        if(node->type()->name() == basic_type::TYPE_DOUBLE) {
-                _pf.DDIV(); // yup.
-        }
-        else {
-                // No. regular integer DIV
-                _pf.DIV();
-        }
+	// DIV result is a double?
+	if(node->type()->name() == basic_type::TYPE_DOUBLE) {
+		_pf.DDIV(); // yup.
+	}
+	else {
+		// No. regular integer DIV
+		_pf.DIV();
+	}
 }
 
 void zu::postfix_writer::do_mod_node(cdk::mod_node * const node, int lvl) {
@@ -240,14 +240,14 @@ void zu::postfix_writer::do_mod_node(cdk::mod_node * const node, int lvl) {
 	CHECK_TYPES(_compiler, _symtab, node);
 
 	node->left()->accept(this, lvl);
-	
+
 	// --left-- Replace address with value
 	if(node->left()->type()->name() == basic_type::TYPE_POINTER)
 		_pf.LOAD();
 
 	node->right()->accept(this, lvl);
-	
-	// --right--  Replace address with value 
+
+	// --right--  Replace address with value
 	if(node->right()->type()->name() == basic_type::TYPE_POINTER)
 		_pf.LOAD();
 
@@ -257,7 +257,7 @@ void zu::postfix_writer::do_mod_node(cdk::mod_node * const node, int lvl) {
 void zu::postfix_writer::do_lt_node(cdk::lt_node * const node, int lvl) {
 	debug(node,lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-        checkExpressionsForLogicalBinaryInstruction(node,lvl); 
+        checkExpressionsForLogicalBinaryInstruction(node,lvl);
 
 	_pf.LT();
 }
@@ -265,7 +265,7 @@ void zu::postfix_writer::do_lt_node(cdk::lt_node * const node, int lvl) {
 void zu::postfix_writer::do_le_node(cdk::le_node * const node, int lvl) {
 	debug(node,lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-        checkExpressionsForLogicalBinaryInstruction(node,lvl); 
+        checkExpressionsForLogicalBinaryInstruction(node,lvl);
 
 	_pf.LE();
 }
@@ -273,7 +273,7 @@ void zu::postfix_writer::do_le_node(cdk::le_node * const node, int lvl) {
 void zu::postfix_writer::do_ge_node(cdk::ge_node * const node, int lvl) {
 	debug(node,lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-        checkExpressionsForLogicalBinaryInstruction(node,lvl); 
+        checkExpressionsForLogicalBinaryInstruction(node,lvl);
 
 	_pf.GE();
 }
@@ -281,7 +281,7 @@ void zu::postfix_writer::do_ge_node(cdk::ge_node * const node, int lvl) {
 void zu::postfix_writer::do_gt_node(cdk::gt_node * const node, int lvl) {
 	debug(node,lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-        checkExpressionsForLogicalBinaryInstruction(node,lvl); 
+        checkExpressionsForLogicalBinaryInstruction(node,lvl);
 
 	_pf.GT();
 }
@@ -289,7 +289,7 @@ void zu::postfix_writer::do_gt_node(cdk::gt_node * const node, int lvl) {
 void zu::postfix_writer::do_ne_node(cdk::ne_node * const node, int lvl) {
 	debug(node,lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-        checkExpressionsForLogicalBinaryInstruction(node,lvl); 
+        checkExpressionsForLogicalBinaryInstruction(node,lvl);
 
 	_pf.NE();
 }
@@ -297,7 +297,7 @@ void zu::postfix_writer::do_ne_node(cdk::ne_node * const node, int lvl) {
 void zu::postfix_writer::do_eq_node(cdk::eq_node * const node, int lvl) {
 	debug(node,lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-        checkExpressionsForLogicalBinaryInstruction(node,lvl); 
+        checkExpressionsForLogicalBinaryInstruction(node,lvl);
 
 	_pf.EQ();
 }
@@ -390,9 +390,11 @@ void zu::postfix_writer::do_function_body_node(zu::function_body_node * const no
 	_pf.ALIGN();
 	_pf.LABEL(zuFunctionName(node->identifier()));
 
+	if (node->args())
+		for (size_t i=0; i < node->args()->size(); i++)
+			dec_size += ((zu::variable_node*)node->args()->node(i))->zu_type()->size();
 	if (node->block()->declarations())
 		for (size_t i=0; i < node->block()->declarations()->size(); i++)
-/* TODO ALLOCATE MEMORY FOR ARGUMENTS  */
 			dec_size += ((zu::variable_node*)node->block()->declarations()->node(i))->zu_type()->size();
 
 	_pf.ENTER(dec_size);
@@ -411,10 +413,12 @@ void zu::postfix_writer::do_function_body_node(zu::function_body_node * const no
 
 	if (node->identifier() == "zu") {
 		_pf.EXTERN("readi");
+		_pf.EXTERN("readd");
 		_pf.EXTERN("printi");
+		_pf.EXTERN("printd");
 		_pf.EXTERN("prints");
 		_pf.EXTERN("println");
-}
+	}
 }
 
 void zu::postfix_writer::do_function_call_node(zu::function_call_node * const node, int lvl){
@@ -456,14 +460,19 @@ void zu::postfix_writer::do_evaluation_node(zu::evaluation_node * const node, in
 }
 
 void zu::postfix_writer::do_print_node(zu::print_node * const node, int lvl) {
-	/* TODO */
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
 
 	node->argument()->accept(this, lvl); // determine the value to print
+	if (node->argument()->name().compare("index_node") == 0 || node->argument()->name().compare("id_node") == 0)
+		_pf.LOAD(); // load
 
 	if (node->argument()->type()->name() == basic_type::TYPE_INT) {
 		_pf.CALL("printi");
+		_pf.TRASH(4); // delete the printed value
+	}
+	if (node->argument()->type()->name() == basic_type::TYPE_DOUBLE) {
+		_pf.CALL("printd");
 		_pf.TRASH(4); // delete the printed value
 	}
 	else if (node->argument()->type()->name() == basic_type::TYPE_STRING) {
@@ -475,7 +484,8 @@ void zu::postfix_writer::do_print_node(zu::print_node * const node, int lvl) {
 		exit(1);
 	}
 
-	_pf.CALL("println"); // print a newline
+	if (node->newLine())
+		_pf.CALL("println"); // print a newline
 }
 
 //---------------------------------------------------------------------------
