@@ -315,8 +315,10 @@ void zu::type_checker::do_function_declaration_node(zu::function_declaration_nod
 			node->args()->node(i)->accept(this, lvl+2);
 
 	const std::string &id = node->identifier();
-	if (!_symtab.insert(id, std::make_shared<zu::symbol>(node->zu_type(), id, 0, true)))
+	std::shared_ptr<zu::symbol> s = std::make_shared<zu::symbol>(node->zu_type(), id, 0, true)
+	if (!s->functionIsBuildingBody() && !_symtab.insert(id, s))
 		throw id + " redeclared";
+	s->functionIsDeclared(true);
 
 	if (node->literal()) {
 		node->literal()->accept(this, lvl + 2);
@@ -329,6 +331,11 @@ void zu::type_checker::do_function_declaration_node(zu::function_declaration_nod
 
 void zu::type_checker::do_function_body_node(zu::function_body_node * const node, int lvl){
 	ASSERT_UNSPEC;
+
+	std::shared_ptr<zu::symbol> symbol = _symtab.find(node->identifier());
+	if (symbol->functionIsDeclared())
+		symbol->functionIsBuildingBody(true);
+
 	zu::function_declaration_node *f = node->function_declaration();
 	f->accept(this, lvl + 2);
 	node->type(f->zu_type());
@@ -337,11 +344,9 @@ void zu::type_checker::do_function_body_node(zu::function_body_node * const node
 void zu::type_checker::do_function_call_node(zu::function_call_node * const node, int lvl){
 	ASSERT_UNSPEC;
 
-	if(node->args() != NULL) {
-		for (size_t i = 0; i < node->args()->size(); i++) {
+	if(node->args() != NULL)
+		for (size_t i = 0; i < node->args()->size(); i++)
 			node->args()->node(i)->accept(this, lvl+2);
-		}
-	}
 
 	const std::string &id = node->identifier();
 	std::shared_ptr<zu::symbol> symbol = _symtab.find(id);

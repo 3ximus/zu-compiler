@@ -15,6 +15,9 @@ namespace zu {
 		std::string _global_label;
 		bool _isFunction = false;
 
+		bool _functionIsDeclared = false;
+		bool _functionIsBuildingBody = false;
+
 		public:
 		inline symbol(basic_type *type, const std::string &name, long value, bool isFunction) :
 			_type(type), _name(name), _value(value), _isFunction(isFunction) {
