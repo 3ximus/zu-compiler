@@ -123,7 +123,7 @@ void zu::postfix_writer::do_and_node(zu::and_node * const node, int lvl) {
 
 	_pf.AND();
 	_pf.ALIGN(); // align symbols
-	_pf.LABEL(mklbl(lbl1)); // TODO optimization??
+	_pf.LABEL(mklbl(lbl1));
 }
 
 void zu::postfix_writer::do_or_node(zu::or_node * const node, int lvl) {
@@ -146,13 +146,21 @@ void zu::postfix_writer::do_or_node(zu::or_node * const node, int lvl) {
 
 	_pf.AND();
 	_pf.ALIGN(); // align symbols
-	_pf.LABEL(mklbl(lbl1)); // TODO optimization??
+	_pf.LABEL(mklbl(lbl1));
 }
 
 void zu::postfix_writer::do_allocation_node(zu::allocation_node * const node, int lvl)  {
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-	/* TODO */
+
+	_pf.INT(node->type()->subtype()->size());
+	node->argument()->accept(this, lvl+1);
+	if (node->left()->name().compare("index_node") == 0 || node->left()->name().compare("id_node") == 0)
+		_pf.LOAD();
+
+	_pf.MUL();
+	_pf.ALLOC();
+	_pf.SP();
 }
 
 void zu::postfix_writer::do_index_node(zu::index_node * const node, int lvl) {
@@ -357,7 +365,7 @@ void zu::postfix_writer::do_assignment_node(zu::assignment_node * const node, in
 
 	// If the right value is a left value, it only places
 	// its address on top of the stack
-	if(node->rvalue()->name() == "lvalue_node") {
+	if (node->rvalue()->name().compare("index_node") == 0 || node->rvalue()->name().compare("id_node") == 0) {
 		if(node->rvalue()->type()->name() == basic_type::TYPE_DOUBLE)
 			_pf.DLOAD();
 		else
@@ -416,7 +424,6 @@ void zu::postfix_writer::do_assignment_node(zu::assignment_node * const node, in
 //}
 
 void zu::postfix_writer::do_function_declaration_node(zu::function_declaration_node * const node, int lvl){
-	/* TODO */
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
 }
@@ -477,7 +484,6 @@ void zu::postfix_writer::do_function_call_node(zu::function_call_node * const no
 	int arg_size = 0;
 
 	if (node->args())
-		/* TODO THIS ACCEPT SHOULD ALLOCATE ARGUMENTS ON THE STACK */
 		for (size_t i=0; i < node->args()->size(); i++)
 			arg_size += ((zu::variable_node*)node->args()->node(i))->zu_type()->size();
 
@@ -515,12 +521,14 @@ void zu::postfix_writer::do_evaluation_node(zu::evaluation_node * const node, in
 
 	node->argument()->accept(this, lvl); // determine the value
 
-	if (node->argument()->type()->name() == basic_type::TYPE_INT) {
+	if (node->argument()->type()->name() == basic_type::TYPE_INT)
 		_pf.TRASH(4); // delete the evaluated value
-	}
-	else if (node->argument()->type()->name() == basic_type::TYPE_STRING) {
+	else if (node->argument()->type()->name() == basic_type::TYPE_STRING)
 		_pf.TRASH(4); // delete the evaluated value's address
-	}
+	if (node->argument()->type()->name() == basic_type::TYPE_DOUBLE)
+		_pf.TRASH(8); // delete the evaluated value
+	else if (node->argument()->type()->name() == basic_type::TYPE_POINTER)
+		_pf.TRASH(4); // delete the evaluated
 	else {
 		std::cerr << "ERROR: CANNOT HAPPEN!" << std::endl;
 		exit(1);
