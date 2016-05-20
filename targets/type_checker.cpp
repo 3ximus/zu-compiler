@@ -375,7 +375,7 @@ void zu::type_checker::do_assignment_node(zu::assignment_node * const node, int 
 		return;
 	}
 
-	if ((node->lvalue()->type()->name() != basic_type::TYPE_DOUBLE && node->rvalue()->type()->name() != basic_type::TYPE_INT) || node->lvalue()->type()->name() != node->rvalue()->type()->name())
+	if (node->lvalue()->type()->name() != node->rvalue()->type()->name())
 	  throw std::string("wrong type in left argument of assignment expression");
 
 	node->type(node->lvalue()->type());
