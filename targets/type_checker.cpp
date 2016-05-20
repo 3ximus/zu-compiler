@@ -99,7 +99,7 @@ void zu::type_checker::do_id_node(zu::id_node * const node, int lvl) {
 void zu::type_checker::do_variable_node(zu::variable_node * const node, int lvl) {
 	ASSERT_UNSPEC;
 	const std::string &id = node->identifier();
-	if (!_symtab.insert(id, std::make_shared<zu::symbol>(node->zu_type(), id, 0)))
+	if (!_symtab.insert(id, std::make_shared<zu::symbol>(node->zu_type(), id, 0, false)))
 		throw id + " redeclared";
 
 	if (node->value()) {
@@ -315,7 +315,7 @@ void zu::type_checker::do_function_declaration_node(zu::function_declaration_nod
 			node->args()->node(i)->accept(this, lvl+2);
 
 	const std::string &id = node->identifier();
-	if (!_symtab.insert(id, std::make_shared<zu::symbol>(node->zu_type(), id, 0)))
+	if (!_symtab.insert(id, std::make_shared<zu::symbol>(node->zu_type(), id, 0, true)))
 		throw id + " redeclared";
 
 	if (node->literal()) {

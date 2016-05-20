@@ -403,13 +403,18 @@ void zu::postfix_writer::do_assignment_node(zu::assignment_node * const node, in
 	else
 		_pf.DUP();
 
-	node->lvalue()->accept(this, lvl+1);
+	std::shared_ptr<zu::symbol> s = _symtab.find(node->identifier());
 
-        // Store the value!
-	if(node->lvalue()->type()->name() == basic_type::TYPE_DOUBLE)
-		_pf.DSTORE();
-	else
-		_pf.STORE();
+	node->lvalue()->accept(this, lvl+1);
+	if (_function_context && s->isFunction()) // if we are setting a value to a function
+		_pf.LOCA(0 - node->type()->size());
+	else {
+		// Store the value!
+		if(node->lvalue()->type()->name() == basic_type::TYPE_DOUBLE)
+			_pf.DSTORE();
+		else
+			_pf.STORE();
+	}
 }
 
 //---------------------------------------------------------------------------

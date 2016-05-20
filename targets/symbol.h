@@ -13,42 +13,34 @@ namespace zu {
 		long _value; // hack!
 		int _local_offset = -1;
 		std::string _global_label;
+		bool _isFunction = false;
 
 		public:
-		inline symbol(basic_type *type, const std::string &name, long value) :
-			_type(type), _name(name), _value(value) {
+		inline symbol(basic_type *type, const std::string &name, long value, bool isFunction) :
+			_type(type), _name(name), _value(value), _isFunction(isFunction) {
 			}
 
-		virtual ~symbol() {
-			delete _type;
-		}
+		virtual ~symbol() { delete _type; }
 
-		inline basic_type *type() const {
-			return _type;
-		}
-		inline const std::string &name() const {
-			return _name;
-		}
-		inline long value() const {
-			return _value;
-		}
-		inline long value(long v) {
-			return _value = v;
-		}
+		inline basic_type *type() const { return _type; }
 
-		inline int local_offset() const{
-			return _local_offset;
-		}
-		inline void local_offset(int v) {
-			_local_offset = v;
-		}
+		inline const std::string &name() const { return _name; }
 
-		inline std::string global_label() const{
-			return _global_label;
-		}
-		inline void global_label(std::string v) {
-			_global_label = v;
-		}
+		inline long value() const { return _value; }
+
+		inline long value(long v) { return _value = v; }
+
+		inline int local_offset() const{ return _local_offset; }
+
+		inline void local_offset(int v) { _local_offset = v; }
+
+		inline std::string global_label() const{ return _global_label; }
+
+		inline void global_label(std::string v) { _global_label = v; }
+
+		inline bool isFunction() { return _isFunction; }
+
+		inline void isFunction(bool b) { _isFunction = b; }
 
 	};
 
