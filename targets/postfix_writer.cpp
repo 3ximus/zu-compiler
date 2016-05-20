@@ -88,6 +88,8 @@ void zu::postfix_writer::do_neg_node(cdk::neg_node * const node, int lvl) {
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
 	node->argument()->accept(this, lvl+1); // determine the value
+	if (node->argument()->name().compare("index_node") == 0 || node->argument()->name().compare("id_node") == 0)
+		_pf.LOAD(); // load
 	if (node->argument()->type()->name() == basic_type::TYPE_INT)
 		_pf.NEG(); // 2-complement
 	else
@@ -98,13 +100,16 @@ void zu::postfix_writer::do_identity_node(zu::identity_node * const node, int lv
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
 	node->argument()->accept(this, lvl+1); // determine the value
-	/* FIXME DO NOTHING? */
+	if (node->argument()->name().compare("index_node") == 0 || node->argument()->name().compare("id_node") == 0)
+		_pf.LOAD(); // load
 }
 
 void zu::postfix_writer::do_not_node(zu::not_node * const node, int lvl) {
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
 	node->argument()->accept(this, lvl+1); // determine the value
+	if (node->argument()->name().compare("index_node") == 0 || node->argument()->name().compare("id_node") == 0)
+		_pf.LOAD(); // load
 	_pf.NOT(); // logical negation
 }
 
@@ -112,7 +117,6 @@ void zu::postfix_writer::do_position_node(zu::position_node * const node, int lv
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
 	node->argument()->accept(this, lvl+1); // determine the value
-	/* FIXME DO NOTHING */
 }
 
 //---------------------------------------------------------------------------
