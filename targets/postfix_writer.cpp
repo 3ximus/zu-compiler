@@ -501,17 +501,17 @@ void zu::postfix_writer::do_function_call_node(zu::function_call_node * const no
 	CHECK_TYPES(_compiler, _symtab, node);
 	int arg_size = 0;
 
+	node->args()->accept(this, lvl+1);
+
 	if (node->args())
 		for (size_t i=0; i < node->args()->size(); i++)
 			arg_size += ((zu::variable_node*)node->args()->node(i))->zu_type()->size();
-
-	node->args()->accept(this, lvl+1);
 
 	_pf.CALL(zuFunctionName(node->identifier())); // call function
 	_pf.TRASH(arg_size); // remove arguments from the stack
 
 	std::shared_ptr<zu::symbol> s = _symtab.find(node->identifier());
-	if (s->type()->name() == basic_type::TYPE_INT || s->type()->name() == basic_type::TYPE_DOUBLE || s->type()->name() == basic_type::TYPE_STRING)
+	if (s->type()->name() == basic_type::TYPE_INT || s->type()->name() == basic_type::TYPE_POINTER || s->type()->name() == basic_type::TYPE_STRING)
 		_pf.PUSH(); // allocate ret val
 	else if (s->type()->name() == basic_type::TYPE_DOUBLE)
 		_pf.DPUSH(); // allocate double val
