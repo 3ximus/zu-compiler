@@ -314,14 +314,12 @@ void zu::postfix_writer::do_mod_node(cdk::mod_node * const node, int lvl) {
 
 	node->left()->accept(this, lvl);
 
-	// --left-- Replace address with value
-	if(node->left()->type()->name() == basic_type::TYPE_POINTER)
+	if (node->left()->name().compare("index_node") == 0 || node->left()->name().compare("id_node") == 0)
 		_pf.LOAD();
 
 	node->right()->accept(this, lvl);
 
-	// --right--  Replace address with value
-	if(node->right()->type()->name() == basic_type::TYPE_POINTER)
+	if (node->right()->name().compare("index_node") == 0 || node->right()->name().compare("id_node") == 0)
 		_pf.LOAD();
 
 	_pf.MOD();
