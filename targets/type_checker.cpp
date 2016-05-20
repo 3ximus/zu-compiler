@@ -310,10 +310,6 @@ void zu::type_checker::do_lvalue_node(zu::lvalue_node * const node, int lvl) {
 void zu::type_checker::do_function_declaration_node(zu::function_declaration_node * const node, int lvl){
 	ASSERT_UNSPEC;
 
-	if(node->args() != NULL)
-		for (size_t i = 0; i < node->args()->size(); i++)
-			node->args()->node(i)->accept(this, lvl+2);
-
 	const std::string &id = node->identifier();
 	std::shared_ptr<zu::symbol> s = _symtab.find(id);
 	if (s == NULL || !s->functionIsBuildingBody()) {
@@ -334,6 +330,10 @@ void zu::type_checker::do_function_declaration_node(zu::function_declaration_nod
 
 void zu::type_checker::do_function_body_node(zu::function_body_node * const node, int lvl){
 	ASSERT_UNSPEC;
+
+	if(node->args() != NULL)
+		for (size_t i = 0; i < node->args()->size(); i++)
+			node->args()->node(i)->accept(this, lvl+2);
 
 	std::shared_ptr<zu::symbol> symbol = _symtab.find(node->identifier());
 	if (symbol != NULL && symbol->functionIsDeclared())
