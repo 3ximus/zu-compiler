@@ -460,7 +460,7 @@ void zu::postfix_writer::do_function_body_node(zu::function_body_node * const no
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
 	int dec_size = 0;
-	//node->function_declaration()->accept(this, lvl+1);
+	node->function_declaration()->accept(this, lvl+1);
 
 	_symtab.push();
 	_function_context = true;
