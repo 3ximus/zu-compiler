@@ -502,6 +502,9 @@ void zu::postfix_writer::do_function_body_node(zu::function_body_node * const no
 		_pf.EXTERN("printd");
 		_pf.EXTERN("prints");
 		_pf.EXTERN("println");
+		_pf.EXTERN("argc");
+		_pf.EXTERN("argv");
+		_pf.EXTERN("envp");
 	}
 	_function_context = false;
 }
