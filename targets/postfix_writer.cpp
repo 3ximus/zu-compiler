@@ -124,7 +124,7 @@ void zu::postfix_writer::do_position_node(zu::position_node * const node, int lv
 void zu::postfix_writer::do_and_node(zu::and_node * const node, int lvl) {
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-	int lbl1 = _lbl++;
+	int lbl1 = ++_lbl;
 
 	node->left()->accept(this,lvl+1); // visit left child
 
@@ -147,7 +147,7 @@ void zu::postfix_writer::do_and_node(zu::and_node * const node, int lvl) {
 void zu::postfix_writer::do_or_node(zu::or_node * const node, int lvl) {
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-	int lbl1 = _lbl++;
+	int lbl1 = ++_lbl;
 
 	node->left()->accept(this,lvl+1); // visit left child
 
@@ -657,7 +657,7 @@ void zu::postfix_writer::do_if_else_node(zu::if_else_node * const node, int lvl)
 	_pf.LABEL(mklbl(lbl1));
 
 	node->elseblock()->accept(this, lvl+1);
-	_pf.LABEL(mklbl(lbl1 = lbl2));
+	_pf.LABEL(mklbl(lbl2));
 }
 
 void zu::postfix_writer::do_return_node(zu::return_node * const node, int lvl) {
