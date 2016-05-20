@@ -543,6 +543,7 @@ void zu::postfix_writer::do_evaluation_node(zu::evaluation_node * const node, in
 		_pf.TRASH(8); // delete the evaluated value
 	else if (node->argument()->type()->name() == basic_type::TYPE_POINTER)
 		_pf.TRASH(4); // delete the evaluated
+	else if (node->argument()->type()->name() == basic_type::TYPE_VOID) {}
 	else {
 		std::cerr << "ERROR: CANNOT HAPPEN!" << std::endl;
 		exit(1);
