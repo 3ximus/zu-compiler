@@ -452,6 +452,8 @@ void zu::postfix_writer::do_assignment_node(zu::assignment_node * const node, in
 void zu::postfix_writer::do_function_declaration_node(zu::function_declaration_node * const node, int lvl){
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
+	if (node->isImported())
+		_pf.EXTERN(node->identifier());
 }
 
 void zu::postfix_writer::do_function_body_node(zu::function_body_node * const node, int lvl){
