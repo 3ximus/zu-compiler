@@ -421,39 +421,11 @@ void zu::postfix_writer::do_assignment_node(zu::assignment_node * const node, in
 
 //---------------------------------------------------------------------------
 
-//void zu::postfix_writer::do_program_node(zu::program_node * const node, int lvl) {
-//  // Note that Zu doesn't have functions. Thus, it doesn't need
-//  // a function node. However, it must start in the main function.
-//  // The ProgramNode (representing the whole program) doubles as a
-//  // main function node.
-//
-//  // generate the main function (RTS mandates that its name be "_main")
-//  _pf.TEXT();
-//  _pf.ALIGN();
-//  _pf.GLOBAL("_main", _pf.FUNC());
-//  _pf.LABEL("_main");
-//  _pf.ENTER(0);  // Zu doesn't implement local variables
-//
-//  node->statements()->accept(this, lvl);
-//
-//  // end the main function
-//  _pf.INT(0);
-//  _pf.POP();
-//  _pf.LEAVE();
-//  _pf.RET();
-//
-//  // these are just a few library function imports
-//  _pf.EXTERN("readi");
-//  _pf.EXTERN("printi");
-//  _pf.EXTERN("prints");
-//  _pf.EXTERN("println");
-//}
-
 void zu::postfix_writer::do_function_declaration_node(zu::function_declaration_node * const node, int lvl){
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
-	if (node->isImported())
-		_pf.EXTERN(node->identifier());
+//	if (node->isImported())
+//		_pf.EXTERN(node->identifier());
 }
 
 void zu::postfix_writer::do_function_body_node(zu::function_body_node * const node, int lvl){
