@@ -197,18 +197,18 @@ void zu::postfix_writer::do_variable_node(zu::variable_node * const node, int lv
 		std::string label = (node->isPublic()) ? node->identifier() : mklbl(++_lbl);
 
 		if (node->value() == NULL) {
-			_pf->BSS();
+			_pf.BSS();
 			_pf.ALIGN();
 			_pf.LABEL(label);
 			_pf.BYTE(node->type()->size());
 		}
 		else {
-			_pf->DATA();
+			_pf.DATA();
 			_pf.ALIGN();
 			_pf.LABEL(label);
 
 			if ((node->type()->name() == basic_type::TYPE_DOUBLE) && (node->value()->type()->name() == basic_type::TYPE_INT))
-				_pf.DOUBLE(node->value()->value());
+				_pf.DOUBLE(((cdk::simple_value_node<int>*)node->value())->value());
 			else
 				node->value()->accept(this, lvl+1);
 		}

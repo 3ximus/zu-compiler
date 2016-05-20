@@ -11,8 +11,8 @@ namespace zu {
 		basic_type *_type;
 		std::string _name;
 		long _value; // hack!
-		int local_offset = -1;
-		std::string global_label = -1;
+		int _local_offset = -1;
+		std::string _global_label;
 
 		public:
 		inline symbol(basic_type *type, const std::string &name, long value) :
@@ -36,14 +36,14 @@ namespace zu {
 			return _value = v;
 		}
 
-		inline int local_offset() const {
+		inline int local_offset() const{
 			return _local_offset;
 		}
 		inline void local_offset(int v) {
 			_local_offset = v;
 		}
 
-		inline std::string global_label() const {
+		inline std::string global_label() const{
 			return _global_label;
 		}
 		inline void global_label(std::string v) {

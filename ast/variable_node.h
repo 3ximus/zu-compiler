@@ -4,6 +4,7 @@
 
 #include <string>
 #include "assignment_node.h"
+#include "id_node.h"
 
 namespace zu {
 
@@ -51,7 +52,7 @@ namespace zu {
 		return _isFarg;
 	}
 
-	inline zu::assignment_node assignment_handler() {
+	inline zu::assignment_node* assignment_handler() {
 		return new zu::assignment_node(lineno(), new zu::id_node(lineno(), identifier()), value());
 	}
 
