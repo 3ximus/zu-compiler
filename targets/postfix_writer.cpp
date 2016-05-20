@@ -437,6 +437,7 @@ void zu::postfix_writer::do_function_body_node(zu::function_body_node * const no
 	_function_context = true;
 	_local_arg_offset = 8;
 	_local_dec_offset = 0;
+	_function_return_lbl = ++_lbl;
 
 	if (node->args())
 		node->args()->accept(this, lvl+1);
@@ -459,7 +460,7 @@ void zu::postfix_writer::do_function_body_node(zu::function_body_node * const no
 
 	node->block()->accept(this, lvl+1);
 
-	_pf.LABEL(mklbl(_function_return_lbl = ++_lbl));
+	_pf.LABEL(mklbl(_function_return_lbl));
 
 	if(node->type()->name() != basic_type::TYPE_VOID) {
 		int return_offset = 0 - node->type()->size();
