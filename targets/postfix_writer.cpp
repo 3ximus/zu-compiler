@@ -466,6 +466,8 @@ void zu::postfix_writer::do_function_body_node(zu::function_body_node * const no
 	_pf.ALIGN();
 	_pf.LABEL(zuFunctionName(node->identifier()));
 
+	node->literal()->accept(this, lvl+1);
+
 	COUNT_STACK_SPACE(_compiler, _symtab, node, dec_size);
 
 	_pf.ENTER(dec_size);
