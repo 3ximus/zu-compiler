@@ -3,6 +3,7 @@
 #include <sstream>
 #include "targets/type_checker.h"
 #include "targets/postfix_writer.h"
+#include "targets/stack_allocator.h"
 #include "ast/all.h"  // all.h is automatically generated
 
 // Uncomment for extra spam
@@ -465,9 +466,7 @@ void zu::postfix_writer::do_function_body_node(zu::function_body_node * const no
 	_pf.ALIGN();
 	_pf.LABEL(zuFunctionName(node->identifier()));
 
-	if (node->block()->declarations())
-		for (size_t i=0; i < node->block()->declarations()->size(); i++)
-			dec_size += ((zu::variable_node*)node->block()->declarations()->node(i))->zu_type()->size();
+	COUNT_STACK_SPACE(_compiler, _symtab, node, &dec_size);
 
 	_pf.ENTER(dec_size);
 
@@ -503,9 +502,7 @@ void zu::postfix_writer::do_function_call_node(zu::function_call_node * const no
 
 	node->args()->accept(this, lvl+1);
 
-	if (node->args())
-		for (size_t i=0; i < node->args()->size(); i++)
-			arg_size += ((zu::variable_node*)node->args()->node(i))->zu_type()->size();
+	COUNT_STACK_SPACE(_compiler, _symtab, node, &arg_size);
 
 	_pf.CALL(zuFunctionName(node->identifier())); // call function
 	_pf.TRASH(arg_size); // remove arguments from the stack

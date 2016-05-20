@@ -14,7 +14,7 @@ void zu::stack_allocator::do_block_node(zu::block_node * const node, int lvl){
 //---------------------------------------------------------------------------
 
 void zu::stack_allocator::do_variable_declaration_node(zu::variable_declaration_node * const node, int lvl) {
-	_totalSize += node->type()->size();
+	_alloc += node->zu_type()->size();
 }
 
 void zu::stack_allocator::do_function_body_node(zu::function_body_node * const node, int lvl) {
