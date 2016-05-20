@@ -42,6 +42,13 @@ namespace zu {
 
 		inline void isFunction(bool b) { _isFunction = b; }
 
+		inline bool functionIsDeclared() { return _functionIsDeclared; }
+
+		inline void functionIsDeclared(bool isDeclared) { _functionIsDeclared = isDeclared; }
+
+		inline bool functionIsBuildingBody() { return _functionIsBuildingBody; }
+
+		inline void functionIsBuildingBody(bool b) { _functionIsBuildingBody = b; }
 	};
 
 } // zu
