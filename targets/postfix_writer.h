@@ -70,23 +70,21 @@ namespace zu {
 		// Visit left child
 		node->left()->accept(this, lvl);
 
-		// if lval, replaces address on the top of the stack
-		if(node->left()->type()->name() == basic_type::TYPE_POINTER)
-			_pf.LOAD();
+		if (node->left()->name().compare("index_node") == 0 || node->left()->name().compare("id_node") == 0)
+			_pf.LOAD(); // load
 
 		// If the ADD has type double but left child is of type INT, we must convert
-		if((node->left()->type()->name() == basic_type::TYPE_INT) && (node->type()->name() == basic_type::TYPE_DOUBLE))
+		else if((node->left()->type()->name() == basic_type::TYPE_INT) && (node->type()->name() == basic_type::TYPE_DOUBLE))
 			_pf.I2D();
 
 		// Visit right child
 		node->right()->accept(this, lvl+1);
 
-		// if lval, replaces address on the top of the stack
-		if(node->left()->type()->name() == basic_type::TYPE_POINTER)
-			_pf.LOAD();
+		if (node->right()->name().compare("index_node") == 0 || node->right()->name().compare("id_node") == 0)
+			_pf.LOAD(); // load
 
 		// If the ADD has type double but right child is of type INT, we must convert
-		if((node->right()->type()->name() == basic_type::TYPE_INT) && (node->type()->name() == basic_type::TYPE_DOUBLE))
+		else if((node->right()->type()->name() == basic_type::TYPE_INT) && (node->type()->name() == basic_type::TYPE_DOUBLE))
 			_pf.I2D();
 	}
 

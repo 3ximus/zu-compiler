@@ -132,7 +132,7 @@ void zu::postfix_writer::do_and_node(zu::and_node * const node, int lvl) {
 
 	node->right()->accept(this,lvl+1);
 
-	if (node->left()->name().compare("index_node") == 0 || node->left()->name().compare("id_node") == 0)
+	if (node->right()->name().compare("index_node") == 0 || node->right()->name().compare("id_node") == 0)
 		_pf.LOAD(); // load
 
 	_pf.AND();
@@ -155,7 +155,7 @@ void zu::postfix_writer::do_or_node(zu::or_node * const node, int lvl) {
 
 	node->right()->accept(this,lvl+1);
 
-	if (node->left()->name().compare("index_node") == 0 || node->left()->name().compare("id_node") == 0)
+	if (node->right()->name().compare("index_node") == 0 || node->right()->name().compare("id_node") == 0)
 		_pf.LOAD(); // load
 
 	_pf.AND();
