@@ -19,59 +19,20 @@
         </declarations>
         <instructions>
           <sequence_node size='8'>
-            <print_node>
-              <index_node>
-                <lvalue>
-                  <id_node>
-                    <id_node>g</id_node>
-                  </id_node>
-                </lvalue>
-                <rvalue>
-                  <integer_node>1</integer_node>
-                </rvalue>
-              </index_node>
-              <newLine>0</newLine>
-            </print_node>
-            <print_node>
-              <index_node>
-                <lvalue>
-                  <id_node>
-                    <id_node>g</id_node>
-                  </id_node>
-                </lvalue>
-                <rvalue>
-                  <integer_node>0</integer_node>
-                </rvalue>
-              </index_node>
-              <newLine>0</newLine>
-            </print_node>
-            <print_node>
-              <index_node>
-                <lvalue>
-                  <id_node>
-                    <id_node>f</id_node>
-                  </id_node>
-                </lvalue>
-                <rvalue>
-                  <integer_node>0</integer_node>
-                </rvalue>
-              </index_node>
-              <newLine>0</newLine>
-            </print_node>
             <evaluation_node>
               <assignment_node>
                 <index_node>
                   <lvalue>
                     <id_node>
-                      <id_node>g</id_node>
+                      <id_node>f</id_node>
                     </id_node>
                   </lvalue>
                   <rvalue>
-                    <integer_node>1</integer_node>
+                    <integer_node>0</integer_node>
                   </rvalue>
                 </index_node>
                 <rvalue>
-                  <integer_node>8</integer_node>
+                  <integer_node>3</integer_node>
                 </rvalue>
               </assignment_node>
             </evaluation_node>
@@ -97,18 +58,57 @@
                 <index_node>
                   <lvalue>
                     <id_node>
-                      <id_node>f</id_node>
+                      <id_node>g</id_node>
                     </id_node>
                   </lvalue>
                   <rvalue>
-                    <integer_node>0</integer_node>
+                    <integer_node>1</integer_node>
                   </rvalue>
                 </index_node>
                 <rvalue>
-                  <integer_node>3</integer_node>
+                  <integer_node>8</integer_node>
                 </rvalue>
               </assignment_node>
             </evaluation_node>
+            <print_node>
+              <index_node>
+                <lvalue>
+                  <id_node>
+                    <id_node>f</id_node>
+                  </id_node>
+                </lvalue>
+                <rvalue>
+                  <integer_node>0</integer_node>
+                </rvalue>
+              </index_node>
+              <newLine>0</newLine>
+            </print_node>
+            <print_node>
+              <index_node>
+                <lvalue>
+                  <id_node>
+                    <id_node>g</id_node>
+                  </id_node>
+                </lvalue>
+                <rvalue>
+                  <integer_node>0</integer_node>
+                </rvalue>
+              </index_node>
+              <newLine>0</newLine>
+            </print_node>
+            <print_node>
+              <index_node>
+                <lvalue>
+                  <id_node>
+                    <id_node>g</id_node>
+                  </id_node>
+                </lvalue>
+                <rvalue>
+                  <integer_node>1</integer_node>
+                </rvalue>
+              </index_node>
+              <newLine>0</newLine>
+            </print_node>
           </sequence_node>
         </instructions>
       </block_node>

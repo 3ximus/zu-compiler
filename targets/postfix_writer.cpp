@@ -466,7 +466,7 @@ void zu::postfix_writer::do_function_body_node(zu::function_body_node * const no
 	_pf.ALIGN();
 	_pf.LABEL(zuFunctionName(node->identifier()));
 
-	COUNT_STACK_SPACE(_compiler, _symtab, node, &dec_size);
+	COUNT_STACK_SPACE(_compiler, _symtab, node, dec_size);
 
 	_pf.ENTER(dec_size);
 
@@ -502,7 +502,7 @@ void zu::postfix_writer::do_function_call_node(zu::function_call_node * const no
 
 	node->args()->accept(this, lvl+1);
 
-	COUNT_STACK_SPACE(_compiler, _symtab, node, &arg_size);
+	COUNT_STACK_SPACE(_compiler, _symtab, node, arg_size);
 
 	_pf.CALL(zuFunctionName(node->identifier())); // call function
 	_pf.TRASH(arg_size); // remove arguments from the stack

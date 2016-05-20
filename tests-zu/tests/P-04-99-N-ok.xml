@@ -28,91 +28,6 @@
             <for_node>
               <init>
                 <sequence_node size='1'>
-                  <variable_node>
-                    <variable_node>j</variable_node>
-                    <int_1>4</int_1>
-                    <isPublic>0</isPublic>
-                    <isImported>0</isImported>
-                    <value>
-                      <integer_node>0</integer_node>
-                    </value>
-                  </variable_node>
-                </sequence_node>
-              </init>
-              <test>
-                <sequence_node size='1'>
-                  <lt_node>
-                    <id_node>
-                      <id_node>j</id_node>
-                    </id_node>
-                    <integer_node>7</integer_node>
-                  </lt_node>
-                </sequence_node>
-              </test>
-              <step>
-                <sequence_node size='1'>
-                  <assignment_node>
-                    <id_node>
-                      <id_node>j</id_node>
-                    </id_node>
-                    <rvalue>
-                      <add_node>
-                        <id_node>
-                          <id_node>j</id_node>
-                        </id_node>
-                        <integer_node>1</integer_node>
-                      </add_node>
-                    </rvalue>
-                  </assignment_node>
-                </sequence_node>
-              </step>
-              <block>
-                <print_node>
-                  <index_node>
-                    <lvalue>
-                      <id_node>
-                        <id_node>f</id_node>
-                      </id_node>
-                    </lvalue>
-                    <rvalue>
-                      <id_node>
-                        <id_node>j</id_node>
-                      </id_node>
-                    </rvalue>
-                  </index_node>
-                  <newLine>0</newLine>
-                </print_node>
-              </block>
-            </for_node>
-            <evaluation_node>
-              <assignment_node>
-                <index_node>
-                  <lvalue>
-                    <id_node>
-                      <id_node>f</id_node>
-                    </id_node>
-                  </lvalue>
-                  <rvalue>
-                    <id_node>
-                      <id_node>i</id_node>
-                    </id_node>
-                  </rvalue>
-                </index_node>
-                <rvalue>
-                  <mul_node>
-                    <id_node>
-                      <id_node>d</id_node>
-                    </id_node>
-                    <id_node>
-                      <id_node>d</id_node>
-                    </id_node>
-                  </mul_node>
-                </rvalue>
-              </assignment_node>
-            </evaluation_node>
-            <for_node>
-              <init>
-                <sequence_node size='1'>
                   <assignment_node>
                     <id_node>
                       <id_node>i</id_node>
@@ -172,6 +87,91 @@
                     </rvalue>
                   </assignment_node>
                 </evaluation_node>
+              </block>
+            </for_node>
+            <evaluation_node>
+              <assignment_node>
+                <index_node>
+                  <lvalue>
+                    <id_node>
+                      <id_node>f</id_node>
+                    </id_node>
+                  </lvalue>
+                  <rvalue>
+                    <id_node>
+                      <id_node>i</id_node>
+                    </id_node>
+                  </rvalue>
+                </index_node>
+                <rvalue>
+                  <mul_node>
+                    <id_node>
+                      <id_node>d</id_node>
+                    </id_node>
+                    <id_node>
+                      <id_node>d</id_node>
+                    </id_node>
+                  </mul_node>
+                </rvalue>
+              </assignment_node>
+            </evaluation_node>
+            <for_node>
+              <init>
+                <sequence_node size='1'>
+                  <variable_node>
+                    <variable_node>j</variable_node>
+                    <int_1>4</int_1>
+                    <isPublic>0</isPublic>
+                    <isImported>0</isImported>
+                    <value>
+                      <integer_node>0</integer_node>
+                    </value>
+                  </variable_node>
+                </sequence_node>
+              </init>
+              <test>
+                <sequence_node size='1'>
+                  <lt_node>
+                    <id_node>
+                      <id_node>j</id_node>
+                    </id_node>
+                    <integer_node>7</integer_node>
+                  </lt_node>
+                </sequence_node>
+              </test>
+              <step>
+                <sequence_node size='1'>
+                  <assignment_node>
+                    <id_node>
+                      <id_node>j</id_node>
+                    </id_node>
+                    <rvalue>
+                      <add_node>
+                        <id_node>
+                          <id_node>j</id_node>
+                        </id_node>
+                        <integer_node>1</integer_node>
+                      </add_node>
+                    </rvalue>
+                  </assignment_node>
+                </sequence_node>
+              </step>
+              <block>
+                <print_node>
+                  <index_node>
+                    <lvalue>
+                      <id_node>
+                        <id_node>f</id_node>
+                      </id_node>
+                    </lvalue>
+                    <rvalue>
+                      <id_node>
+                        <id_node>j</id_node>
+                      </id_node>
+                    </rvalue>
+                  </index_node>
+                  <newLine>0</newLine>
+                </print_node>
               </block>
             </for_node>
           </sequence_node>

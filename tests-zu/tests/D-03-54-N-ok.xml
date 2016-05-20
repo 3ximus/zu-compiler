@@ -15,39 +15,7 @@
               </condition>
               <then>
                 <print_node>
-                  <string_node>elif4</string_node>
-                  <newLine>0</newLine>
-                </print_node>
-              </then>
-              <else>
-                <print_node>
-                  <string_node>OK</string_node>
-                  <newLine>0</newLine>
-                </print_node>
-              </else>
-            </if_else_node>
-            <if_else_node>
-              <condition>
-                <integer_node>0</integer_node>
-              </condition>
-              <then>
-                <print_node>
-                  <string_node>elif3</string_node>
-                  <newLine>0</newLine>
-                </print_node>
-              </then>
-              <else>
-                <sequence_node size='1'>
-                </sequence_node>
-              </else>
-            </if_else_node>
-            <if_else_node>
-              <condition>
-                <integer_node>0</integer_node>
-              </condition>
-              <then>
-                <print_node>
-                  <string_node>elif2</string_node>
+                  <string_node>KO</string_node>
                   <newLine>0</newLine>
                 </print_node>
               </then>
@@ -77,13 +45,45 @@
               </condition>
               <then>
                 <print_node>
-                  <string_node>KO</string_node>
+                  <string_node>elif2</string_node>
                   <newLine>0</newLine>
                 </print_node>
               </then>
               <else>
                 <sequence_node size='1'>
                 </sequence_node>
+              </else>
+            </if_else_node>
+            <if_else_node>
+              <condition>
+                <integer_node>0</integer_node>
+              </condition>
+              <then>
+                <print_node>
+                  <string_node>elif3</string_node>
+                  <newLine>0</newLine>
+                </print_node>
+              </then>
+              <else>
+                <sequence_node size='1'>
+                </sequence_node>
+              </else>
+            </if_else_node>
+            <if_else_node>
+              <condition>
+                <integer_node>0</integer_node>
+              </condition>
+              <then>
+                <print_node>
+                  <string_node>elif4</string_node>
+                  <newLine>0</newLine>
+                </print_node>
+              </then>
+              <else>
+                <print_node>
+                  <string_node>OK</string_node>
+                  <newLine>0</newLine>
+                </print_node>
               </else>
             </if_else_node>
           </sequence_node>

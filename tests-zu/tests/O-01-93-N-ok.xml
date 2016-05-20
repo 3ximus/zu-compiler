@@ -61,8 +61,8 @@
                 <function_call_node>f</function_call_node>
                 <args>
                   <sequence_node size='2'>
-                    <integer_node>2</integer_node>
                     <integer_node>3</integer_node>
+                    <integer_node>10</integer_node>
                   </sequence_node>
                 </args>
               </function_call_node>
@@ -73,8 +73,8 @@
                 <function_call_node>f</function_call_node>
                 <args>
                   <sequence_node size='2'>
+                    <integer_node>2</integer_node>
                     <integer_node>3</integer_node>
-                    <integer_node>10</integer_node>
                   </sequence_node>
                 </args>
               </function_call_node>

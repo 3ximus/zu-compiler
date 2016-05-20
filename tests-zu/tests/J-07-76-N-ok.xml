@@ -19,17 +19,17 @@
         </declarations>
         <instructions>
           <sequence_node size='2'>
+            <evaluation_node>
+              <id_node>
+                <id_node>zu</id_node>
+              </id_node>
+            </evaluation_node>
             <print_node>
               <id_node>
                 <id_node>zu</id_node>
               </id_node>
               <newLine>0</newLine>
             </print_node>
-            <evaluation_node>
-              <id_node>
-                <id_node>zu</id_node>
-              </id_node>
-            </evaluation_node>
           </sequence_node>
         </instructions>
       </block_node>

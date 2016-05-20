@@ -15,6 +15,10 @@
       <block_node>
         <instructions>
           <sequence_node size='2'>
+            <print_node>
+              <integer_node>9</integer_node>
+              <newLine>0</newLine>
+            </print_node>
             <for_node>
               <init>
                 <sequence_node size='1'>
@@ -66,10 +70,6 @@
                 </print_node>
               </block>
             </for_node>
-            <print_node>
-              <integer_node>9</integer_node>
-              <newLine>0</newLine>
-            </print_node>
           </sequence_node>
         </instructions>
       </block_node>

@@ -16,16 +16,6 @@
       <block_node>
         <instructions>
           <sequence_node size='2'>
-            <evaluation_node>
-              <assignment_node>
-                <id_node>
-                  <id_node>f</id_node>
-                </id_node>
-                <rvalue>
-                  <integer_node>9</integer_node>
-                </rvalue>
-              </assignment_node>
-            </evaluation_node>
             <if_else_node>
               <condition>
                 <eq_node>
@@ -51,8 +41,6 @@
                 <block_node>
                   <instructions>
                     <sequence_node size='2'>
-                      <return_node>
-                      </return_node>
                       <evaluation_node>
                         <assignment_node>
                           <id_node>
@@ -80,11 +68,23 @@
                           </rvalue>
                         </assignment_node>
                       </evaluation_node>
+                      <return_node>
+                      </return_node>
                     </sequence_node>
                   </instructions>
                 </block_node>
               </else>
             </if_else_node>
+            <evaluation_node>
+              <assignment_node>
+                <id_node>
+                  <id_node>f</id_node>
+                </id_node>
+                <rvalue>
+                  <integer_node>9</integer_node>
+                </rvalue>
+              </assignment_node>
+            </evaluation_node>
           </sequence_node>
         </instructions>
       </block_node>

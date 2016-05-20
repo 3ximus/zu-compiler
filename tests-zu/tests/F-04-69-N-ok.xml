@@ -31,10 +31,6 @@
         </declarations>
         <instructions>
           <sequence_node size='2'>
-            <print_node>
-              <integer_node>99</integer_node>
-              <newLine>0</newLine>
-            </print_node>
             <for_node>
               <init>
                 <sequence_node size='1'>
@@ -58,21 +54,6 @@
                 <block_node>
                   <instructions>
                     <sequence_node size='2'>
-                      <evaluation_node>
-                        <assignment_node>
-                          <id_node>
-                            <id_node>y</id_node>
-                          </id_node>
-                          <rvalue>
-                            <add_node>
-                              <id_node>
-                                <id_node>y</id_node>
-                              </id_node>
-                              <integer_node>1</integer_node>
-                            </add_node>
-                          </rvalue>
-                        </assignment_node>
-                      </evaluation_node>
                       <for_node>
                         <init>
                           <sequence_node size='1'>
@@ -96,21 +77,6 @@
                           <block_node>
                             <instructions>
                               <sequence_node size='2'>
-                                <evaluation_node>
-                                  <assignment_node>
-                                    <id_node>
-                                      <id_node>x</id_node>
-                                    </id_node>
-                                    <rvalue>
-                                      <add_node>
-                                        <id_node>
-                                          <id_node>x</id_node>
-                                        </id_node>
-                                        <integer_node>1</integer_node>
-                                      </add_node>
-                                    </rvalue>
-                                  </assignment_node>
-                                </evaluation_node>
                                 <if_else_node>
                                   <condition>
                                     <eq_node>
@@ -136,16 +102,50 @@
                                     </print_node>
                                   </else>
                                 </if_else_node>
+                                <evaluation_node>
+                                  <assignment_node>
+                                    <id_node>
+                                      <id_node>x</id_node>
+                                    </id_node>
+                                    <rvalue>
+                                      <add_node>
+                                        <id_node>
+                                          <id_node>x</id_node>
+                                        </id_node>
+                                        <integer_node>1</integer_node>
+                                      </add_node>
+                                    </rvalue>
+                                  </assignment_node>
+                                </evaluation_node>
                               </sequence_node>
                             </instructions>
                           </block_node>
                         </block>
                       </for_node>
+                      <evaluation_node>
+                        <assignment_node>
+                          <id_node>
+                            <id_node>y</id_node>
+                          </id_node>
+                          <rvalue>
+                            <add_node>
+                              <id_node>
+                                <id_node>y</id_node>
+                              </id_node>
+                              <integer_node>1</integer_node>
+                            </add_node>
+                          </rvalue>
+                        </assignment_node>
+                      </evaluation_node>
                     </sequence_node>
                   </instructions>
                 </block_node>
               </block>
             </for_node>
+            <print_node>
+              <integer_node>99</integer_node>
+              <newLine>0</newLine>
+            </print_node>
           </sequence_node>
         </instructions>
       </block_node>

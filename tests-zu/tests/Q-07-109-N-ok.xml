@@ -65,11 +65,11 @@
                     </id_node>
                   </lvalue>
                   <rvalue>
-                    <integer_node>2</integer_node>
+                    <integer_node>0</integer_node>
                   </rvalue>
                 </index_node>
                 <rvalue>
-                  <double_node>6</double_node>
+                  <double_node>3</double_node>
                 </rvalue>
               </assignment_node>
             </evaluation_node>
@@ -99,11 +99,11 @@
                     </id_node>
                   </lvalue>
                   <rvalue>
-                    <integer_node>0</integer_node>
+                    <integer_node>2</integer_node>
                   </rvalue>
                 </index_node>
                 <rvalue>
-                  <double_node>3</double_node>
+                  <double_node>6</double_node>
                 </rvalue>
               </assignment_node>
             </evaluation_node>

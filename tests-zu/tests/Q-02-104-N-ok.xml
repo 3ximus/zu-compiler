@@ -37,19 +37,6 @@
         </declarations>
         <instructions>
           <sequence_node size='6'>
-            <print_node>
-              <index_node>
-                <lvalue>
-                  <id_node>
-                    <id_node>q</id_node>
-                  </id_node>
-                </lvalue>
-                <rvalue>
-                  <integer_node>0</integer_node>
-                </rvalue>
-              </index_node>
-              <newLine>0</newLine>
-            </print_node>
             <evaluation_node>
               <assignment_node>
                 <index_node>
@@ -59,11 +46,11 @@
                     </id_node>
                   </lvalue>
                   <rvalue>
-                    <integer_node>2</integer_node>
+                    <integer_node>0</integer_node>
                   </rvalue>
                 </index_node>
                 <rvalue>
-                  <double_node>6</double_node>
+                  <double_node>3</double_node>
                 </rvalue>
               </assignment_node>
             </evaluation_node>
@@ -93,14 +80,27 @@
                     </id_node>
                   </lvalue>
                   <rvalue>
-                    <integer_node>0</integer_node>
+                    <integer_node>2</integer_node>
                   </rvalue>
                 </index_node>
                 <rvalue>
-                  <double_node>3</double_node>
+                  <double_node>6</double_node>
                 </rvalue>
               </assignment_node>
             </evaluation_node>
+            <print_node>
+              <index_node>
+                <lvalue>
+                  <id_node>
+                    <id_node>q</id_node>
+                  </id_node>
+                </lvalue>
+                <rvalue>
+                  <integer_node>0</integer_node>
+                </rvalue>
+              </index_node>
+              <newLine>0</newLine>
+            </print_node>
           </sequence_node>
         </instructions>
       </block_node>

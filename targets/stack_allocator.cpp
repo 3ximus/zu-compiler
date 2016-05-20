@@ -53,7 +53,6 @@ void zu::stack_allocator::do_or_node(zu::or_node * const node, int lvl){}
 void zu::stack_allocator::do_allocation_node(zu::allocation_node * const node, int lvl){}
 void zu::stack_allocator::do_index_node(zu::index_node * const node, int lvl){}
 void zu::stack_allocator::do_id_node(zu::id_node * const node, int lvl){}
-void zu::stack_allocator::do_variable_node(zu::variable_node * const node, int lvl){}
 void zu::stack_allocator::do_lvalue_node(zu::lvalue_node * const node, int lvl){}
 void zu::stack_allocator::do_add_node(cdk::add_node * const node, int lvl){}
 void zu::stack_allocator::do_sub_node(cdk::sub_node * const node, int lvl){}

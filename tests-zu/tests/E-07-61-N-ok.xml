@@ -18,6 +18,10 @@
       <block_node>
         <instructions>
           <sequence_node size='2'>
+            <print_node>
+              <integer_node>9</integer_node>
+              <newLine>0</newLine>
+            </print_node>
             <for_node>
               <init>
                 <sequence_node size='1'>
@@ -43,6 +47,12 @@
                 <block_node>
                   <instructions>
                     <sequence_node size='2'>
+                      <print_node>
+                        <id_node>
+                          <id_node>x</id_node>
+                        </id_node>
+                        <newLine>0</newLine>
+                      </print_node>
                       <evaluation_node>
                         <assignment_node>
                           <id_node>
@@ -58,21 +68,11 @@
                           </rvalue>
                         </assignment_node>
                       </evaluation_node>
-                      <print_node>
-                        <id_node>
-                          <id_node>x</id_node>
-                        </id_node>
-                        <newLine>0</newLine>
-                      </print_node>
                     </sequence_node>
                   </instructions>
                 </block_node>
               </block>
             </for_node>
-            <print_node>
-              <integer_node>9</integer_node>
-              <newLine>0</newLine>
-            </print_node>
           </sequence_node>
         </instructions>
       </block_node>
