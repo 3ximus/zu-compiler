@@ -34,13 +34,21 @@ void zu::postfix_writer::do_integer_node(cdk::integer_node * const node, int lvl
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
 
-	_pf.INT(node->value()); // push an integer
+	if (_function_context)
+		_pf.INT(node->value()); // push an integer
+	else
+		_pf.CONST(node->value()); // declare integer on selected segment
 }
 
 void zu::postfix_writer::do_double_node(cdk::double_node * const node, int lvl) {
 	debug(node, lvl);
 	int lbl1;
 	CHECK_TYPES(_compiler, _symtab, node);
+
+	if (!_function_context) {
+		_pf.DOUBLE(node->value());
+		return;
+	}
 
 	_pf.RODATA();
 	_pf.ALIGN();
@@ -54,18 +62,24 @@ void zu::postfix_writer::do_double_node(cdk::double_node * const node, int lvl) 
 
 void zu::postfix_writer::do_string_node(cdk::string_node * const node, int lvl) {
 	debug(node, lvl);
-	int lbl1;
+	int lbl1 = ++_lbl;
 	CHECK_TYPES(_compiler, _symtab, node);
+
 
 	/* generate the string */
 	_pf.RODATA(); // strings are DATA readonly
 	_pf.ALIGN(); // make sure we are aligned
-	_pf.LABEL(mklbl(lbl1 = ++_lbl)); // give the string a name
+	_pf.LABEL(mklbl(lbl1)); // give the string a name
 	_pf.STR(node->value()); // output string characters
 
-	/* leave the address on the stack */
-	_pf.TEXT(); // return to the TEXT segment
-	_pf.ADDR(mklbl(lbl1)); // the string to be printed
+	if (!_function_context) {
+		_pf.DATA();
+		_pf.ID(mklbl(lbl1));
+	}
+	else { /* leave the address on the stack */
+		_pf.TEXT(); // return to the TEXT segment
+		_pf.ADDR(mklbl(lbl1)); // the string to be printed
+	}
 }
 
 //---------------------------------------------------------------------------
@@ -154,8 +168,8 @@ void zu::postfix_writer::do_allocation_node(zu::allocation_node * const node, in
 	CHECK_TYPES(_compiler, _symtab, node);
 
 	_pf.INT(node->type()->subtype()->size());
-	node->argument()->accept(this, lvl+1);
-	if (node->left()->name().compare("index_node") == 0 || node->left()->name().compare("id_node") == 0)
+	node->size()->accept(this, lvl+1);
+	if (node->size()->name().compare("index_node") == 0 || node->size()->name().compare("id_node") == 0)
 		_pf.LOAD();
 
 	_pf.MUL();
@@ -211,6 +225,7 @@ void zu::postfix_writer::do_variable_node(zu::variable_node * const node, int lv
 			_pf.BYTE(node->type()->size());
 		}
 		else {
+
 			_pf.DATA();
 			_pf.ALIGN();
 			_pf.LABEL(label);
@@ -219,6 +234,7 @@ void zu::postfix_writer::do_variable_node(zu::variable_node * const node, int lv
 				_pf.DOUBLE(((cdk::simple_value_node<int>*)node->value())->value());
 			else
 				node->value()->accept(this, lvl+1);
+
 		}
 		s->global_label(label);
 	}
@@ -515,7 +531,6 @@ void zu::postfix_writer::do_block_node(zu::block_node * const node, int lvl){
 //---------------------------------------------------------------------------
 
 void zu::postfix_writer::do_evaluation_node(zu::evaluation_node * const node, int lvl) {
-	/* TODO */
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
 
@@ -525,7 +540,7 @@ void zu::postfix_writer::do_evaluation_node(zu::evaluation_node * const node, in
 		_pf.TRASH(4); // delete the evaluated value
 	else if (node->argument()->type()->name() == basic_type::TYPE_STRING)
 		_pf.TRASH(4); // delete the evaluated value's address
-	if (node->argument()->type()->name() == basic_type::TYPE_DOUBLE)
+	else if (node->argument()->type()->name() == basic_type::TYPE_DOUBLE)
 		_pf.TRASH(8); // delete the evaluated value
 	else if (node->argument()->type()->name() == basic_type::TYPE_POINTER)
 		_pf.TRASH(4); // delete the evaluated

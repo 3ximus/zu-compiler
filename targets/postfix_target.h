@@ -7,6 +7,7 @@
 #include <cdk/ast/basic_node.h>
 #include <cdk/compiler.h>
 #include <cdk/emitters/postfix_ix86_emitter.h>
+#include <cdk/emitters/postfix_debug_emitter.h>
 #include "targets/postfix_writer.h"
 #include "targets/symbol.h"
 
@@ -28,6 +29,7 @@ namespace zu {
 
       // this is the backend postfix machine
       cdk::postfix_ix86_emitter pf(compiler);
+      //cdk::postfix_debug_emitter pf(compiler);
 
       // generate assembly code from the syntax tree
       postfix_writer writer(compiler, symtab, pf);
