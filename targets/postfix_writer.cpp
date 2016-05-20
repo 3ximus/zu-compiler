@@ -470,7 +470,8 @@ void zu::postfix_writer::do_function_body_node(zu::function_body_node * const no
 
 	_pf.ENTER(dec_size + node->type()->size()); // add space for decs and return value
 
-	node->literal()->accept(this, lvl+1);
+	if (node->literal())
+		node->literal()->accept(this, lvl+1);
 	_pf.LOCA(0 - node->type()->size());
 
 	node->block()->accept(this, lvl+1);
