@@ -93,7 +93,7 @@ vars : vdec 			{ $$ = new cdk::sequence_node(LINE, $1); }
      ;
 
 itrs : itr			{ $$ = new cdk::sequence_node(LINE, $1); }
-     | itr itrs		{ $$ = new cdk::sequence_node(LINE, $1, $2); }
+     | itrs itr		{ $$ = new cdk::sequence_node(LINE, $2, $1); }
      ;
 
 itr  : expr ';'		{ $$ = new zu::evaluation_node(LINE, $1); }
