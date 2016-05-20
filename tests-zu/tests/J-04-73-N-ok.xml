@@ -6,6 +6,39 @@
     <isImported>0</isImported>
   </function_declaration_node>
   <function_body_node>
+    <function_body_node>f</function_body_node>
+    <unknown_type_1073741824>0</unknown_type_1073741824>
+    <block>
+      <block_node>
+        <declarations>
+          <sequence_node size='1'>
+            <variable_node>
+              <variable_node>x</variable_node>
+              <int_1>4</int_1>
+              <isPublic>0</isPublic>
+              <isImported>0</isImported>
+              <value>
+                <integer_node>3</integer_node>
+              </value>
+            </variable_node>
+          </sequence_node>
+        </declarations>
+        <instructions>
+          <sequence_node size='1'>
+            <print_node>
+              <id_node>
+                <id_node>x</id_node>
+              </id_node>
+              <newLine>0</newLine>
+            </print_node>
+          </sequence_node>
+        </instructions>
+      </block_node>
+    </block>
+    <isPublic>1</isPublic>
+    <isImported>0</isImported>
+  </function_body_node>
+  <function_body_node>
     <function_body_node>zu</function_body_node>
     <int_1>4</int_1>
     <literal>

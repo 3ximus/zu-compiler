@@ -141,7 +141,7 @@ str  : tSTRING			{ $$ = $1; }
 // Function arguments
 
 fargs : farg			{ $$ = new cdk::sequence_node(LINE, $1); }
-      |	fargs ',' farg	{ $$ = new cdk::sequence_node(LINE, $3, $1); }
+      |	farg ',' fargs	{ $$ = new cdk::sequence_node(LINE, $1, $3); }
       |						{ $$ = NULL; }
       ;
 

@@ -460,12 +460,14 @@ void zu::postfix_writer::do_function_body_node(zu::function_body_node * const no
 	debug(node, lvl);
 	CHECK_TYPES(_compiler, _symtab, node);
 	int dec_size = 0;
-	node->function_declaration()->accept(this, lvl+1);
 
 	_symtab.push();
 	_function_context = true;
 	_local_arg_offset = 8;
 	_local_dec_offset = 0;
+
+	if (node->args())
+		node->args()->accept(this, lvl+1);
 
 	_pf.TEXT();
 

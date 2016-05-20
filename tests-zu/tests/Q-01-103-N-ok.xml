@@ -16,6 +16,21 @@
       <block_node>
         <instructions>
           <sequence_node size='1'>
+            <evaluation_node>
+              <assignment_node>
+                <id_node>
+                  <id_node>main</id_node>
+                </id_node>
+                <rvalue>
+                  <add_node>
+                    <integer_node>1</integer_node>
+                    <id_node>
+                      <id_node>p</id_node>
+                    </id_node>
+                  </add_node>
+                </rvalue>
+              </assignment_node>
+            </evaluation_node>
           </sequence_node>
         </instructions>
       </block_node>
@@ -37,6 +52,20 @@
         </declarations>
         <instructions>
           <sequence_node size='6'>
+            <evaluation_node>
+              <assignment_node>
+                <id_node>
+                  <id_node>p</id_node>
+                </id_node>
+                <rvalue>
+                  <allocation_node>
+                    <size>
+                      <integer_node>3</integer_node>
+                    </size>
+                  </allocation_node>
+                </rvalue>
+              </assignment_node>
+            </evaluation_node>
             <evaluation_node>
               <assignment_node>
                 <index_node>
@@ -85,6 +114,25 @@
                 </index_node>
                 <rvalue>
                   <double_node>6</double_node>
+                </rvalue>
+              </assignment_node>
+            </evaluation_node>
+            <evaluation_node>
+              <assignment_node>
+                <id_node>
+                  <id_node>q</id_node>
+                </id_node>
+                <rvalue>
+                  <function_call_node>
+                    <function_call_node>main</function_call_node>
+                    <args>
+                      <sequence_node size='1'>
+                        <id_node>
+                          <id_node>p</id_node>
+                        </id_node>
+                      </sequence_node>
+                    </args>
+                  </function_call_node>
                 </rvalue>
               </assignment_node>
             </evaluation_node>

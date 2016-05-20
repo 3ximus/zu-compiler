@@ -58,6 +58,20 @@
           <sequence_node size='5'>
             <evaluation_node>
               <assignment_node>
+                <id_node>
+                  <id_node>p</id_node>
+                </id_node>
+                <rvalue>
+                  <allocation_node>
+                    <size>
+                      <integer_node>3</integer_node>
+                    </size>
+                  </allocation_node>
+                </rvalue>
+              </assignment_node>
+            </evaluation_node>
+            <evaluation_node>
+              <assignment_node>
                 <index_node>
                   <lvalue>
                     <id_node>

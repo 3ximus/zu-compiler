@@ -25,6 +25,20 @@
         </declarations>
         <instructions>
           <sequence_node size='4'>
+            <evaluation_node>
+              <assignment_node>
+                <id_node>
+                  <id_node>f</id_node>
+                </id_node>
+                <rvalue>
+                  <allocation_node>
+                    <size>
+                      <integer_node>7</integer_node>
+                    </size>
+                  </allocation_node>
+                </rvalue>
+              </assignment_node>
+            </evaluation_node>
             <for_node>
               <init>
                 <sequence_node size='1'>

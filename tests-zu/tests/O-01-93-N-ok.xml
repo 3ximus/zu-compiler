@@ -5,14 +5,14 @@
     <args>
       <sequence_node size='2'>
         <variable_node>
-          <variable_node>x</variable_node>
-          <int_1>4</int_1>
+          <variable_node>y</variable_node>
+          <double_2>8</double_2>
           <isPublic>0</isPublic>
           <isImported>0</isImported>
         </variable_node>
         <variable_node>
-          <variable_node>y</variable_node>
-          <double_2>8</double_2>
+          <variable_node>x</variable_node>
+          <int_1>4</int_1>
           <isPublic>0</isPublic>
           <isImported>0</isImported>
         </variable_node>
