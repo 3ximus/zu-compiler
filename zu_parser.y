@@ -18,15 +18,15 @@
   cdk::basic_node     				*node;	/* node pointer */
   cdk::sequence_node  				*sequence;
   cdk::expression_node				*expression;
-  zu::function_declaration_node 	*function;
-zu::block_node				*block;
-  zu::lvalue_node					*lvalue;
-  basic_type						*ztype;
+  zu::function_declaration_node 		*function;
+  zu::block_node				*block;
+  zu::lvalue_node				*lvalue;
+  basic_type					*ztype;
 };
 
 
 /* ZU TOKENS */
-%token tBREAK tCONTINUE tRETURN tTYPE tPRINTLN
+%token tBREAK tCONTINUE tRETURN tTYPE tPRINTLN tAPPLY tTO
 
 /* LITERALS && IDENTIFIERS */
 %token <i> tINTEGER
@@ -34,6 +34,7 @@ zu::block_node				*block;
 %token <s> tIDENTIFIER tSTRING
 
 /* PRECEDENCES */
+
 
 %nonassoc tIFX
 %nonassoc tELSEX
@@ -64,7 +65,7 @@ zu::block_node				*block;
 %type <block> blk
 %type <function> fdec 						/* function declaration */
 
-%type <expression> expr fcal lit 			/* expression, function call, literal */
+%type <expression> expr fcal lit apply 			/* expression, function call, literal */
 %type <lvalue> lval
 %type <ztype> type
 %type <s> str
@@ -200,6 +201,7 @@ expr : lit  						{ $$ = $1; }
      | lval 						{ $$ = $1; }
      | lval '?'						{ $$ = new zu::position_node(LINE, $1); }
      | lval '=' expr					{ $$ = new zu::assignment_node(LINE, $1, $3); }
+     | apply						{ $$ = $1; }
      ;
 
 lval : tIDENTIFIER					{ $$ = new zu::id_node(LINE, $1); }
@@ -210,6 +212,9 @@ lval : tIDENTIFIER					{ $$ = new zu::id_node(LINE, $1); }
 
 fcal : tIDENTIFIER '(' exprs ')' 			{ $$ = new zu::function_call_node(LINE, $1, $3); }
      ;
+
+apply : tAPPLY tIDENTIFIER tTO exprs			{ $$ = new zu::apply_node(LINE, new zu::function_call_node(LINE,$2,$4)); }
+      ;
 
 exprs : exprs ',' expr					{ $$ = new cdk::sequence_node(LINE, $3, $1); }
       | expr						{ $$ = new cdk::sequence_node(LINE, $1); }

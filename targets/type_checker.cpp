@@ -442,3 +442,5 @@ void zu::type_checker::do_break_node(zu::break_node * const node, int lvl) {
 	/* EMPTY */
 }
 
+void zu::type_checker::do_apply_node(zu::apply_node * const node, int lvl) {
+}

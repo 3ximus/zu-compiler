@@ -106,6 +106,8 @@ public:
   virtual void do_continue_node(zu::continue_node * const node, int lvl) = 0;
   virtual void do_return_node(zu::return_node * const node, int lvl) = 0;
 
+public:
+  virtual void do_apply_node(zu::apply_node * const node, int lvl) = 0; // new method for test
 };
 
 #endif

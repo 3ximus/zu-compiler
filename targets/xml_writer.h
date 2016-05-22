@@ -125,7 +125,10 @@ namespace zu {
 		void do_break_node(zu::break_node * const node, int lvl);
 		void do_continue_node(zu::continue_node * const node, int lvl);
 		void do_return_node(zu::return_node * const node, int lvl);
-
+		
+		public:
+		void do_apply_node(zu::apply_node * const node, int lvl);
+		
 	};
 
 } // zu

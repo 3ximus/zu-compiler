@@ -664,3 +664,5 @@ void zu::postfix_writer::do_break_node(zu::break_node * const node, int lvl) {
 	_pf.JMP(l.end_label); // loop
 }
 
+void zu::postfix_writer::do_apply_node(zu::apply_node * const node, int lvl) {
+}

@@ -42,6 +42,8 @@ DOUBLE		[0-9]+(({DEC}?{EXPONENT})|{DEC})
 "<>"						return tCONTINUE;
 "!!!"						return tRETURN;
 "!!"						return tPRINTLN;
+"apply"						return tAPPLY;
+"to"						return tTO;
 
 [#%$]						return *yytext; /* zu_types */
 
