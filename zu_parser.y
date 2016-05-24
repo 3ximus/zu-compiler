@@ -65,7 +65,7 @@
 %type <block> blk
 %type <function> fdec 						/* function declaration */
 
-%type <expression> expr fcal lit apply 			/* expression, function call, literal */
+%type <expression> expr fcal lit 			/* expression, function call, literal */
 %type <lvalue> lval
 %type <ztype> type
 %type <s> str
