@@ -58,12 +58,12 @@
 
 /* TYPES OF NON-TERMINAL SYMBOLS */
 
-%type <node> dec itr smp_vdec farg 	/* declaration, argument, variable, instruction */
-%type <sequence> decs vars itrs blk_var exprs fargs /* declarations,arguments,variables,instructions,expressions,function arguments*/
+%type <node> dec itr smp_vdec farg 			/* declaration, argument, variable, instruction */
+%type <sequence> decs vars itrs blk_var exprs fargs 	/* declarations,arguments,variables,instructions,expressions,function arguments*/
 
-%type <node> vdec cond iter  			/* variable declaration, block, condtional instruction, iteraion instruction */
+%type <node> vdec cond iter  				/* variable declaration, block, condtional instruction, iteraion instruction */
 %type <block> blk
-%type <function> fdec 						/* function declaration */
+%type <function> fdec 					/* function declaration */
 
 %type <expression> expr fcal lit 			/* expression, function call, literal */
 %type <lvalue> lval
