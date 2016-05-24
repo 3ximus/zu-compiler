@@ -27,13 +27,21 @@ void zu::type_checker::do_string_node(cdk::string_node * const node, int lvl) {
 
 //---------------------------------------------------------------------------
 
-inline void zu::type_checker::processUnaryExpression(cdk::unary_expression_node * const node, int lvl) {
+void zu::type_checker::basicProcessUnaryExpression(cdk::unary_expression_node * const node, int lvl) {
 	ASSERT_UNSPEC;
 	node->argument()->accept(this, lvl + 2);
-	if (node->argument()->type()->name() != basic_type::TYPE_INT && node->argument()->type()->name() != basic_type::TYPE_DOUBLE)
+	if (!isUnaryType(node->argument()->type()))
 		throw std::string("wrong type in argument of unary expression");
+}
 
+void zu::type_checker::processUnaryExpression(cdk::unary_expression_node * const node, int lvl) {
+        basicProcessUnaryExpression(node,lvl);
 	node->type(node->argument()->type());
+}
+
+void zu::type_checker::processUnaryExpression(cdk::unary_expression_node * const node, int lvl, basic_type *type) {
+        basicProcessUnaryExpression(node,lvl);
+	node->type(type);
 }
 
 void zu::type_checker::do_neg_node(cdk::neg_node * const node, int lvl) {
@@ -45,21 +53,11 @@ void zu::type_checker::do_identity_node(zu::identity_node * const node, int lvl)
 }
 
 void zu::type_checker::do_not_node(zu::not_node * const node, int lvl) {
-	ASSERT_UNSPEC;
-	node->argument()->accept(this, lvl + 2);
-	if (node->argument()->type()->name() != basic_type::TYPE_INT)
-		throw std::string("wrong type in argument of unary expression");
-
-	node->type(new basic_type(4, basic_type::TYPE_INT));
+	processUnaryExpression(node, lvl, new basic_type(4, basic_type::TYPE_INT));
 }
 
 void zu::type_checker::do_position_node(zu::position_node * const node, int lvl) {
-	ASSERT_UNSPEC;
-	node->argument()->accept(this, lvl + 2);
-	if (node->argument()->type()->name() != basic_type::TYPE_POINTER)
-		throw std::string("wrong type in argument of unary expression");
-
-	node->type(new basic_type(4, basic_type::TYPE_POINTER));
+	processUnaryExpression(node, lvl, new basic_type(4, basic_type::TYPE_POINTER));
 }
 
 //---------------------------------------------------------------------------
@@ -67,7 +65,7 @@ void zu::type_checker::do_position_node(zu::position_node * const node, int lvl)
 void zu::type_checker::do_allocation_node(zu::allocation_node * const node, int lvl)  {
 	ASSERT_UNSPEC;
 	node->size()->accept(this, lvl + 2);
-	if (node->size()->type()->name() != basic_type::TYPE_INT)
+	if (!isInteger(node->size()->type()))
 		throw std::string("wrong type in argument of allocation expression");
 
 	node->type(new basic_type(4, basic_type::TYPE_POINTER));
@@ -77,11 +75,11 @@ void zu::type_checker::do_allocation_node(zu::allocation_node * const node, int 
 void zu::type_checker::do_index_node(zu::index_node * const node, int lvl) {
 	ASSERT_UNSPEC;
 	node->lvalue()->accept(this, lvl + 2);
-	if (node->lvalue()->type()->name() != basic_type::TYPE_POINTER)
+	if (!isPointer(node->lvalue()->type()))
 		throw std::string("wrong type in argument of index expression");
 
 	node->rvalue()->accept(this, lvl + 2);
-	if (node->rvalue()->type()->name() != basic_type::TYPE_INT)
+	if (!isInteger(node->rvalue()->type()))
 		throw std::string("wrong type in argument of index expression");
 
 	node->type(node->lvalue()->type()->subtype());
@@ -442,5 +440,3 @@ void zu::type_checker::do_break_node(zu::break_node * const node, int lvl) {
 	/* EMPTY */
 }
 
-void zu::type_checker::do_apply_node(zu::apply_node * const node, int lvl) {
-}

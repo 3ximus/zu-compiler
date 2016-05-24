@@ -23,8 +23,8 @@ namespace zu {
     }
 
   public:
-	~type_checker() {
-		os().flush();
+    ~type_checker() {
+	    os().flush();
     }
 
   public:
@@ -40,21 +40,23 @@ namespace zu {
     void do_string_node(cdk::string_node * const node, int lvl);
 
   protected:
+    void basicProcessUnaryExpression(cdk::unary_expression_node * const node, int lvl);
     void processUnaryExpression(cdk::unary_expression_node * const node, int lvl);
+    void processUnaryExpression(cdk::unary_expression_node * const node, int lvl, basic_type *type);
 
   public:
     void do_neg_node(cdk::neg_node * const node, int lvl);
-	void do_not_node(zu::not_node * const node, int lvl);
-	void do_identity_node(zu::identity_node * const node, int lvl);
-	void do_position_node(zu::position_node * const node, int lvl);
+    void do_not_node(zu::not_node * const node, int lvl);
+    void do_identity_node(zu::identity_node * const node, int lvl);
+    void do_position_node(zu::position_node * const node, int lvl);
 
   public:
-	void do_and_node(zu::and_node * const node, int lvl);
-	void do_or_node(zu::or_node * const node, int lvl);
-	void do_allocation_node(zu::allocation_node * const node, int lvl);
-	void do_index_node(zu::index_node * const node, int lvl);
-	void do_id_node(zu::id_node * const node, int lvl);
-	void do_variable_node(zu::variable_node * const node, int lvl);
+    void do_and_node(zu::and_node * const node, int lvl);
+    void do_or_node(zu::or_node * const node, int lvl);
+    void do_allocation_node(zu::allocation_node * const node, int lvl);
+    void do_index_node(zu::index_node * const node, int lvl);
+    void do_id_node(zu::id_node * const node, int lvl);
+    void do_variable_node(zu::variable_node * const node, int lvl);
 
   protected:
     void processBinaryExpression(cdk::binary_expression_node * const node, int lvl);
@@ -96,8 +98,34 @@ namespace zu {
     void do_continue_node(zu::continue_node * const node, int lvl);
     void do_return_node(zu::return_node * const node, int lvl);
 
-  public:
-    void do_apply_node(zu::apply_node * const node, int lvl);
+  private:
+    inline bool isInteger(basic_type *type) {
+	if(type->name() == basic_type::TYPE_INT)
+		return true;
+	return false;
+    }
+    inline bool isDouble(basic_type *type) {
+	if(type->name() == basic_type::TYPE_DOUBLE)
+		return true;
+	return false;
+    }
+    inline bool isString(basic_type *type) {
+	if(type->name() == basic_type::TYPE_STRING)
+		return true;
+	return false;
+    }
+
+    inline bool isPointer(basic_type *type) {
+	if(type->name() == basic_type::TYPE_POINTER)
+		return true;
+	return false;
+    }
+
+    inline bool isUnaryType(basic_type *type) {
+    	if(!isInteger(type) && !isDouble(type))
+		return false;
+	return true;
+    }
   };
 
 } // zu

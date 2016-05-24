@@ -26,7 +26,7 @@
 
 
 /* ZU TOKENS */
-%token tBREAK tCONTINUE tRETURN tTYPE tPRINTLN tAPPLY tTO
+%token tBREAK tCONTINUE tRETURN tTYPE tPRINTLN 
 
 /* LITERALS && IDENTIFIERS */
 %token <i> tINTEGER
@@ -212,9 +212,6 @@ lval : tIDENTIFIER					{ $$ = new zu::id_node(LINE, $1); }
 
 fcal : tIDENTIFIER '(' exprs ')' 			{ $$ = new zu::function_call_node(LINE, $1, $3); }
      ;
-
-apply : tAPPLY tIDENTIFIER tTO exprs			{ $$ = new zu::apply_node(LINE, new zu::function_call_node(LINE,$2,$4)); }
-      ;
 
 exprs : exprs ',' expr					{ $$ = new cdk::sequence_node(LINE, $3, $1); }
       | expr						{ $$ = new cdk::sequence_node(LINE, $1); }

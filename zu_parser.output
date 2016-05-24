@@ -1,0 +1,3271 @@
+   0  $accept : file $end
+
+   1  file : decs
+   2       |
+
+   3  decs : dec
+   4       | decs dec
+
+   5  dec : vdec ';'
+   6      | fdec
+   7      | fdec blk
+
+   8  vars : vdec
+   9       | vars ',' vdec
+
+  10  itrs : itr
+  11       | itrs itr
+
+  12  itr : expr ';'
+  13      | expr '!'
+  14      | expr tPRINTLN
+  15      | tBREAK
+  16      | tCONTINUE
+  17      | tRETURN
+  18      | cond
+  19      | iter
+  20      | blk
+
+  21  vdec : type tIDENTIFIER '!'
+  22       | type tIDENTIFIER '!' '=' expr
+  23       | type tIDENTIFIER '?'
+  24       | type tIDENTIFIER '?' '=' expr
+  25       | smp_vdec
+
+  26  smp_vdec : type tIDENTIFIER
+  27           | type tIDENTIFIER '=' expr
+
+  28  fdec : type tIDENTIFIER '(' fargs ')' '=' lit
+  29       | type tIDENTIFIER '(' fargs ')'
+  30       | '!' tIDENTIFIER '(' fargs ')'
+  31       | type tIDENTIFIER '!' '(' fargs ')' '=' lit
+  32       | type tIDENTIFIER '!' '(' fargs ')'
+  33       | '!' tIDENTIFIER '!' '(' fargs ')'
+  34       | type tIDENTIFIER '?' '(' fargs ')' '=' lit
+  35       | type tIDENTIFIER '?' '(' fargs ')'
+  36       | '!' tIDENTIFIER '?' '(' fargs ')'
+
+  37  lit : tINTEGER
+  38      | tDOUBLE
+  39      | str
+
+  40  str : tSTRING
+  41      | str tSTRING
+
+  42  fargs : farg
+  43        | farg ',' fargs
+  44        |
+
+  45  farg : type tIDENTIFIER
+  46       | type tIDENTIFIER '=' expr
+
+  47  blk_var : smp_vdec ';'
+  48          | blk_var smp_vdec ';'
+
+  49  type : '#'
+  50       | '%'
+  51       | '$'
+  52       | '<' type '>'
+
+  53  blk : '{' blk_var itrs '}'
+  54      | '{' blk_var '}'
+  55      | '{' itrs '}'
+  56      | '{' '}'
+
+  57  cond : '[' expr ']' '#' itr
+  58       | '[' expr ']' '?' itr
+  59       | '[' expr ']' '?' itr ':' itr
+
+  60  iter : '[' exprs ';' exprs ';' exprs ']' itr
+  61       | '[' vars ';' exprs ';' exprs ']' itr
+
+  62  expr : lit
+  63       | fcal
+  64       | expr '+' expr
+  65       | expr '-' expr
+  66       | expr '*' expr
+  67       | expr '/' expr
+  68       | expr '%' expr
+  69       | expr '<' expr
+  70       | expr '>' expr
+  71       | expr tGE expr
+  72       | expr tLE expr
+  73       | expr tEQ expr
+  74       | expr tNE expr
+  75       | expr '|' expr
+  76       | expr '&' expr
+  77       | '~' expr
+  78       | '-' expr
+  79       | '+' expr
+  80       | '@'
+  81       | '[' expr ']'
+  82       | '(' expr ')'
+  83       | lval
+  84       | lval '?'
+  85       | lval '=' expr
+  86       | apply
+
+  87  lval : tIDENTIFIER
+  88       | lval '[' expr ']'
+  89       | '(' expr ')' '[' expr ']'
+  90       | fcal '[' expr ']'
+
+  91  fcal : tIDENTIFIER '(' exprs ')'
+
+  92  exprs : exprs ',' expr
+  93        | expr
+  94        |
+
+state 0
+	$accept : . file $end  (0)
+	file : .  (2)
+
+	'<'  shift 1
+	'%'  shift 2
+	'!'  shift 3
+	'#'  shift 4
+	'$'  shift 5
+	$end  reduce 2
+
+	file  goto 6
+	dec  goto 7
+	smp_vdec  goto 8
+	decs  goto 9
+	vdec  goto 10
+	fdec  goto 11
+	type  goto 12
+
+
+state 1
+	type : '<' . type '>'  (52)
+
+	'<'  shift 1
+	'%'  shift 2
+	'#'  shift 4
+	'$'  shift 5
+	.  error
+
+	type  goto 13
+
+
+state 2
+	type : '%' .  (50)
+
+	.  reduce 50
+
+
+state 3
+	fdec : '!' . tIDENTIFIER '(' fargs ')'  (30)
+	fdec : '!' . tIDENTIFIER '!' '(' fargs ')'  (33)
+	fdec : '!' . tIDENTIFIER '?' '(' fargs ')'  (36)
+
+	tIDENTIFIER  shift 14
+	.  error
+
+
+state 4
+	type : '#' .  (49)
+
+	.  reduce 49
+
+
+state 5
+	type : '$' .  (51)
+
+	.  reduce 51
+
+
+state 6
+	$accept : file . $end  (0)
+
+	$end  accept
+
+
+state 7
+	decs : dec .  (3)
+
+	.  reduce 3
+
+
+state 8
+	vdec : smp_vdec .  (25)
+
+	.  reduce 25
+
+
+state 9
+	file : decs .  (1)
+	decs : decs . dec  (4)
+
+	'<'  shift 1
+	'%'  shift 2
+	'!'  shift 3
+	'#'  shift 4
+	'$'  shift 5
+	$end  reduce 1
+
+	dec  goto 15
+	smp_vdec  goto 8
+	vdec  goto 10
+	fdec  goto 11
+	type  goto 12
+
+
+state 10
+	dec : vdec . ';'  (5)
+
+	';'  shift 16
+	.  error
+
+
+state 11
+	dec : fdec .  (6)
+	dec : fdec . blk  (7)
+
+	'{'  shift 17
+	$end  reduce 6
+	'<'  reduce 6
+	'%'  reduce 6
+	'!'  reduce 6
+	'#'  reduce 6
+	'$'  reduce 6
+
+	blk  goto 18
+
+
+state 12
+	vdec : type . tIDENTIFIER '!'  (21)
+	vdec : type . tIDENTIFIER '!' '=' expr  (22)
+	vdec : type . tIDENTIFIER '?'  (23)
+	vdec : type . tIDENTIFIER '?' '=' expr  (24)
+	smp_vdec : type . tIDENTIFIER  (26)
+	smp_vdec : type . tIDENTIFIER '=' expr  (27)
+	fdec : type . tIDENTIFIER '(' fargs ')' '=' lit  (28)
+	fdec : type . tIDENTIFIER '(' fargs ')'  (29)
+	fdec : type . tIDENTIFIER '!' '(' fargs ')' '=' lit  (31)
+	fdec : type . tIDENTIFIER '!' '(' fargs ')'  (32)
+	fdec : type . tIDENTIFIER '?' '(' fargs ')' '=' lit  (34)
+	fdec : type . tIDENTIFIER '?' '(' fargs ')'  (35)
+
+	tIDENTIFIER  shift 19
+	.  error
+
+
+state 13
+	type : '<' type . '>'  (52)
+
+	'>'  shift 20
+	.  error
+
+
+state 14
+	fdec : '!' tIDENTIFIER . '(' fargs ')'  (30)
+	fdec : '!' tIDENTIFIER . '!' '(' fargs ')'  (33)
+	fdec : '!' tIDENTIFIER . '?' '(' fargs ')'  (36)
+
+	'('  shift 21
+	'!'  shift 22
+	'?'  shift 23
+	.  error
+
+
+state 15
+	decs : decs dec .  (4)
+
+	.  reduce 4
+
+
+state 16
+	dec : vdec ';' .  (5)
+
+	.  reduce 5
+
+
+state 17
+	blk : '{' . blk_var itrs '}'  (53)
+	blk : '{' . blk_var '}'  (54)
+	blk : '{' . itrs '}'  (55)
+	blk : '{' . '}'  (56)
+
+	tBREAK  shift 24
+	tCONTINUE  shift 25
+	tRETURN  shift 26
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'<'  shift 1
+	'+'  shift 32
+	'-'  shift 33
+	'%'  shift 2
+	'('  shift 34
+	'['  shift 35
+	'{'  shift 17
+	apply  shift 36
+	'#'  shift 4
+	'$'  shift 5
+	'}'  shift 37
+	'@'  shift 38
+	.  error
+
+	itr  goto 39
+	smp_vdec  goto 40
+	itrs  goto 41
+	blk_var  goto 42
+	cond  goto 43
+	iter  goto 44
+	blk  goto 45
+	expr  goto 46
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	type  goto 50
+	str  goto 51
+
+
+state 18
+	dec : fdec blk .  (7)
+
+	.  reduce 7
+
+
+state 19
+	vdec : type tIDENTIFIER . '!'  (21)
+	vdec : type tIDENTIFIER . '!' '=' expr  (22)
+	vdec : type tIDENTIFIER . '?'  (23)
+	vdec : type tIDENTIFIER . '?' '=' expr  (24)
+	smp_vdec : type tIDENTIFIER .  (26)
+	smp_vdec : type tIDENTIFIER . '=' expr  (27)
+	fdec : type tIDENTIFIER . '(' fargs ')' '=' lit  (28)
+	fdec : type tIDENTIFIER . '(' fargs ')'  (29)
+	fdec : type tIDENTIFIER . '!' '(' fargs ')' '=' lit  (31)
+	fdec : type tIDENTIFIER . '!' '(' fargs ')'  (32)
+	fdec : type tIDENTIFIER . '?' '(' fargs ')' '=' lit  (34)
+	fdec : type tIDENTIFIER . '?' '(' fargs ')'  (35)
+
+	'='  shift 52
+	'('  shift 53
+	'!'  shift 54
+	'?'  shift 55
+	';'  reduce 26
+
+
+state 20
+	type : '<' type '>' .  (52)
+
+	.  reduce 52
+
+
+state 21
+	fdec : '!' tIDENTIFIER '(' . fargs ')'  (30)
+	fargs : .  (44)
+
+	'<'  shift 1
+	'%'  shift 2
+	'#'  shift 4
+	'$'  shift 5
+	')'  reduce 44
+
+	farg  goto 56
+	fargs  goto 57
+	type  goto 58
+
+
+state 22
+	fdec : '!' tIDENTIFIER '!' . '(' fargs ')'  (33)
+
+	'('  shift 59
+	.  error
+
+
+state 23
+	fdec : '!' tIDENTIFIER '?' . '(' fargs ')'  (36)
+
+	'('  shift 60
+	.  error
+
+
+state 24
+	itr : tBREAK .  (15)
+
+	.  reduce 15
+
+
+state 25
+	itr : tCONTINUE .  (16)
+
+	.  reduce 16
+
+
+state 26
+	itr : tRETURN .  (17)
+
+	.  reduce 17
+
+
+state 27
+	lit : tINTEGER .  (37)
+
+	.  reduce 37
+
+
+state 28
+	lit : tDOUBLE .  (38)
+
+	.  reduce 38
+
+
+state 29
+	lval : tIDENTIFIER .  (87)
+	fcal : tIDENTIFIER . '(' exprs ')'  (91)
+
+	'('  shift 61
+	tPRINTLN  reduce 87
+	'='  reduce 87
+	'|'  reduce 87
+	'&'  reduce 87
+	tEQ  reduce 87
+	tNE  reduce 87
+	tGE  reduce 87
+	tLE  reduce 87
+	'>'  reduce 87
+	'<'  reduce 87
+	'+'  reduce 87
+	'-'  reduce 87
+	'*'  reduce 87
+	'/'  reduce 87
+	'%'  reduce 87
+	'['  reduce 87
+	';'  reduce 87
+	','  reduce 87
+	'!'  reduce 87
+	'?'  reduce 87
+	')'  reduce 87
+	']'  reduce 87
+
+
+state 30
+	str : tSTRING .  (40)
+
+	.  reduce 40
+
+
+state 31
+	expr : '~' . expr  (77)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 63
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 32
+	expr : '+' . expr  (79)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 64
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 33
+	expr : '-' . expr  (78)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 65
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 34
+	expr : '(' . expr ')'  (82)
+	lval : '(' . expr ')' '[' expr ']'  (89)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 66
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 35
+	cond : '[' . expr ']' '#' itr  (57)
+	cond : '[' . expr ']' '?' itr  (58)
+	cond : '[' . expr ']' '?' itr ':' itr  (59)
+	iter : '[' . exprs ';' exprs ';' exprs ']' itr  (60)
+	iter : '[' . vars ';' exprs ';' exprs ']' itr  (61)
+	expr : '[' . expr ']'  (81)
+	exprs : .  (94)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'<'  shift 1
+	'+'  shift 32
+	'-'  shift 33
+	'%'  shift 2
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'#'  shift 4
+	'$'  shift 5
+	'@'  shift 38
+	';'  reduce 94
+	','  reduce 94
+
+	smp_vdec  goto 8
+	vars  goto 67
+	exprs  goto 68
+	vdec  goto 69
+	expr  goto 70
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	type  goto 71
+	str  goto 51
+
+
+state 36
+	expr : apply .  (86)
+
+	.  reduce 86
+
+
+state 37
+	blk : '{' '}' .  (56)
+
+	.  reduce 56
+
+
+state 38
+	expr : '@' .  (80)
+
+	.  reduce 80
+
+
+state 39
+	itrs : itr .  (10)
+
+	.  reduce 10
+
+
+state 40
+	blk_var : smp_vdec . ';'  (47)
+
+	';'  shift 72
+	.  error
+
+
+state 41
+	itrs : itrs . itr  (11)
+	blk : '{' itrs . '}'  (55)
+
+	tBREAK  shift 24
+	tCONTINUE  shift 25
+	tRETURN  shift 26
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 35
+	'{'  shift 17
+	apply  shift 36
+	'}'  shift 73
+	'@'  shift 38
+	.  error
+
+	itr  goto 74
+	cond  goto 43
+	iter  goto 44
+	blk  goto 45
+	expr  goto 46
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 42
+	blk_var : blk_var . smp_vdec ';'  (48)
+	blk : '{' blk_var . itrs '}'  (53)
+	blk : '{' blk_var . '}'  (54)
+
+	tBREAK  shift 24
+	tCONTINUE  shift 25
+	tRETURN  shift 26
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'<'  shift 1
+	'+'  shift 32
+	'-'  shift 33
+	'%'  shift 2
+	'('  shift 34
+	'['  shift 35
+	'{'  shift 17
+	apply  shift 36
+	'#'  shift 4
+	'$'  shift 5
+	'}'  shift 75
+	'@'  shift 38
+	.  error
+
+	itr  goto 39
+	smp_vdec  goto 76
+	itrs  goto 77
+	cond  goto 43
+	iter  goto 44
+	blk  goto 45
+	expr  goto 46
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	type  goto 50
+	str  goto 51
+
+
+state 43
+	itr : cond .  (18)
+
+	.  reduce 18
+
+
+state 44
+	itr : iter .  (19)
+
+	.  reduce 19
+
+
+state 45
+	itr : blk .  (20)
+
+	.  reduce 20
+
+
+state 46
+	itr : expr . ';'  (12)
+	itr : expr . '!'  (13)
+	itr : expr . tPRINTLN  (14)
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+
+	tPRINTLN  shift 78
+	'|'  shift 79
+	'&'  shift 80
+	tEQ  shift 81
+	tNE  shift 82
+	tGE  shift 83
+	tLE  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'+'  shift 87
+	'-'  shift 88
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	';'  shift 92
+	'!'  shift 93
+	.  error
+
+
+state 47
+	expr : fcal .  (63)
+	lval : fcal . '[' expr ']'  (90)
+
+	'['  shift 94
+	tPRINTLN  reduce 63
+	'|'  reduce 63
+	'&'  reduce 63
+	tEQ  reduce 63
+	tNE  reduce 63
+	tGE  reduce 63
+	tLE  reduce 63
+	'>'  reduce 63
+	'<'  reduce 63
+	'+'  reduce 63
+	'-'  reduce 63
+	'*'  reduce 63
+	'/'  reduce 63
+	'%'  reduce 63
+	';'  reduce 63
+	','  reduce 63
+	'!'  reduce 63
+	')'  reduce 63
+	']'  reduce 63
+
+
+state 48
+	expr : lit .  (62)
+
+	.  reduce 62
+
+
+state 49
+	expr : lval .  (83)
+	expr : lval . '?'  (84)
+	expr : lval . '=' expr  (85)
+	lval : lval . '[' expr ']'  (88)
+
+	'='  shift 95
+	'['  shift 96
+	'?'  shift 97
+	tPRINTLN  reduce 83
+	'|'  reduce 83
+	'&'  reduce 83
+	tEQ  reduce 83
+	tNE  reduce 83
+	tGE  reduce 83
+	tLE  reduce 83
+	'>'  reduce 83
+	'<'  reduce 83
+	'+'  reduce 83
+	'-'  reduce 83
+	'*'  reduce 83
+	'/'  reduce 83
+	'%'  reduce 83
+	';'  reduce 83
+	','  reduce 83
+	'!'  reduce 83
+	')'  reduce 83
+	']'  reduce 83
+
+
+state 50
+	smp_vdec : type . tIDENTIFIER  (26)
+	smp_vdec : type . tIDENTIFIER '=' expr  (27)
+
+	tIDENTIFIER  shift 98
+	.  error
+
+
+state 51
+	lit : str .  (39)
+	str : str . tSTRING  (41)
+
+	tSTRING  shift 99
+	$end  reduce 39
+	tPRINTLN  reduce 39
+	'|'  reduce 39
+	'&'  reduce 39
+	tEQ  reduce 39
+	tNE  reduce 39
+	tGE  reduce 39
+	tLE  reduce 39
+	'>'  reduce 39
+	'<'  reduce 39
+	'+'  reduce 39
+	'-'  reduce 39
+	'*'  reduce 39
+	'/'  reduce 39
+	'%'  reduce 39
+	'{'  reduce 39
+	';'  reduce 39
+	','  reduce 39
+	'!'  reduce 39
+	')'  reduce 39
+	'#'  reduce 39
+	'$'  reduce 39
+	']'  reduce 39
+
+
+state 52
+	smp_vdec : type tIDENTIFIER '=' . expr  (27)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 100
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 53
+	fdec : type tIDENTIFIER '(' . fargs ')' '=' lit  (28)
+	fdec : type tIDENTIFIER '(' . fargs ')'  (29)
+	fargs : .  (44)
+
+	'<'  shift 1
+	'%'  shift 2
+	'#'  shift 4
+	'$'  shift 5
+	')'  reduce 44
+
+	farg  goto 56
+	fargs  goto 101
+	type  goto 58
+
+
+state 54
+	vdec : type tIDENTIFIER '!' .  (21)
+	vdec : type tIDENTIFIER '!' . '=' expr  (22)
+	fdec : type tIDENTIFIER '!' . '(' fargs ')' '=' lit  (31)
+	fdec : type tIDENTIFIER '!' . '(' fargs ')'  (32)
+
+	'='  shift 102
+	'('  shift 103
+	';'  reduce 21
+
+
+state 55
+	vdec : type tIDENTIFIER '?' .  (23)
+	vdec : type tIDENTIFIER '?' . '=' expr  (24)
+	fdec : type tIDENTIFIER '?' . '(' fargs ')' '=' lit  (34)
+	fdec : type tIDENTIFIER '?' . '(' fargs ')'  (35)
+
+	'='  shift 104
+	'('  shift 105
+	';'  reduce 23
+
+
+state 56
+	fargs : farg .  (42)
+	fargs : farg . ',' fargs  (43)
+
+	','  shift 106
+	')'  reduce 42
+
+
+state 57
+	fdec : '!' tIDENTIFIER '(' fargs . ')'  (30)
+
+	')'  shift 107
+	.  error
+
+
+state 58
+	farg : type . tIDENTIFIER  (45)
+	farg : type . tIDENTIFIER '=' expr  (46)
+
+	tIDENTIFIER  shift 108
+	.  error
+
+
+state 59
+	fdec : '!' tIDENTIFIER '!' '(' . fargs ')'  (33)
+	fargs : .  (44)
+
+	'<'  shift 1
+	'%'  shift 2
+	'#'  shift 4
+	'$'  shift 5
+	')'  reduce 44
+
+	farg  goto 56
+	fargs  goto 109
+	type  goto 58
+
+
+state 60
+	fdec : '!' tIDENTIFIER '?' '(' . fargs ')'  (36)
+	fargs : .  (44)
+
+	'<'  shift 1
+	'%'  shift 2
+	'#'  shift 4
+	'$'  shift 5
+	')'  reduce 44
+
+	farg  goto 56
+	fargs  goto 110
+	type  goto 58
+
+
+state 61
+	fcal : tIDENTIFIER '(' . exprs ')'  (91)
+	exprs : .  (94)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	','  reduce 94
+	')'  reduce 94
+
+	exprs  goto 111
+	expr  goto 112
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 62
+	expr : '[' . expr ']'  (81)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 113
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 63
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+	expr : '~' expr .  (77)
+
+	.  reduce 77
+
+
+state 64
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+	expr : '+' expr .  (79)
+
+	.  reduce 79
+
+
+state 65
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+	expr : '-' expr .  (78)
+
+	.  reduce 78
+
+
+state 66
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+	expr : '(' expr . ')'  (82)
+	lval : '(' expr . ')' '[' expr ']'  (89)
+
+	'|'  shift 79
+	'&'  shift 80
+	tEQ  shift 81
+	tNE  shift 82
+	tGE  shift 83
+	tLE  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'+'  shift 87
+	'-'  shift 88
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	')'  shift 114
+	.  error
+
+
+state 67
+	vars : vars . ',' vdec  (9)
+	iter : '[' vars . ';' exprs ';' exprs ']' itr  (61)
+
+	';'  shift 115
+	','  shift 116
+	.  error
+
+
+state 68
+	iter : '[' exprs . ';' exprs ';' exprs ']' itr  (60)
+	exprs : exprs . ',' expr  (92)
+
+	';'  shift 117
+	','  shift 118
+	.  error
+
+
+state 69
+	vars : vdec .  (8)
+
+	.  reduce 8
+
+
+state 70
+	cond : '[' expr . ']' '#' itr  (57)
+	cond : '[' expr . ']' '?' itr  (58)
+	cond : '[' expr . ']' '?' itr ':' itr  (59)
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+	expr : '[' expr . ']'  (81)
+	exprs : expr .  (93)
+
+	'|'  shift 79
+	'&'  shift 80
+	tEQ  shift 81
+	tNE  shift 82
+	tGE  shift 83
+	tLE  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'+'  shift 87
+	'-'  shift 88
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	']'  shift 119
+	';'  reduce 93
+	','  reduce 93
+
+
+state 71
+	vdec : type . tIDENTIFIER '!'  (21)
+	vdec : type . tIDENTIFIER '!' '=' expr  (22)
+	vdec : type . tIDENTIFIER '?'  (23)
+	vdec : type . tIDENTIFIER '?' '=' expr  (24)
+	smp_vdec : type . tIDENTIFIER  (26)
+	smp_vdec : type . tIDENTIFIER '=' expr  (27)
+
+	tIDENTIFIER  shift 120
+	.  error
+
+
+state 72
+	blk_var : smp_vdec ';' .  (47)
+
+	.  reduce 47
+
+
+state 73
+	blk : '{' itrs '}' .  (55)
+
+	.  reduce 55
+
+
+state 74
+	itrs : itrs itr .  (11)
+
+	.  reduce 11
+
+
+state 75
+	blk : '{' blk_var '}' .  (54)
+
+	.  reduce 54
+
+
+state 76
+	blk_var : blk_var smp_vdec . ';'  (48)
+
+	';'  shift 121
+	.  error
+
+
+state 77
+	itrs : itrs . itr  (11)
+	blk : '{' blk_var itrs . '}'  (53)
+
+	tBREAK  shift 24
+	tCONTINUE  shift 25
+	tRETURN  shift 26
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 35
+	'{'  shift 17
+	apply  shift 36
+	'}'  shift 122
+	'@'  shift 38
+	.  error
+
+	itr  goto 74
+	cond  goto 43
+	iter  goto 44
+	blk  goto 45
+	expr  goto 46
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 78
+	itr : expr tPRINTLN .  (14)
+
+	.  reduce 14
+
+
+state 79
+	expr : expr '|' . expr  (75)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 123
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 80
+	expr : expr '&' . expr  (76)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 124
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 81
+	expr : expr tEQ . expr  (73)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 125
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 82
+	expr : expr tNE . expr  (74)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 126
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 83
+	expr : expr tGE . expr  (71)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 127
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 84
+	expr : expr tLE . expr  (72)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 128
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 85
+	expr : expr '>' . expr  (70)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 129
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 86
+	expr : expr '<' . expr  (69)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 130
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 87
+	expr : expr '+' . expr  (64)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 131
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 88
+	expr : expr '-' . expr  (65)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 132
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 89
+	expr : expr '*' . expr  (66)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 133
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 90
+	expr : expr '/' . expr  (67)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 134
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 91
+	expr : expr '%' . expr  (68)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 135
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 92
+	itr : expr ';' .  (12)
+
+	.  reduce 12
+
+
+state 93
+	itr : expr '!' .  (13)
+
+	.  reduce 13
+
+
+state 94
+	lval : fcal '[' . expr ']'  (90)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 136
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 95
+	expr : lval '=' . expr  (85)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 137
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 96
+	lval : lval '[' . expr ']'  (88)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 138
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 97
+	expr : lval '?' .  (84)
+
+	.  reduce 84
+
+
+state 98
+	smp_vdec : type tIDENTIFIER .  (26)
+	smp_vdec : type tIDENTIFIER . '=' expr  (27)
+
+	'='  shift 52
+	';'  reduce 26
+
+
+state 99
+	str : str tSTRING .  (41)
+
+	.  reduce 41
+
+
+state 100
+	smp_vdec : type tIDENTIFIER '=' expr .  (27)
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+
+	'|'  shift 79
+	'&'  shift 80
+	tEQ  shift 81
+	tNE  shift 82
+	tGE  shift 83
+	tLE  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'+'  shift 87
+	'-'  shift 88
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	';'  reduce 27
+	','  reduce 27
+
+
+state 101
+	fdec : type tIDENTIFIER '(' fargs . ')' '=' lit  (28)
+	fdec : type tIDENTIFIER '(' fargs . ')'  (29)
+
+	')'  shift 139
+	.  error
+
+
+state 102
+	vdec : type tIDENTIFIER '!' '=' . expr  (22)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 140
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 103
+	fdec : type tIDENTIFIER '!' '(' . fargs ')' '=' lit  (31)
+	fdec : type tIDENTIFIER '!' '(' . fargs ')'  (32)
+	fargs : .  (44)
+
+	'<'  shift 1
+	'%'  shift 2
+	'#'  shift 4
+	'$'  shift 5
+	')'  reduce 44
+
+	farg  goto 56
+	fargs  goto 141
+	type  goto 58
+
+
+state 104
+	vdec : type tIDENTIFIER '?' '=' . expr  (24)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 142
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 105
+	fdec : type tIDENTIFIER '?' '(' . fargs ')' '=' lit  (34)
+	fdec : type tIDENTIFIER '?' '(' . fargs ')'  (35)
+	fargs : .  (44)
+
+	'<'  shift 1
+	'%'  shift 2
+	'#'  shift 4
+	'$'  shift 5
+	')'  reduce 44
+
+	farg  goto 56
+	fargs  goto 143
+	type  goto 58
+
+
+state 106
+	fargs : farg ',' . fargs  (43)
+	fargs : .  (44)
+
+	'<'  shift 1
+	'%'  shift 2
+	'#'  shift 4
+	'$'  shift 5
+	')'  reduce 44
+
+	farg  goto 56
+	fargs  goto 144
+	type  goto 58
+
+
+state 107
+	fdec : '!' tIDENTIFIER '(' fargs ')' .  (30)
+
+	.  reduce 30
+
+
+state 108
+	farg : type tIDENTIFIER .  (45)
+	farg : type tIDENTIFIER . '=' expr  (46)
+
+	'='  shift 145
+	','  reduce 45
+	')'  reduce 45
+
+
+state 109
+	fdec : '!' tIDENTIFIER '!' '(' fargs . ')'  (33)
+
+	')'  shift 146
+	.  error
+
+
+state 110
+	fdec : '!' tIDENTIFIER '?' '(' fargs . ')'  (36)
+
+	')'  shift 147
+	.  error
+
+
+state 111
+	fcal : tIDENTIFIER '(' exprs . ')'  (91)
+	exprs : exprs . ',' expr  (92)
+
+	','  shift 118
+	')'  shift 148
+	.  error
+
+
+state 112
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+	exprs : expr .  (93)
+
+	'|'  shift 79
+	'&'  shift 80
+	tEQ  shift 81
+	tNE  shift 82
+	tGE  shift 83
+	tLE  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'+'  shift 87
+	'-'  shift 88
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	';'  reduce 93
+	','  reduce 93
+	')'  reduce 93
+	']'  reduce 93
+
+
+state 113
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+	expr : '[' expr . ']'  (81)
+
+	'|'  shift 79
+	'&'  shift 80
+	tEQ  shift 81
+	tNE  shift 82
+	tGE  shift 83
+	tLE  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'+'  shift 87
+	'-'  shift 88
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	']'  shift 149
+	.  error
+
+
+state 114
+	expr : '(' expr ')' .  (82)
+	lval : '(' expr ')' . '[' expr ']'  (89)
+
+	'['  shift 150
+	tPRINTLN  reduce 82
+	'|'  reduce 82
+	'&'  reduce 82
+	tEQ  reduce 82
+	tNE  reduce 82
+	tGE  reduce 82
+	tLE  reduce 82
+	'>'  reduce 82
+	'<'  reduce 82
+	'+'  reduce 82
+	'-'  reduce 82
+	'*'  reduce 82
+	'/'  reduce 82
+	'%'  reduce 82
+	';'  reduce 82
+	','  reduce 82
+	'!'  reduce 82
+	')'  reduce 82
+	']'  reduce 82
+
+
+state 115
+	iter : '[' vars ';' . exprs ';' exprs ']' itr  (61)
+	exprs : .  (94)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	';'  reduce 94
+	','  reduce 94
+
+	exprs  goto 151
+	expr  goto 112
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 116
+	vars : vars ',' . vdec  (9)
+
+	'<'  shift 1
+	'%'  shift 2
+	'#'  shift 4
+	'$'  shift 5
+	.  error
+
+	smp_vdec  goto 8
+	vdec  goto 152
+	type  goto 71
+
+
+state 117
+	iter : '[' exprs ';' . exprs ';' exprs ']' itr  (60)
+	exprs : .  (94)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	';'  reduce 94
+	','  reduce 94
+
+	exprs  goto 153
+	expr  goto 112
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 118
+	exprs : exprs ',' . expr  (92)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 154
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 119
+	cond : '[' expr ']' . '#' itr  (57)
+	cond : '[' expr ']' . '?' itr  (58)
+	cond : '[' expr ']' . '?' itr ':' itr  (59)
+	expr : '[' expr ']' .  (81)
+
+	'?'  shift 155
+	'#'  shift 156
+	tPRINTLN  reduce 81
+	'|'  reduce 81
+	'&'  reduce 81
+	tEQ  reduce 81
+	tNE  reduce 81
+	tGE  reduce 81
+	tLE  reduce 81
+	'>'  reduce 81
+	'<'  reduce 81
+	'+'  reduce 81
+	'-'  reduce 81
+	'*'  reduce 81
+	'/'  reduce 81
+	'%'  reduce 81
+	';'  reduce 81
+	'!'  reduce 81
+
+
+state 120
+	vdec : type tIDENTIFIER . '!'  (21)
+	vdec : type tIDENTIFIER . '!' '=' expr  (22)
+	vdec : type tIDENTIFIER . '?'  (23)
+	vdec : type tIDENTIFIER . '?' '=' expr  (24)
+	smp_vdec : type tIDENTIFIER .  (26)
+	smp_vdec : type tIDENTIFIER . '=' expr  (27)
+
+	'='  shift 52
+	'!'  shift 157
+	'?'  shift 158
+	';'  reduce 26
+	','  reduce 26
+
+
+state 121
+	blk_var : blk_var smp_vdec ';' .  (48)
+
+	.  reduce 48
+
+
+state 122
+	blk : '{' blk_var itrs '}' .  (53)
+
+	.  reduce 53
+
+
+state 123
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr '|' expr .  (75)
+	expr : expr . '&' expr  (76)
+
+	'&'  shift 80
+	tEQ  shift 81
+	tNE  shift 82
+	tGE  shift 83
+	tLE  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'+'  shift 87
+	'-'  shift 88
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	tPRINTLN  reduce 75
+	'|'  reduce 75
+	';'  reduce 75
+	','  reduce 75
+	'!'  reduce 75
+	')'  reduce 75
+	']'  reduce 75
+
+
+state 124
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+	expr : expr '&' expr .  (76)
+
+	tEQ  shift 81
+	tNE  shift 82
+	tGE  shift 83
+	tLE  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'+'  shift 87
+	'-'  shift 88
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	tPRINTLN  reduce 76
+	'|'  reduce 76
+	'&'  reduce 76
+	';'  reduce 76
+	','  reduce 76
+	'!'  reduce 76
+	')'  reduce 76
+	']'  reduce 76
+
+
+state 125
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr tEQ expr .  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+
+	tGE  shift 83
+	tLE  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'+'  shift 87
+	'-'  shift 88
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	tPRINTLN  reduce 73
+	'|'  reduce 73
+	'&'  reduce 73
+	tEQ  reduce 73
+	tNE  reduce 73
+	';'  reduce 73
+	','  reduce 73
+	'!'  reduce 73
+	')'  reduce 73
+	']'  reduce 73
+
+
+state 126
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr tNE expr .  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+
+	tGE  shift 83
+	tLE  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'+'  shift 87
+	'-'  shift 88
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	tPRINTLN  reduce 74
+	'|'  reduce 74
+	'&'  reduce 74
+	tEQ  reduce 74
+	tNE  reduce 74
+	';'  reduce 74
+	','  reduce 74
+	'!'  reduce 74
+	')'  reduce 74
+	']'  reduce 74
+
+
+state 127
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr tGE expr .  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+
+	'+'  shift 87
+	'-'  shift 88
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	tPRINTLN  reduce 71
+	'|'  reduce 71
+	'&'  reduce 71
+	tEQ  reduce 71
+	tNE  reduce 71
+	tGE  reduce 71
+	tLE  reduce 71
+	'>'  reduce 71
+	'<'  reduce 71
+	';'  reduce 71
+	','  reduce 71
+	'!'  reduce 71
+	')'  reduce 71
+	']'  reduce 71
+
+
+state 128
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr tLE expr .  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+
+	'+'  shift 87
+	'-'  shift 88
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	tPRINTLN  reduce 72
+	'|'  reduce 72
+	'&'  reduce 72
+	tEQ  reduce 72
+	tNE  reduce 72
+	tGE  reduce 72
+	tLE  reduce 72
+	'>'  reduce 72
+	'<'  reduce 72
+	';'  reduce 72
+	','  reduce 72
+	'!'  reduce 72
+	')'  reduce 72
+	']'  reduce 72
+
+
+state 129
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr '>' expr .  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+
+	'+'  shift 87
+	'-'  shift 88
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	tPRINTLN  reduce 70
+	'|'  reduce 70
+	'&'  reduce 70
+	tEQ  reduce 70
+	tNE  reduce 70
+	tGE  reduce 70
+	tLE  reduce 70
+	'>'  reduce 70
+	'<'  reduce 70
+	';'  reduce 70
+	','  reduce 70
+	'!'  reduce 70
+	')'  reduce 70
+	']'  reduce 70
+
+
+state 130
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr '<' expr .  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+
+	'+'  shift 87
+	'-'  shift 88
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	tPRINTLN  reduce 69
+	'|'  reduce 69
+	'&'  reduce 69
+	tEQ  reduce 69
+	tNE  reduce 69
+	tGE  reduce 69
+	tLE  reduce 69
+	'>'  reduce 69
+	'<'  reduce 69
+	';'  reduce 69
+	','  reduce 69
+	'!'  reduce 69
+	')'  reduce 69
+	']'  reduce 69
+
+
+state 131
+	expr : expr . '+' expr  (64)
+	expr : expr '+' expr .  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	tPRINTLN  reduce 64
+	'|'  reduce 64
+	'&'  reduce 64
+	tEQ  reduce 64
+	tNE  reduce 64
+	tGE  reduce 64
+	tLE  reduce 64
+	'>'  reduce 64
+	'<'  reduce 64
+	'+'  reduce 64
+	'-'  reduce 64
+	';'  reduce 64
+	','  reduce 64
+	'!'  reduce 64
+	')'  reduce 64
+	']'  reduce 64
+
+
+state 132
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr '-' expr .  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	tPRINTLN  reduce 65
+	'|'  reduce 65
+	'&'  reduce 65
+	tEQ  reduce 65
+	tNE  reduce 65
+	tGE  reduce 65
+	tLE  reduce 65
+	'>'  reduce 65
+	'<'  reduce 65
+	'+'  reduce 65
+	'-'  reduce 65
+	';'  reduce 65
+	','  reduce 65
+	'!'  reduce 65
+	')'  reduce 65
+	']'  reduce 65
+
+
+state 133
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr '*' expr .  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+
+	.  reduce 66
+
+
+state 134
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr '/' expr .  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+
+	.  reduce 67
+
+
+state 135
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr '%' expr .  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+
+	.  reduce 68
+
+
+state 136
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+	lval : fcal '[' expr . ']'  (90)
+
+	'|'  shift 79
+	'&'  shift 80
+	tEQ  shift 81
+	tNE  shift 82
+	tGE  shift 83
+	tLE  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'+'  shift 87
+	'-'  shift 88
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	']'  shift 159
+	.  error
+
+
+state 137
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+	expr : lval '=' expr .  (85)
+
+	'|'  shift 79
+	'&'  shift 80
+	tEQ  shift 81
+	tNE  shift 82
+	tGE  shift 83
+	tLE  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'+'  shift 87
+	'-'  shift 88
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	tPRINTLN  reduce 85
+	';'  reduce 85
+	','  reduce 85
+	'!'  reduce 85
+	')'  reduce 85
+	']'  reduce 85
+
+
+state 138
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+	lval : lval '[' expr . ']'  (88)
+
+	'|'  shift 79
+	'&'  shift 80
+	tEQ  shift 81
+	tNE  shift 82
+	tGE  shift 83
+	tLE  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'+'  shift 87
+	'-'  shift 88
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	']'  shift 160
+	.  error
+
+
+state 139
+	fdec : type tIDENTIFIER '(' fargs ')' . '=' lit  (28)
+	fdec : type tIDENTIFIER '(' fargs ')' .  (29)
+
+	'='  shift 161
+	$end  reduce 29
+	'<'  reduce 29
+	'%'  reduce 29
+	'{'  reduce 29
+	'!'  reduce 29
+	'#'  reduce 29
+	'$'  reduce 29
+
+
+state 140
+	vdec : type tIDENTIFIER '!' '=' expr .  (22)
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+
+	'|'  shift 79
+	'&'  shift 80
+	tEQ  shift 81
+	tNE  shift 82
+	tGE  shift 83
+	tLE  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'+'  shift 87
+	'-'  shift 88
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	';'  reduce 22
+	','  reduce 22
+
+
+state 141
+	fdec : type tIDENTIFIER '!' '(' fargs . ')' '=' lit  (31)
+	fdec : type tIDENTIFIER '!' '(' fargs . ')'  (32)
+
+	')'  shift 162
+	.  error
+
+
+state 142
+	vdec : type tIDENTIFIER '?' '=' expr .  (24)
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+
+	'|'  shift 79
+	'&'  shift 80
+	tEQ  shift 81
+	tNE  shift 82
+	tGE  shift 83
+	tLE  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'+'  shift 87
+	'-'  shift 88
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	';'  reduce 24
+	','  reduce 24
+
+
+state 143
+	fdec : type tIDENTIFIER '?' '(' fargs . ')' '=' lit  (34)
+	fdec : type tIDENTIFIER '?' '(' fargs . ')'  (35)
+
+	')'  shift 163
+	.  error
+
+
+state 144
+	fargs : farg ',' fargs .  (43)
+
+	.  reduce 43
+
+
+state 145
+	farg : type tIDENTIFIER '=' . expr  (46)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 164
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 146
+	fdec : '!' tIDENTIFIER '!' '(' fargs ')' .  (33)
+
+	.  reduce 33
+
+
+state 147
+	fdec : '!' tIDENTIFIER '?' '(' fargs ')' .  (36)
+
+	.  reduce 36
+
+
+state 148
+	fcal : tIDENTIFIER '(' exprs ')' .  (91)
+
+	.  reduce 91
+
+
+state 149
+	expr : '[' expr ']' .  (81)
+
+	.  reduce 81
+
+
+state 150
+	lval : '(' expr ')' '[' . expr ']'  (89)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	expr  goto 165
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 151
+	iter : '[' vars ';' exprs . ';' exprs ']' itr  (61)
+	exprs : exprs . ',' expr  (92)
+
+	';'  shift 166
+	','  shift 118
+	.  error
+
+
+state 152
+	vars : vars ',' vdec .  (9)
+
+	.  reduce 9
+
+
+state 153
+	iter : '[' exprs ';' exprs . ';' exprs ']' itr  (60)
+	exprs : exprs . ',' expr  (92)
+
+	';'  shift 167
+	','  shift 118
+	.  error
+
+
+state 154
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+	exprs : exprs ',' expr .  (92)
+
+	'|'  shift 79
+	'&'  shift 80
+	tEQ  shift 81
+	tNE  shift 82
+	tGE  shift 83
+	tLE  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'+'  shift 87
+	'-'  shift 88
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	';'  reduce 92
+	','  reduce 92
+	')'  reduce 92
+	']'  reduce 92
+
+
+state 155
+	cond : '[' expr ']' '?' . itr  (58)
+	cond : '[' expr ']' '?' . itr ':' itr  (59)
+
+	tBREAK  shift 24
+	tCONTINUE  shift 25
+	tRETURN  shift 26
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 35
+	'{'  shift 17
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	itr  goto 168
+	cond  goto 43
+	iter  goto 44
+	blk  goto 45
+	expr  goto 46
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 156
+	cond : '[' expr ']' '#' . itr  (57)
+
+	tBREAK  shift 24
+	tCONTINUE  shift 25
+	tRETURN  shift 26
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 35
+	'{'  shift 17
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	itr  goto 169
+	cond  goto 43
+	iter  goto 44
+	blk  goto 45
+	expr  goto 46
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 157
+	vdec : type tIDENTIFIER '!' .  (21)
+	vdec : type tIDENTIFIER '!' . '=' expr  (22)
+
+	'='  shift 102
+	';'  reduce 21
+	','  reduce 21
+
+
+state 158
+	vdec : type tIDENTIFIER '?' .  (23)
+	vdec : type tIDENTIFIER '?' . '=' expr  (24)
+
+	'='  shift 104
+	';'  reduce 23
+	','  reduce 23
+
+
+state 159
+	lval : fcal '[' expr ']' .  (90)
+
+	.  reduce 90
+
+
+state 160
+	lval : lval '[' expr ']' .  (88)
+
+	.  reduce 88
+
+
+state 161
+	fdec : type tIDENTIFIER '(' fargs ')' '=' . lit  (28)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tSTRING  shift 30
+	.  error
+
+	lit  goto 170
+	str  goto 51
+
+
+state 162
+	fdec : type tIDENTIFIER '!' '(' fargs ')' . '=' lit  (31)
+	fdec : type tIDENTIFIER '!' '(' fargs ')' .  (32)
+
+	'='  shift 171
+	$end  reduce 32
+	'<'  reduce 32
+	'%'  reduce 32
+	'{'  reduce 32
+	'!'  reduce 32
+	'#'  reduce 32
+	'$'  reduce 32
+
+
+state 163
+	fdec : type tIDENTIFIER '?' '(' fargs ')' . '=' lit  (34)
+	fdec : type tIDENTIFIER '?' '(' fargs ')' .  (35)
+
+	'='  shift 172
+	$end  reduce 35
+	'<'  reduce 35
+	'%'  reduce 35
+	'{'  reduce 35
+	'!'  reduce 35
+	'#'  reduce 35
+	'$'  reduce 35
+
+
+state 164
+	farg : type tIDENTIFIER '=' expr .  (46)
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+
+	'|'  shift 79
+	'&'  shift 80
+	tEQ  shift 81
+	tNE  shift 82
+	tGE  shift 83
+	tLE  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'+'  shift 87
+	'-'  shift 88
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	','  reduce 46
+	')'  reduce 46
+
+
+state 165
+	expr : expr . '+' expr  (64)
+	expr : expr . '-' expr  (65)
+	expr : expr . '*' expr  (66)
+	expr : expr . '/' expr  (67)
+	expr : expr . '%' expr  (68)
+	expr : expr . '<' expr  (69)
+	expr : expr . '>' expr  (70)
+	expr : expr . tGE expr  (71)
+	expr : expr . tLE expr  (72)
+	expr : expr . tEQ expr  (73)
+	expr : expr . tNE expr  (74)
+	expr : expr . '|' expr  (75)
+	expr : expr . '&' expr  (76)
+	lval : '(' expr ')' '[' expr . ']'  (89)
+
+	'|'  shift 79
+	'&'  shift 80
+	tEQ  shift 81
+	tNE  shift 82
+	tGE  shift 83
+	tLE  shift 84
+	'>'  shift 85
+	'<'  shift 86
+	'+'  shift 87
+	'-'  shift 88
+	'*'  shift 89
+	'/'  shift 90
+	'%'  shift 91
+	']'  shift 173
+	.  error
+
+
+state 166
+	iter : '[' vars ';' exprs ';' . exprs ']' itr  (61)
+	exprs : .  (94)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	','  reduce 94
+	']'  reduce 94
+
+	exprs  goto 174
+	expr  goto 112
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 167
+	iter : '[' exprs ';' exprs ';' . exprs ']' itr  (60)
+	exprs : .  (94)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 62
+	apply  shift 36
+	'@'  shift 38
+	','  reduce 94
+	']'  reduce 94
+
+	exprs  goto 175
+	expr  goto 112
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 168
+	cond : '[' expr ']' '?' itr .  (58)
+	cond : '[' expr ']' '?' itr . ':' itr  (59)
+
+	':'  shift 176
+	tBREAK  reduce 58
+	tCONTINUE  reduce 58
+	tRETURN  reduce 58
+	tINTEGER  reduce 58
+	tDOUBLE  reduce 58
+	tIDENTIFIER  reduce 58
+	tSTRING  reduce 58
+	'~'  reduce 58
+	'+'  reduce 58
+	'-'  reduce 58
+	'('  reduce 58
+	'['  reduce 58
+	'{'  reduce 58
+	apply  reduce 58
+	'}'  reduce 58
+	'@'  reduce 58
+
+
+state 169
+	cond : '[' expr ']' '#' itr .  (57)
+
+	.  reduce 57
+
+
+state 170
+	fdec : type tIDENTIFIER '(' fargs ')' '=' lit .  (28)
+
+	.  reduce 28
+
+
+state 171
+	fdec : type tIDENTIFIER '!' '(' fargs ')' '=' . lit  (31)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tSTRING  shift 30
+	.  error
+
+	lit  goto 177
+	str  goto 51
+
+
+state 172
+	fdec : type tIDENTIFIER '?' '(' fargs ')' '=' . lit  (34)
+
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tSTRING  shift 30
+	.  error
+
+	lit  goto 178
+	str  goto 51
+
+
+state 173
+	lval : '(' expr ')' '[' expr ']' .  (89)
+
+	.  reduce 89
+
+
+state 174
+	iter : '[' vars ';' exprs ';' exprs . ']' itr  (61)
+	exprs : exprs . ',' expr  (92)
+
+	','  shift 118
+	']'  shift 179
+	.  error
+
+
+state 175
+	iter : '[' exprs ';' exprs ';' exprs . ']' itr  (60)
+	exprs : exprs . ',' expr  (92)
+
+	','  shift 118
+	']'  shift 180
+	.  error
+
+
+state 176
+	cond : '[' expr ']' '?' itr ':' . itr  (59)
+
+	tBREAK  shift 24
+	tCONTINUE  shift 25
+	tRETURN  shift 26
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 35
+	'{'  shift 17
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	itr  goto 181
+	cond  goto 43
+	iter  goto 44
+	blk  goto 45
+	expr  goto 46
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 177
+	fdec : type tIDENTIFIER '!' '(' fargs ')' '=' lit .  (31)
+
+	.  reduce 31
+
+
+state 178
+	fdec : type tIDENTIFIER '?' '(' fargs ')' '=' lit .  (34)
+
+	.  reduce 34
+
+
+state 179
+	iter : '[' vars ';' exprs ';' exprs ']' . itr  (61)
+
+	tBREAK  shift 24
+	tCONTINUE  shift 25
+	tRETURN  shift 26
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 35
+	'{'  shift 17
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	itr  goto 182
+	cond  goto 43
+	iter  goto 44
+	blk  goto 45
+	expr  goto 46
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 180
+	iter : '[' exprs ';' exprs ';' exprs ']' . itr  (60)
+
+	tBREAK  shift 24
+	tCONTINUE  shift 25
+	tRETURN  shift 26
+	tINTEGER  shift 27
+	tDOUBLE  shift 28
+	tIDENTIFIER  shift 29
+	tSTRING  shift 30
+	'~'  shift 31
+	'+'  shift 32
+	'-'  shift 33
+	'('  shift 34
+	'['  shift 35
+	'{'  shift 17
+	apply  shift 36
+	'@'  shift 38
+	.  error
+
+	itr  goto 183
+	cond  goto 43
+	iter  goto 44
+	blk  goto 45
+	expr  goto 46
+	fcal  goto 47
+	lit  goto 48
+	lval  goto 49
+	str  goto 51
+
+
+state 181
+	cond : '[' expr ']' '?' itr ':' itr .  (59)
+
+	.  reduce 59
+
+
+state 182
+	iter : '[' vars ';' exprs ';' exprs ']' itr .  (61)
+
+	.  reduce 61
+
+
+state 183
+	iter : '[' exprs ';' exprs ';' exprs ']' itr .  (60)
+
+	.  reduce 60
+
+
+46 terminals, 23 nonterminals
+95 grammar rules, 184 states

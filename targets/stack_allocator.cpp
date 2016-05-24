@@ -73,4 +73,3 @@ void zu::stack_allocator::do_assignment_node(zu::assignment_node * const node, i
 void zu::stack_allocator::do_break_node(zu::break_node * const node, int lvl){}
 void zu::stack_allocator::do_continue_node(zu::continue_node * const node, int lvl){}
 void zu::stack_allocator::do_return_node(zu::return_node * const node, int lvl){}
-void zu::stack_allocator::do_apply_node(zu::apply_node * const node, int lvl){}

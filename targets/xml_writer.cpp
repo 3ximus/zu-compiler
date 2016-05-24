@@ -345,7 +345,3 @@ void zu::xml_writer::do_break_node(zu::break_node * const node, int lvl) {
 }
 
 
-void zu::xml_writer::do_apply_node(zu::apply_node * const node, int lvl) {
-	openTag(node, lvl);
-	closeTag(node, lvl);
-}
