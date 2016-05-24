@@ -63,6 +63,8 @@ namespace zu {
     bool processBinaryRead(cdk::binary_expression_node * const node);
     void processSameTypes(cdk::binary_expression_node * const node);
     void processNotPointer(cdk::binary_expression_node * const node);
+    void processLogicalExpression(cdk::binary_expression_node * const node, int lvl);
+    void processAND_OR(cdk::binary_expression_node * const node, int lvl);
 
   public:
     void do_add_node(cdk::add_node * const node, int lvl);

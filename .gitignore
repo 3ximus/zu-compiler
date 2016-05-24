@@ -1,2 +1,6 @@
 *.o
+zu
+zu_scanner.cpp
+zu_parser.tab.*
+zu_parser.output
 tests-zu/

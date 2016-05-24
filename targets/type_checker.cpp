@@ -132,10 +132,10 @@ inline void zu::type_checker::processBinaryExpression(cdk::binary_expression_nod
 	ASSERT_UNSPEC;
 	/* operation cannot be performed on a string */
 	node->left()->accept(this, lvl + 2);
-	if (node->left()->type()->name() != basic_type::TYPE_INT && node->left()->type()->name() != basic_type::TYPE_DOUBLE && node->left()->type()->name() != basic_type::TYPE_POINTER)
+	if (isString(node->left()->type()))
 		throw std::string("string not supported on binary expression");
 	node->right()->accept(this, lvl + 2);
-	if (node->right()->type()->name() != basic_type::TYPE_INT && node->right()->type()->name() != basic_type::TYPE_DOUBLE && node->right()->type()->name() != basic_type::TYPE_POINTER)
+	if (isString(node->right()->type()))
 		throw std::string("string not supported on binary expression");
 }
 
@@ -226,76 +226,57 @@ void zu::type_checker::do_mod_node(cdk::mod_node * const node, int lvl) {
 	node->type(node->left()->type());
 }
 
-void zu::type_checker::do_lt_node(cdk::lt_node * const node, int lvl) {
+//----------------------------------------------------------------------------------------------------
+
+
+void zu::type_checker::processLogicalExpression(cdk::binary_expression_node * const node, int lvl) {
 	processBinaryExpression(node, lvl);
 	if (processBinaryRead(node)) return;
 	processNotPointer(node);
 	processSameTypes(node);
 
 	node->type(new basic_type(4, basic_type::TYPE_INT));
+}
+
+void zu::type_checker::processAND_OR(cdk::binary_expression_node * const node, int lvl) {
+	processBinaryExpression(node, lvl);
+	if (processBinaryRead(node)) return;
+	if(!isInteger(node->left()->type()) || !isInteger(node->right()->type()))
+		throw std::string("wrong types in arguments of binary expression");
+
+	node->type(new basic_type(4, basic_type::TYPE_INT));
+}
+
+void zu::type_checker::do_lt_node(cdk::lt_node * const node, int lvl) {
+	processLogicalExpression(node,lvl);
 }
 
 void zu::type_checker::do_le_node(cdk::le_node * const node, int lvl) {
-	processBinaryExpression(node, lvl);
-	if (processBinaryRead(node)) return;
-	processNotPointer(node);
-	processSameTypes(node);
-
-	node->type(new basic_type(4, basic_type::TYPE_INT));
+	processLogicalExpression(node,lvl);
 }
 
 void zu::type_checker::do_ge_node(cdk::ge_node * const node, int lvl) {
-	processBinaryExpression(node, lvl);
-	if (processBinaryRead(node)) return;
-	processNotPointer(node);
-	processSameTypes(node);
-
-	node->type(new basic_type(4, basic_type::TYPE_INT));
+	processLogicalExpression(node,lvl);
 }
 
 void zu::type_checker::do_gt_node(cdk::gt_node * const node, int lvl) {
-	processBinaryExpression(node, lvl);
-	if (processBinaryRead(node)) return;
-	processNotPointer(node);
-	processSameTypes(node);
-
-	node->type(new basic_type(4, basic_type::TYPE_INT));
+	processLogicalExpression(node,lvl);
 }
 
-//---------------------------------------------------------------------------
-
 void zu::type_checker::do_ne_node(cdk::ne_node * const node, int lvl) {
-	processBinaryExpression(node, lvl);
-	if (processBinaryRead(node)) return;
-	processSameTypes(node);
-
-	node->type(new basic_type(4, basic_type::TYPE_INT));
+	processLogicalExpression(node,lvl);
 }
 
 void zu::type_checker::do_eq_node(cdk::eq_node * const node, int lvl) {
-	processBinaryExpression(node, lvl);
-	if (processBinaryRead(node)) return;
-	processSameTypes(node);
-
-	node->type(new basic_type(4, basic_type::TYPE_INT));
+	processLogicalExpression(node,lvl);
 }
 
 void zu::type_checker::do_and_node(zu::and_node * const node, int lvl) {
-	processBinaryExpression(node, lvl);
-	if (processBinaryRead(node)) return;
-	if(node->left()->type()->name() != basic_type::TYPE_INT || node->right()->type()->name() != basic_type::TYPE_INT)
-		throw std::string("wrong types in arguments of binary expression");
-
-	node->type(new basic_type(4, basic_type::TYPE_INT));
+	processAND_OR(node, lvl);
 }
 
 void zu::type_checker::do_or_node(zu::or_node * const node, int lvl) {
-	processBinaryExpression(node, lvl);
-	if (processBinaryRead(node)) return;
-	if(node->left()->type()->name() != basic_type::TYPE_INT || node->right()->type()->name() != basic_type::TYPE_INT)
-		throw std::string("wrong types in arguments of binary expression");
-
-	node->type(new basic_type(4, basic_type::TYPE_INT));
+	processAND_OR(node, lvl);
 }
 
 //---------------------------------------------------------------------------
